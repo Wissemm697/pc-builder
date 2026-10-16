@@ -1,0 +1,1428 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monter son PC de A à Z — guide 3D interactif</title>
+  <meta name="description" content="Comprendre chaque pièce d'un PC fixe, vérifier la compatibilité et l'assembler pas à pas, avec des modèles 3D interactifs.">
+  <meta name="theme-color" content="#0b0f14">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Three.js en version figée (0.160.0), copié localement : le site fonctionne hors-ligne -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./js/vendor/three/three.module.min.js",
+      "three/addons/": "./js/vendor/three/addons/"
+    }
+  }
+  </script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <!-- ====================================================== barre de navigation -->
+  <header class="topbar" id="topbar">
+    <a class="brand" href="#accueil" aria-label="Retour à l'accueil">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="3" width="17" height="26" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12.5" cy="11" r="3.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 20h9M8 24h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M25 8v16" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/></svg>
+      <span>PC&nbsp;Builder</span>
+    </a>
+    <p class="topbar-current" id="topbar-current" aria-live="polite">Accueil</p>
+    <button class="toc-toggle" id="toc-toggle" aria-expanded="false" aria-controls="toc">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span>Sommaire</span>
+    </button>
+    <div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>
+  </header>
+
+  <nav class="toc" id="toc" aria-label="Sommaire">
+    <div class="toc-inner">
+      <p class="toc-title">Sommaire</p>
+      <ol>
+        <li class="toc-group">Introduction
+          <ol>
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#vue-ensemble">Vue d'ensemble</a></li>
+          </ol>
+        </li>
+        <li class="toc-group">Les pièces
+          <ol>
+            <li><a href="#cpu">Processeur</a></li>
+            <li><a href="#carte-mere">Carte mère</a></li>
+            <li><a href="#ram">Mémoire vive</a></li>
+            <li><a href="#stockage">Stockage</a></li>
+            <li><a href="#gpu">Carte graphique</a></li>
+            <li><a href="#alimentation">Alimentation</a></li>
+            <li><a href="#refroidissement">Refroidissement</a></li>
+            <li><a href="#boitier">Boîtier</a></li>
+          </ol>
+        </li>
+        <li class="toc-group">Assembler
+          <ol>
+            <li><a href="#vue-eclatee">Vue éclatée</a></li>
+            <li><a href="#montage">Montage pas à pas</a></li>
+            <li><a href="#bios">BIOS / UEFI</a></li>
+          </ol>
+        </li>
+        <li class="toc-group">Finitions
+          <ol>
+            <li><a href="#peripheriques">Périphériques</a></li>
+            <li><a href="#compatibilite">Checklist</a></li>
+            <li><a href="#glossaire">Glossaire</a></li>
+          </ol>
+        </li>
+      </ol>
+    </div>
+  </nav>
+
+  <main id="contenu">
+
+    <!-- ====================================================== 1. HÉROS -->
+    <section id="accueil" class="hero" aria-labelledby="hero-title">
+      <div class="hero-stage">
+        <figure class="viewer viewer--hero" data-viewer="hero" aria-label="PC complet assemblé, en 3D, qui tourne lentement">
+          <img class="viewer-poster" src="img/previews/assembly.webp" alt="" decoding="async">
+          <p class="viewer-status" role="status">Chargement de la 3D…</p>
+        </figure>
+      </div>
+      <div class="hero-content">
+        <p class="kicker">Guide interactif en 3D</p>
+        <h1 id="hero-title">Monter son PC <span class="accent-text">de A à Z</span></h1>
+        <p class="hero-lead">Comprendre à quoi sert chaque pièce, savoir lire une fiche technique, vérifier la compatibilité, puis assembler un PC fixe étape par étape. Aucune connaissance préalable n'est nécessaire.</p>
+        <div class="hero-actions">
+          <a class="btn btn--primary" href="#vue-ensemble">Commencer
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="#montage">Aller au montage</a>
+        </div>
+        <ul class="hero-facts">
+          <li><strong>8</strong> pièces expliquées en détail</li>
+          <li><strong>11</strong> étapes de montage animées</li>
+          <li><strong>2 à 4 h</strong> pour un premier montage</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ====================================================== 2. VUE D'ENSEMBLE -->
+    <section id="vue-ensemble" class="section" aria-labelledby="ve-title">
+      <header class="section-head">
+        <p class="kicker">Avant de commencer</p>
+        <h2 id="ve-title">Comment les pièces travaillent ensemble</h2>
+        <p class="lead">Un ordinateur, c'est une équipe de pièces spécialisées. Pour comprendre qui fait quoi, imagine la <strong>cuisine d'un restaurant</strong>&nbsp;: chaque pièce y joue un rôle précis, et elles ne servent à rien les unes sans les autres.</p>
+      </header>
+
+      <ul class="analogy-grid">
+        <li class="analogy-card">
+          <a href="#cpu" class="analogy-link">
+            <span class="analogy-role">Le chef</span>
+            <h3>Processeur <abbr title="Central Processing Unit">(CPU)</abbr></h3>
+            <p>Il lit les recettes (les instructions des programmes) et exécute les calculs, des milliards de fois par seconde. Un processeur à 8 <span class="term" data-g="coeur">cœurs</span>, c'est comme 8 chefs qui cuisinent en même temps.</p>
+          </a>
+        </li>
+        <li class="analogy-card">
+          <a href="#ram" class="analogy-link">
+            <span class="analogy-role">Le plan de travail</span>
+            <h3>Mémoire vive <abbr title="Random Access Memory">(RAM)</abbr></h3>
+            <p>Les ingrédients en cours d'utilisation y sont posés, à portée de main du chef. C'est très rapide, mais tout est débarrassé à la fermeture&nbsp;: la RAM se vide quand on éteint le PC.</p>
+          </a>
+        </li>
+        <li class="analogy-card">
+          <a href="#stockage" class="analogy-link">
+            <span class="analogy-role">Le frigo et la réserve</span>
+            <h3>Stockage <abbr title="Solid State Drive">(SSD)</abbr></h3>
+            <p>On y range tout&nbsp;: le système, les programmes, tes fichiers. Rien ne se perd quand on éteint, mais aller y chercher quelque chose prend beaucoup plus de temps que de le prendre sur le plan de travail.</p>
+          </a>
+        </li>
+        <li class="analogy-card">
+          <a href="#carte-mere" class="analogy-link">
+            <span class="analogy-role">La cuisine elle-même</span>
+            <h3>Carte mère</h3>
+            <p>Les murs, les couloirs, les prises électriques&nbsp;: elle relie toutes les pièces, leur distribue le courant et transporte les informations de l'une à l'autre.</p>
+          </a>
+        </li>
+        <li class="analogy-card">
+          <a href="#gpu" class="analogy-link">
+            <span class="analogy-role">1 000 commis en parallèle</span>
+            <h3>Carte graphique <abbr title="Graphics Processing Unit">(GPU)</abbr></h3>
+            <p>Chaque commis fait une tâche simple (par exemple calculer la couleur d'un point de l'image), mais ils sont des milliers à travailler en même temps. Imbattable pour les images, et aussi pour l'intelligence artificielle.</p>
+          </a>
+        </li>
+        <li class="analogy-card">
+          <a href="#alimentation" class="analogy-link">
+            <span class="analogy-role">L'arrivée d'électricité</span>
+            <h3>Alimentation <abbr title="Power Supply Unit">(PSU)</abbr></h3>
+            <p>Elle transforme le courant de la prise (230&nbsp;V alternatif) en courant continu à basse tension (surtout 12&nbsp;V) adapté aux composants, et coupe tout en cas de problème.</p>
+          </a>
+        </li>
+        <li class="analogy-card">
+          <a href="#boitier" class="analogy-link">
+            <span class="analogy-role">Le bâtiment et la hotte</span>
+            <h3>Boîtier et ventilateurs</h3>
+            <p>Le boîtier protège et organise tout&nbsp;; les ventilateurs, comme une hotte, font entrer l'air frais et évacuent la chaleur produite par les pièces.</p>
+          </a>
+        </li>
+      </ul>
+
+      <h3 class="subhead">Le trajet d'un programme, du stockage jusqu'à l'écran</h3>
+      <p class="muted">Exemple&nbsp;: tu lances un jeu. Voici ce qui se passe, dans l'ordre.</p>
+      <ol class="flow" aria-label="Trajet des données">
+        <li class="flow-step">
+          <span class="flow-num">1</span>
+          <h4>Stockage</h4>
+          <p>Les fichiers du jeu sont lus sur le SSD (le frigo). C'est l'étape la plus lente&nbsp;: c'est elle qui fait les écrans de chargement.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-num">2</span>
+          <h4>RAM</h4>
+          <p>Ils sont copiés dans la RAM (le plan de travail), où le processeur peut les atteindre en quelques dizaines de <span class="term" data-g="nanoseconde">nanosecondes</span>.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-num">3</span>
+          <h4>CPU</h4>
+          <p>Le processeur (le chef) exécute la logique du jeu&nbsp;: déplacements, physique, intelligence des personnages, son… et prépare la liste de ce qu'il faut dessiner.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-num">4</span>
+          <h4>GPU</h4>
+          <p>La carte graphique (la brigade) calcule les millions de points (<span class="term" data-g="pixel">pixels</span>) de chaque image, en parallèle, dans sa propre mémoire rapide&nbsp;: la <span class="term" data-g="vram">VRAM</span>.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-num">5</span>
+          <h4>Écran</h4>
+          <p>L'image part dans le câble (DisplayPort ou HDMI) jusqu'à l'écran, qui en affiche 60 à 165 par seconde selon sa <span class="term" data-g="hz">fréquence</span>.</p>
+        </li>
+      </ol>
+      <p class="note">Entre toutes ces pièces, la carte mère sert de réseau routier&nbsp;: les données circulent sur des « autoroutes » appelées <span class="term" data-g="bus">bus</span>, dont la plus importante est le <span class="term" data-g="pcie">PCIe</span>.</p>
+    </section>
+
+    <!-- ====================================================== 3. LES PIÈCES -->
+    <div class="parts-intro section" id="pieces">
+      <header class="section-head">
+        <p class="kicker">Les 8 pièces d'un PC fixe</p>
+        <h2>Pièce par pièce</h2>
+        <p class="lead">Pour chaque pièce&nbsp;: une visionneuse 3D (fais-la tourner à la souris ou au doigt, zoome avec la molette ou en pinçant), son rôle, comment lire sa fiche technique, des ordres de grandeur, puis ce qu'il faut vérifier pour la compatibilité et les erreurs classiques. Le matériel présenté est celui d'une configuration <strong>typique, grand public, de milieu de gamme</strong>.</p>
+      </header>
+    </div>
+
+    <!-- ---------------------------------------------------------------- CPU -->
+    <section id="cpu" class="part section" aria-labelledby="cpu-title">
+      <header class="section-head">
+        <p class="kicker">Pièce 1/8 · Le chef</p>
+        <h2 id="cpu-title">Le processeur (CPU)</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="cpu" aria-label="Processeur en 3D : glisser pour le faire tourner, molette ou pincement pour zoomer.">
+            <img class="viewer-poster" src="img/previews/cpu.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">La 3D se charge quand cette zone devient visible…</p>
+          </figure>
+          <p class="viewer-caption">Processeur au format AMD AM5 (40 × 40 mm). Retourne-le pour voir ses ~1 700 pastilles dorées.</p>
+        </div>
+        <div class="part-text">
+          <h3>Son rôle</h3>
+          <p>Le processeur (<abbr title="Central Processing Unit">CPU</abbr>, « unité centrale de traitement ») exécute les instructions des programmes&nbsp;: additions, comparaisons, déplacements de données… Tout ce que fait l'ordinateur passe à un moment par lui.</p>
+          <p>Physiquement, c'est une puce de silicium (le <span class="term" data-g="die">die</span>) soudée sur un petit circuit vert (le <em>substrat</em>), recouverte d'un capot en métal, l'<span class="term" data-g="ihs">IHS</span>, qui répartit la chaleur vers le ventirad. Dessous, des pastilles dorées viennent toucher les broches du <span class="term" data-g="socket">socket</span>, la prise de la carte mère. Sur les sockets modernes de type <span class="term" data-g="lga">LGA</span> (AMD AM5, Intel LGA&nbsp;1851), <strong>les broches sont sur la carte mère</strong>, pas sur le processeur.</p>
+          <div class="analogy-box"><span class="analogy-tag">Analogie</span> Le processeur est le <strong>chef de cuisine</strong>&nbsp;: il suit les recettes pas à pas, très vite. Chaque <span class="term" data-g="coeur">cœur</span> est un chef indépendant&nbsp;; 8 cœurs, c'est 8 chefs qui travaillent en même temps sur des plats différents.</div>
+
+          <h3>Comment lire sa fiche technique</h3>
+          <div class="spec">
+            <p class="spec-title">Fiche type&nbsp;: processeur grand public de milieu de gamme</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Cœurs / threads</dt><dd class="spec-value">8 / 16</dd>
+                <dd class="spec-help">Un cœur est une unité de calcul complète. Un <span class="term" data-g="thread">thread</span> est une suite d'instructions à exécuter&nbsp;; grâce au <span class="term" data-g="smt">SMT</span>, un cœur AMD alterne entre 2 threads pour éviter les temps morts. Chez Intel (Core Ultra série 200), on compte des cœurs « P » (performants) et « E » (économes), sans SMT. 6 à 8 cœurs suffisent largement pour jouer, programmer ou faire de la data.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Fréquence</dt><dd class="spec-value">3,8 GHz base · 5,4 GHz boost</dd>
+                <dd class="spec-help">Le nombre de cycles par seconde&nbsp;: 5&nbsp;<span class="term" data-g="ghz">GHz</span> = 5 milliards. La fréquence « boost » est atteinte tant que la température et la consommation le permettent. On ne compare les GHz qu'entre processeurs de la même génération&nbsp;: une architecture récente fait plus de travail à chaque cycle.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Cache L3</dt><dd class="spec-value">32 Mo</dd>
+                <dd class="spec-help">Le <span class="term" data-g="cache">cache</span> est une petite mémoire ultra-rapide intégrée au processeur&nbsp;: le garde-manger du chef, juste à côté de lui. Plus il y en a, moins le processeur attend la RAM. Les versions « X3D » d'AMD en ont beaucoup plus (96 Mo), ce qui aide surtout en jeu.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Socket</dt><dd class="spec-value">AM5 (LGA 1718)</dd>
+                <dd class="spec-help">Le type de prise. Un processeur ne rentre que dans une carte mère au même socket. Aujourd'hui&nbsp;: AM5 chez AMD, LGA&nbsp;1851 chez Intel (la prochaine génération Intel, attendue début 2027, passera au LGA&nbsp;1954).</dd>
+              </div>
+              <div class="spec-row">
+                <dt>TDP</dt><dd class="spec-value">65 W</dd>
+                <dd class="spec-help">Le <span class="term" data-g="tdp">TDP</span> donne l'ordre de grandeur de la chaleur à évacuer&nbsp;: il sert à choisir le refroidissement. Les processeurs grand public se situent généralement entre 65 et 125&nbsp;W.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Mémoire / graphique intégré</dt><dd class="spec-value">DDR5 · iGPU oui</dd>
+                <dd class="spec-help">Le type de RAM accepté (DDR5 uniquement sur AM5) et la présence d'une petite partie graphique intégrée (<span class="term" data-g="igpu">iGPU</span>), utile pour dépanner sans carte graphique. Attention&nbsp;: les processeurs Intel dont le nom finit par «&nbsp;F&nbsp;» n'en ont pas.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>Ordres de grandeur</h3>
+          <ul class="magnitudes">
+            <li><strong>0,2 ns</strong> C'est la durée d'un cycle à 5&nbsp;GHz. Pendant ce temps, la lumière ne parcourt que 6&nbsp;cm.</li>
+            <li><strong>Des milliards</strong> de transistors tiennent dans une puce de la taille d'un ongle.</li>
+            <li><strong>95 °C</strong> Vers 95 à 105&nbsp;°C selon le modèle, le processeur se protège en baissant sa fréquence (le <span class="term" data-g="throttling">throttling</span>). D'où l'importance du ventirad.</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibilité">
+            <h4>Compatibilité</h4>
+            <ul>
+              <li><strong>Avec la carte mère&nbsp;:</strong> même socket (AM5 ↔ AM5). Vérifie aussi la liste des processeurs supportés sur le site du fabricant de la carte&nbsp;: un processeur plus récent que la carte peut demander une mise à jour du BIOS.</li>
+              <li><strong>Avec la RAM&nbsp;:</strong> le type de mémoire (DDR5 sur AM5).</li>
+              <li><strong>Avec le ventirad&nbsp;:</strong> le kit de fixation doit gérer ton socket (AM5 reprend les fixations de l'AM4), et sa capacité doit couvrir le TDP.</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Erreurs de débutant">
+            <h4>Erreurs de débutant</h4>
+            <ul>
+              <li><strong>Forcer.</strong> Le processeur doit tomber à plat tout seul dans le socket. Si ça résiste, l'orientation est mauvaise&nbsp;: aligne les deux triangles dorés.</li>
+              <li><strong>Toucher les broches du socket.</strong> Elles sont très fines et se tordent au moindre contact&nbsp;; une broche tordue peut rendre la carte inutilisable.</li>
+              <li><strong>Jeter le cache plastique du socket.</strong> Il saute quand on referme le levier&nbsp;: garde-le, il est souvent demandé en cas de retour au fabricant.</li>
+              <li><strong>Comparer les GHz</strong> entre deux marques ou deux générations&nbsp;: ça ne veut rien dire. Regarde plutôt des tests de performances.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- CARTE MÈRE -->
+    <section id="carte-mere" class="part section" aria-labelledby="mb-title">
+      <header class="section-head">
+        <p class="kicker">Pièce 2/8 · La cuisine qui relie tout</p>
+        <h2 id="mb-title">La carte mère</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="motherboard" aria-label="Carte mère ATX en 3D : glisser pour la faire tourner. Les repères numérotés indiquent les composants importants.">
+            <img class="viewer-poster" src="img/previews/motherboard.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">La 3D se charge quand cette zone devient visible…</p>
+          </figure>
+          <p class="viewer-caption">Carte mère au format ATX (30,5 × 24,4 cm). Survole ou touche les repères pour identifier chaque zone.</p>
+        </div>
+        <div class="part-text">
+          <h3>Son rôle</h3>
+          <p>La carte mère est un grand circuit imprimé (<span class="term" data-g="pcb">PCB</span>) sur lequel tout se branche. Elle distribue le courant à chaque pièce, fait circuler les données entre elles et contient le <span class="term" data-g="bios">BIOS/UEFI</span>, le petit logiciel qui démarre le PC.</p>
+          <p>Ses zones principales&nbsp;: le <strong>socket</strong> du processeur et son <span class="term" data-g="vrm">VRM</span> (l'étage qui fabrique la tension du processeur, sous les dissipateurs à ailettes), les 4 <strong><span class="term" data-g="slot">slots</span> de RAM</strong>, le slot <strong>PCIe x16</strong> pour la carte graphique, les slots <strong>M.2</strong> pour les SSD, le <span class="term" data-g="chipset">chipset</span>, les connecteurs d'alimentation <strong>24 broches</strong> et <strong>8 broches <span class="term" data-g="eps">EPS</span></strong>, les <span class="term" data-g="header">en-têtes</span> (pour la façade du boîtier, les ventilateurs, l'USB) et les <strong>ports arrière</strong> (<span class="term" data-g="io">I/O</span>).</p>
+          <div class="analogy-box"><span class="analogy-tag">Analogie</span> La carte mère est <strong>la cuisine elle-même</strong>&nbsp;: les plans de travail, les couloirs entre les postes, les prises électriques. Une cuisine mal conçue ralentit toute la brigade, même avec un excellent chef.</div>
+
+          <h3>Comment lire sa fiche technique</h3>
+          <div class="spec">
+            <p class="spec-title">Fiche type&nbsp;: carte mère ATX de milieu de gamme</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Format</dt><dd class="spec-value">ATX (30,5 × 24,4 cm)</dd>
+                <dd class="spec-help">La taille de la carte et la position de ses 9 trous de fixation. Le boîtier doit accepter ce format. <span class="term" data-g="atx">ATX</span> est le format standard des tours.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Socket / chipset</dt><dd class="spec-value">AM5 · chipset série B</dd>
+                <dd class="spec-help">Le socket fixe les processeurs compatibles. Le chipset gère une partie des ports (USB, SATA, M.2 secondaires) et détermine les options. La gamme « B » (par exemple B650/B850 chez AMD, B860 chez Intel) est le milieu de gamme&nbsp;: tout ce qu'il faut, sans le superflu.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Mémoire</dt><dd class="spec-value">4 × DDR5 (dual channel)</dd>
+                <dd class="spec-help">Le type et le nombre de slots. Avec 2 barrettes, on utilise les slots A2 et B2 pour profiter du <span class="term" data-g="dualchannel">dual channel</span>.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Stockage</dt><dd class="spec-value">2 × M.2 NVMe · 4 × SATA</dd>
+                <dd class="spec-help">Les emplacements pour SSD M.2 (et leur génération PCIe) et les ports <span class="term" data-g="sata">SATA</span> pour des disques plus anciens. Le slot M.2 le plus proche du processeur est généralement le plus rapide.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Extension</dt><dd class="spec-value">1 × PCIe x16 (renforcé) + slots secondaires</dd>
+                <dd class="spec-help">Le slot x16 principal, avec un renfort métallique, accueille la carte graphique. « x16 » = 16 lignes de données.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Connectique</dt><dd class="spec-value">USB-A/C, réseau 2,5 Gbit/s, Wi-Fi, audio</dd>
+                <dd class="spec-help">Les ports disponibles à l'arrière et les en-têtes internes (USB-C de façade, ventilateurs…). Les sorties vidéo de la carte mère ne servent qu'au graphique intégré du processeur.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>Ordres de grandeur</h3>
+          <ul class="magnitudes">
+            <li><strong>~32 Go/s</strong> Débit d'un slot PCIe 4.0 x16, dans chaque sens&nbsp;: l'autoroute de la carte graphique.</li>
+            <li><strong>6 à 8 couches</strong> de pistes en cuivre sont empilées dans l'épaisseur du circuit (1,6&nbsp;mm) d'une carte moderne.</li>
+            <li><strong>~1 V</strong> Le VRM transforme le 12&nbsp;V de l'alimentation en environ 1&nbsp;à 1,4&nbsp;V pour le processeur, qui peut alors demander plusieurs dizaines d'ampères.</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibilité">
+            <h4>Compatibilité</h4>
+            <ul>
+              <li><strong>Processeur&nbsp;:</strong> même socket, et version du BIOS compatible (liste « CPU support » du fabricant). Beaucoup de cartes ont un bouton <span class="term" data-g="flashback">BIOS Flashback</span> pour mettre à jour sans processeur.</li>
+              <li><strong>RAM&nbsp;:</strong> même génération (DDR5).</li>
+              <li><strong>Boîtier&nbsp;:</strong> le format (ATX) doit figurer dans la liste des formats acceptés.</li>
+              <li><strong>Alimentation&nbsp;:</strong> elle doit fournir le 24 broches et le 8 broches EPS (parfois un second 4/8 broches, optionnel en milieu de gamme).</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Erreurs de débutant">
+            <h4>Erreurs de débutant</h4>
+            <ul>
+              <li><strong>Oublier la plaque I/O</strong> quand elle n'est pas intégrée à la carte&nbsp;: elle se clipse dans le boîtier <em>avant</em> la carte mère.</li>
+              <li><strong>Mettre une entretoise sans trou en face&nbsp;:</strong> elle touche le dos de la carte et peut provoquer un court-circuit.</li>
+              <li><strong>Oublier le câble 8 broches EPS</strong> en haut à gauche&nbsp;: le PC ne démarre pas.</li>
+              <li><strong>Trop serrer les vis&nbsp;:</strong> au contact, puis un petit quart de tour suffit.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- RAM -->
+    <section id="ram" class="part section" aria-labelledby="ram-title">
+      <header class="section-head">
+        <p class="kicker">Pièce 3/8 · Le plan de travail</p>
+        <h2 id="ram-title">La mémoire vive (RAM)</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="ram" aria-label="Barrette de mémoire DDR5 en 3D : glisser pour la faire tourner.">
+            <img class="viewer-poster" src="img/previews/ram.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">La 3D se charge quand cette zone devient visible…</p>
+          </figure>
+          <p class="viewer-caption">Une barrette DDR5 de 16 Go (133 × 31 mm)&nbsp;: 8 puces mémoire, un régulateur de tension (PMIC) et 288 contacts.</p>
+        </div>
+        <div class="part-text">
+          <h3>Son rôle</h3>
+          <p>La mémoire vive (<abbr title="Random Access Memory">RAM</abbr>) garde à portée de main les données et les programmes <em>en cours d'utilisation</em>. Elle est des centaines de fois plus réactive qu'un SSD, mais elle est <span class="term" data-g="volatile">volatile</span>&nbsp;: son contenu disparaît dès qu'on coupe le courant. C'est pour ça qu'on «&nbsp;enregistre&nbsp;» un fichier&nbsp;: on le copie de la RAM vers le stockage.</p>
+          <p>La configuration typique en 2026&nbsp;: <strong>2 barrettes de 16 Go en <span class="term" data-g="ddr5">DDR5</span></strong>, soit 32 Go, placées dans les slots A2 et B2 pour fonctionner en dual channel (les deux barrettes travaillent en parallèle, ce qui double le débit).</p>
+          <div class="analogy-box"><span class="analogy-tag">Analogie</span> La RAM est le <strong>plan de travail</strong>&nbsp;: plus il est grand, plus le chef peut préparer de plats en même temps sans aller sans cesse au frigo. Mais le soir, tout est débarrassé.</div>
+
+          <h3>Comment lire sa fiche technique</h3>
+          <div class="spec">
+            <p class="spec-title">Fiche type&nbsp;: kit 32 Go (2 × 16 Go) DDR5-6000 CL30</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Capacité</dt><dd class="spec-value">32 Go (2 × 16 Go)</dd>
+                <dd class="spec-help">La taille du plan de travail. 16&nbsp;Go est un minimum confortable, 32&nbsp;Go le choix sûr pour jouer, programmer, faire de la data ou du montage vidéo. On achète un <strong>kit</strong> de 2 barrettes identiques.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Génération</dt><dd class="spec-value">DDR5</dd>
+                <dd class="spec-help">DDR5 et DDR4 ne sont pas interchangeables&nbsp;: l'encoche du bas n'est pas au même endroit, il est impossible (et dangereux de forcer) d'insérer l'une dans le slot de l'autre.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Vitesse</dt><dd class="spec-value">6000 MT/s</dd>
+                <dd class="spec-help">Le nombre de transferts par seconde (<span class="term" data-g="mts">MT/s</span>, souvent écrit à tort «&nbsp;MHz&nbsp;»). Sans réglage, la RAM démarre à une vitesse standard plus basse&nbsp;: il faut activer le profil <span class="term" data-g="expo">EXPO/XMP</span> dans le BIOS. Sur AM5, 6000&nbsp;MT/s est le point idéal courant.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Latence</dt><dd class="spec-value">CL30</dd>
+                <dd class="spec-help">Le nombre de cycles d'attente avant que la donnée arrive (<span class="term" data-g="cl">CAS latency</span>). Plus c'est bas, mieux c'est, mais il faut la combiner à la vitesse&nbsp;: latence réelle ≈ CL × 2000 ÷ vitesse = 30 × 2000 ÷ 6000 = <strong>10&nbsp;ns</strong>.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Tension / profil</dt><dd class="spec-value">1,35 V · EXPO (AMD) / XMP (Intel)</dd>
+                <dd class="spec-help">La tension nécessaire pour tenir la vitesse annoncée, appliquée automatiquement par le profil. EXPO est le nom chez AMD, XMP chez Intel&nbsp;; beaucoup de kits ont les deux.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>Ordres de grandeur</h3>
+          <div class="chart" data-chart="latency" aria-label="Temps d'accès comparés, échelle logarithmique"></div>
+          <ul class="magnitudes">
+            <li><strong>~1 000×</strong> La RAM répond en environ 80&nbsp;ns, un SSD NVMe en 50 à 100&nbsp;µs&nbsp;: en temps d'accès (<span class="term" data-g="latence">latence</span>), la RAM est environ <strong>1&nbsp;000 fois plus rapide</strong>. Si un accès à la RAM durait 1&nbsp;seconde, un accès au SSD prendrait un quart d'heure, et un disque dur plus d'une journée.</li>
+            <li><strong>~14×</strong> En <span class="term" data-g="debit">débit</span> (quantité de données par seconde), l'écart est plus faible&nbsp;: deux barrettes DDR5-6000 en dual channel atteignent ~96&nbsp;Go/s en théorie, contre ~7&nbsp;Go/s pour un très bon SSD PCIe&nbsp;4.0.</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibilité">
+            <h4>Compatibilité</h4>
+            <ul>
+              <li><strong>Carte mère&nbsp;:</strong> même génération (DDR5). La liste <span class="term" data-g="qvl">QVL</span> du fabricant indique les kits testés.</li>
+              <li><strong>Slots&nbsp;:</strong> avec 2 barrettes, A2 et B2 (2<sup>e</sup> et 4<sup>e</sup> slot en partant du processeur)&nbsp;: c'est indiqué dans le manuel et souvent sérigraphié sur la carte.</li>
+              <li><strong>Ventirad&nbsp;:</strong> des barrettes très hautes (avec gros dissipateur) peuvent gêner le ventilateur du ventirad.</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Erreurs de débutant">
+            <h4>Erreurs de débutant</h4>
+            <ul>
+              <li><strong>Ne pas enfoncer jusqu'au clic.</strong> Il faut appuyer fort, des deux côtés&nbsp;: une barrette mal enfoncée empêche le démarrage.</li>
+              <li><strong>Mettre les barrettes côte à côte</strong> (A1 + A2)&nbsp;: on perd le dual channel.</li>
+              <li><strong>Oublier EXPO/XMP</strong>&nbsp;: la RAM tourne alors moins vite que ce qu'on a payé.</li>
+              <li><strong>Paniquer au premier démarrage.</strong> Avec la DDR5, la carte «&nbsp;entraîne&nbsp;» la mémoire (<span class="term" data-g="training">memory training</span>)&nbsp;: le premier démarrage peut durer plusieurs minutes, écran noir. C'est normal&nbsp;: n'éteins pas.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- STOCKAGE -->
+    <section id="stockage" class="part section" aria-labelledby="ssd-title">
+      <header class="section-head">
+        <p class="kicker">Pièce 4/8 · Le frigo et la réserve</p>
+        <h2 id="ssd-title">Le stockage (SSD NVMe M.2)</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="ssd" aria-label="SSD NVMe M.2 2280 en 3D : glisser pour le faire tourner.">
+            <img class="viewer-poster" src="img/previews/ssd.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">La 3D se charge quand cette zone devient visible…</p>
+          </figure>
+          <p class="viewer-caption">SSD M.2 2280 de 1 To&nbsp;: 22 × 80 mm, à peine plus grand qu'une barre de chocolat… et aucun câble.</p>
+        </div>
+        <div class="part-text">
+          <h3>Son rôle</h3>
+          <p>Le stockage conserve tout, même éteint&nbsp;: le système d'exploitation, les programmes, tes fichiers. Le <abbr title="Solid State Drive">SSD</abbr> utilise de la mémoire flash (<span class="term" data-g="nand">NAND</span>), sans aucune pièce mobile. Le format <span class="term" data-g="m2">M.2</span> 2280 se visse directement sur la carte mère, et le protocole <span class="term" data-g="nvme">NVMe</span> le fait dialoguer avec le processeur par des lignes PCIe&nbsp;: c'est pour ça qu'il est si rapide.</p>
+          <p>Sur la puce de gauche, le <strong>contrôleur</strong> (le cerveau du SSD) répartit les données entre les puces de mémoire flash, cachées sous l'étiquette.</p>
+          <div class="analogy-box"><span class="analogy-tag">Analogie</span> Le stockage est le <strong>frigo et la réserve</strong>&nbsp;: on y garde tout, même la nuit, mais il faut le temps d'aller y chercher les ingrédients. Un SSD NVMe est un frigo juste à côté de la cuisine&nbsp;; un disque dur, une réserve au fond de la cour.</div>
+
+          <h3>Comment lire sa fiche technique</h3>
+          <div class="spec">
+            <p class="spec-title">Fiche type&nbsp;: SSD NVMe M.2 2280, 1 To</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Format</dt><dd class="spec-value">M.2 2280 (clé M)</dd>
+                <dd class="spec-help">22&nbsp;mm de large, 80&nbsp;mm de long&nbsp;: le format de loin le plus courant. L'encoche des contacts («&nbsp;clé M&nbsp;») correspond aux slots M.2 pour SSD.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Interface</dt><dd class="spec-value">PCIe 4.0 x4, NVMe</dd>
+                <dd class="spec-help">4 lignes PCIe de 4<sup>e</sup> génération&nbsp;: environ 8&nbsp;Go/s au maximum théorique. Les SSD PCIe&nbsp;5.0 doublent ce chiffre mais chauffent plus, pour un gain peu visible en usage courant.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Capacité</dt><dd class="spec-value">1 To</dd>
+                <dd class="spec-help">1 To = 1&nbsp;000 Go. Windows et quelques jeux récents (souvent 50 à 150 Go chacun) le remplissent vite&nbsp;: 1 To est un bon départ, 2 To si tu joues beaucoup.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Débits séquentiels</dt><dd class="spec-value">7 000 / 6 000 Mo/s</dd>
+                <dd class="spec-help">Lecture / écriture de gros fichiers, dans les meilleures conditions. Au quotidien, la réactivité dépend surtout des petits accès aléatoires (<span class="term" data-g="iops">IOPS</span>) et de la latence, où tous les SSD NVMe sont déjà excellents.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Endurance</dt><dd class="spec-value">600 TBW</dd>
+                <dd class="spec-help">La quantité totale de données qu'on peut écrire avant usure (<span class="term" data-g="tbw">TBW</span>). 600&nbsp;To, c'est 160&nbsp;Go écrits chaque jour pendant 10 ans&nbsp;: largement suffisant.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>Ordres de grandeur</h3>
+          <div class="chart" data-chart="storage" aria-label="Débit séquentiel en lecture par type de stockage"></div>
+          <ul class="magnitudes">
+            <li><strong>3 s</strong> Copier un fichier de 20&nbsp;Go&nbsp;: environ 3&nbsp;s pour un SSD NVMe PCIe&nbsp;4.0, 40&nbsp;s pour un SSD SATA, 2&nbsp;minutes pour un disque dur (dans les meilleures conditions).</li>
+          </ul>
+
+          <h3>Les autres types de stockage (en complément)</h3>
+          <div class="table-wrap">
+            <table class="compare">
+              <caption>NVMe, SSD SATA et disque dur&nbsp;: les différences</caption>
+              <thead><tr><th scope="col"></th><th scope="col">SSD NVMe M.2</th><th scope="col">SSD SATA 2,5"</th><th scope="col">Disque dur 3,5" (<span class="term" data-g="hdd">HDD</span>)</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Débit</th><td>3 500 à 14 000 Mo/s</td><td>~550 Mo/s (limite du SATA)</td><td>150 à 280 Mo/s</td></tr>
+                <tr><th scope="row">Temps d'accès</th><td>~0,05 à 0,1 ms</td><td>~0,1 ms</td><td>5 à 10 ms (une tête mécanique se déplace)</td></tr>
+                <tr><th scope="row">Branchement</th><td>Slot M.2, aucun câble</td><td>Câble SATA + câble d'alimentation</td><td>Câble SATA + câble d'alimentation</td></tr>
+                <tr><th scope="row">Usage idéal</th><td>Système, programmes, jeux</td><td>Stockage secondaire, récupérer un ancien SSD</td><td>Grosses archives et sauvegardes, coût par Go le plus bas</td></tr>
+                <tr><th scope="row">Bruit</th><td>Silencieux</td><td>Silencieux</td><td>Bruit et vibrations</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <aside class="callout callout--compat" aria-label="Compatibilité">
+            <h4>Compatibilité</h4>
+            <ul>
+              <li><strong>Carte mère&nbsp;:</strong> un slot M.2 clé M compatible NVMe, de génération PCIe égale ou supérieure (sinon le SSD fonctionne, mais plus lentement).</li>
+              <li><strong>Partage de lignes&nbsp;:</strong> sur certaines cartes, occuper un slot M.2 désactive des ports SATA ou ralentit un slot PCIe. Le manuel l'indique.</li>
+              <li><strong>Longueur&nbsp;:</strong> le slot doit accepter 80&nbsp;mm (c'est presque toujours le cas).</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Erreurs de débutant">
+            <h4>Erreurs de débutant</h4>
+            <ul>
+              <li><strong>Oublier la vis</strong> (ou le loquet)&nbsp;: le SSD reste relevé à 30° et finit par mal contacter.</li>
+              <li><strong>Laisser le film plastique</strong> sur le pad thermique du dissipateur M.2 de la carte mère.</li>
+              <li><strong>Installer Windows sur le mauvais disque</strong>&nbsp;: pendant l'installation, choisis bien le SSD NVMe.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- GPU -->
+    <section id="gpu" class="part section" aria-labelledby="gpu-title">
+      <header class="section-head">
+        <p class="kicker">Pièce 5/8 · La brigade de 1 000 commis</p>
+        <h2 id="gpu-title">La carte graphique (GPU)</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="gpu" aria-label="Carte graphique double ventilateur en 3D : glisser pour la faire tourner.">
+            <img class="viewer-poster" src="img/previews/gpu.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">La 3D se charge quand cette zone devient visible…</p>
+          </figure>
+          <p class="viewer-caption">Carte graphique de milieu de gamme&nbsp;: 28 cm de long, 2 ventilateurs, une prise d'alimentation 8 broches.</p>
+        </div>
+        <div class="part-text">
+          <h3>Son rôle</h3>
+          <p>La carte graphique calcule les images affichées à l'écran. Sa puce, le <abbr title="Graphics Processing Unit">GPU</abbr>, contient des <strong>milliers</strong> de petites unités de calcul qui travaillent en parallèle&nbsp;: parfait pour traiter des millions de pixels, et aussi pour l'intelligence artificielle ou le calcul scientifique (c'est pour ça qu'on l'utilise en data science). Elle a sa propre mémoire ultra-rapide, la VRAM, et son propre système de refroidissement&nbsp;: radiateur, <span class="term" data-g="heatpipe">caloducs</span> et ventilateurs.</p>
+          <div class="analogy-box"><span class="analogy-tag">Analogie</span> Le CPU est un chef génial capable de tout faire&nbsp;; le GPU est une <strong>brigade de 1&nbsp;000 commis</strong> qui ne savent faire que des tâches simples… mais toutes en même temps. Pour éplucher 10&nbsp;000 pommes de terre, la brigade gagne haut la main.</div>
+
+          <h3>Comment lire sa fiche technique</h3>
+          <div class="spec">
+            <p class="spec-title">Fiche type&nbsp;: carte graphique de milieu de gamme</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>VRAM</dt><dd class="spec-value">8 à 16 Go (GDDR6/GDDR7)</dd>
+                <dd class="spec-help">La mémoire de la carte, où sont stockées les textures des jeux. 8&nbsp;Go devient juste en 1440p avec les jeux récents&nbsp;: 12 à 16&nbsp;Go sont plus confortables.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Consommation</dt><dd class="spec-value">~150 à 220 W</dd>
+                <dd class="spec-help">La puissance consommée par la carte (souvent notée TGP ou TBP). Elle détermine l'alimentation nécessaire&nbsp;: le fabricant indique une puissance d'alimentation recommandée (souvent 550 à 650&nbsp;W pour ce niveau).</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Dimensions</dt><dd class="spec-value">28 cm · 2,5 slots</dd>
+                <dd class="spec-help">La longueur se compare à la «&nbsp;longueur maximale de carte graphique&nbsp;» du boîtier. L'épaisseur en «&nbsp;slots&nbsp;» indique combien d'emplacements elle occupe à l'arrière (ici, elle recouvre aussi le 2<sup>e</sup> slot M.2).</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Alimentation</dt><dd class="spec-value">1 × PCIe 8 broches</dd>
+                <dd class="spec-help">Le slot PCIe fournit jusqu'à 75&nbsp;W, un connecteur 8 broches jusqu'à 150&nbsp;W de plus. Certaines cartes plus puissantes utilisent un connecteur 16 broches appelé <span class="term" data-g="12v2x6">12V-2x6</span>.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Sorties vidéo</dt><dd class="spec-value">3 × DisplayPort · 1 × HDMI</dd>
+                <dd class="spec-help">Pour brancher un ou plusieurs écrans. DisplayPort est le standard des écrans PC, HDMI celui des TV (voir la section <a href="#peripheriques">Périphériques</a>).</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Interface</dt><dd class="spec-value">PCIe x16 (4.0 ou 5.0)</dd>
+                <dd class="spec-help">Les générations PCIe sont compatibles entre elles&nbsp;: une carte PCIe&nbsp;5.0 fonctionne dans un slot 4.0, avec une perte de performances généralement faible pour ce niveau de carte.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>Ordres de grandeur</h3>
+          <ul class="magnitudes">
+            <li><strong>600 millions</strong> Une image 1440p compte 3,7 millions de pixels&nbsp;; à 165 images par seconde, la carte calcule plus de 600 millions de pixels chaque seconde.</li>
+            <li><strong>Des milliers</strong> d'unités de calcul dans le GPU, contre 6 à 8 cœurs (beaucoup plus polyvalents) dans le processeur.</li>
+            <li><strong>3 à 5×</strong> La VRAM offre 300 à plus de 500&nbsp;Go/s, soit 3 à 5 fois le débit de la RAM du PC.</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibilité">
+            <h4>Compatibilité</h4>
+            <ul>
+              <li><strong>Boîtier&nbsp;:</strong> longueur de la carte &lt; longueur maximale acceptée (attention, des ventilateurs ou un radiateur en façade réduisent la place).</li>
+              <li><strong>Alimentation&nbsp;:</strong> puissance suffisante et bon connecteur (8 broches PCIe ou 12V-2x6).</li>
+              <li><strong>Carte mère&nbsp;:</strong> un slot PCIe x16 libre (le plus haut, renforcé).</li>
+              <li><strong>Écran&nbsp;:</strong> une entrée compatible avec ses sorties (DisplayPort ou HDMI).</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Erreurs de débutant">
+            <h4>Erreurs de débutant</h4>
+            <ul>
+              <li><strong>Brancher l'écran sur la carte mère.</strong> C'est l'erreur n°1&nbsp;: les sorties de la carte mère ne servent qu'au graphique intégré. Avec une carte graphique, l'écran se branche <em>sur la carte graphique</em>.</li>
+              <li><strong>Oublier le câble d'alimentation PCIe</strong>, ou ne pas l'enfoncer jusqu'au clic.</li>
+              <li><strong>Utiliser un câble «&nbsp;en guirlande&nbsp;»</strong> (deux prises sur un même câble) pour une carte à deux connecteurs&nbsp;: préfère deux câbles séparés.</li>
+              <li><strong>Ne pas visser l'<span class="term" data-g="equerre">équerre</span></strong> au boîtier&nbsp;: la carte bouge et pèse sur le slot.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- ALIMENTATION -->
+    <section id="alimentation" class="part section" aria-labelledby="psu-title">
+      <header class="section-head">
+        <p class="kicker">Pièce 6/8 · L'arrivée d'électricité</p>
+        <h2 id="psu-title">L'alimentation (PSU)</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="psu" aria-label="Alimentation ATX semi-modulaire en 3D : glisser pour la faire tourner.">
+            <img class="viewer-poster" src="img/previews/psu.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">La 3D se charge quand cette zone devient visible…</p>
+          </figure>
+          <p class="viewer-caption">Alimentation ATX 750 W, 80 PLUS Gold, semi-modulaire (15 × 8,6 × 14 cm).</p>
+        </div>
+        <div class="part-text">
+          <h3>Son rôle</h3>
+          <p>L'alimentation (<abbr title="Power Supply Unit">PSU</abbr>) transforme le courant alternatif de la prise (230&nbsp;V en France) en courant continu à basse tension&nbsp;: surtout du <strong>12&nbsp;V</strong> (pour le processeur et la carte graphique), plus du 5&nbsp;V et du 3,3&nbsp;V. Une bonne alimentation délivre un courant stable et intègre des <span class="term" data-g="protections">protections</span> qui coupent tout en cas de court-circuit ou de surcharge&nbsp;: c'est elle qui protège toutes les autres pièces.</p>
+          <p>Elle est <span class="term" data-g="modulaire">semi-modulaire</span>&nbsp;: les câbles indispensables (24 broches de la carte mère, 8 broches EPS du processeur) sont fixés, les autres se branchent selon les besoins.</p>
+          <div class="analogy-box"><span class="analogy-tag">Analogie</span> L'alimentation est <strong>l'arrivée d'électricité et le tableau électrique</strong> de la cuisine&nbsp;: elle convertit le courant du réseau pour chaque appareil et coupe tout si quelque chose tourne mal.</div>
+
+          <h3>Comment lire sa fiche technique</h3>
+          <div class="spec">
+            <p class="spec-title">Fiche type&nbsp;: alimentation ATX 750 W</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Puissance</dt><dd class="spec-value">750 W</dd>
+                <dd class="spec-help">Le maximum qu'elle peut fournir en continu. Une configuration de milieu de gamme consomme environ 300 à 450&nbsp;W en jeu&nbsp;: la marge évite de la faire travailler à fond (plus bruyant, moins efficace) et laisse de la place pour une future carte graphique.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Certification</dt><dd class="spec-value">80 PLUS Gold</dd>
+                <dd class="spec-help">Son rendement (<span class="term" data-g="80plus">80 PLUS</span>). À mi-charge, une Gold perd environ 10&nbsp;% de l'énergie en chaleur, une Bronze environ 15&nbsp;%. Gold = plus silencieuse et moins de gaspillage.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Modularité</dt><dd class="spec-value">Semi-modulaire</dd>
+                <dd class="spec-help">Moins de câbles inutiles dans le boîtier qu'une alimentation non modulaire, pour moins cher qu'une entièrement modulaire.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Norme</dt><dd class="spec-value">ATX 3.1</dd>
+                <dd class="spec-help">Version récente de la norme&nbsp;: elle encaisse mieux les pics de consommation très brefs des cartes graphiques modernes et fournit le connecteur 12V-2x6.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Connecteurs</dt><dd class="spec-value">24 broches · 2 × EPS 4+4 · 3 × PCIe 8 · SATA</dd>
+                <dd class="spec-help">À comparer à ce que demandent la carte mère (24 + 8 broches), la carte graphique (8 broches) et les éventuels disques SATA.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>Ordres de grandeur</h3>
+          <ul class="magnitudes">
+            <li><strong>~445 W</strong> Pour fournir 400&nbsp;W aux composants, une Gold prélève environ 445&nbsp;W à la prise (45&nbsp;W perdus en chaleur)&nbsp;; une Bronze environ 470&nbsp;W.</li>
+            <li><strong>62 A</strong> 750&nbsp;W sous 12&nbsp;V, c'est plus de 60 ampères&nbsp;: des courants importants, d'où des câbles épais et des connecteurs bien enfoncés.</li>
+            <li><strong>~380 kWh/an</strong> Un PC qui consomme 350&nbsp;W pendant 3&nbsp;h par jour.</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibilité">
+            <h4>Compatibilité</h4>
+            <ul>
+              <li><strong>Puissance&nbsp;:</strong> (processeur + carte graphique + ~100&nbsp;W) × 1,5 de marge, ou la recommandation du fabricant de la carte graphique. Le calculateur de la <a href="#compatibilite">checklist</a> fait le calcul.</li>
+              <li><strong>Connecteurs&nbsp;:</strong> 24 broches, EPS 8 broches, PCIe 8 broches (ou 12V-2x6) en nombre suffisant.</li>
+              <li><strong>Boîtier&nbsp;:</strong> format ATX et longueur maximale d'alimentation.</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Erreurs de débutant">
+            <h4>Erreurs de débutant</h4>
+            <ul>
+              <li><strong>Mélanger les câbles modulaires de deux alimentations différentes.</strong> Le câblage côté alimentation n'est pas standard&nbsp;: tu peux détruire des composants. N'utilise que les câbles fournis avec ton alimentation.</li>
+              <li><strong>Confondre EPS (CPU) et PCIe (GPU).</strong> Ces deux 8 broches se ressemblent mais ne sont pas câblés pareil&nbsp;; ils sont marqués «&nbsp;CPU&nbsp;» et «&nbsp;PCIe&nbsp;». Ne force jamais.</li>
+              <li><strong>Laisser l'interrupteur arrière sur O</strong> au premier démarrage.</li>
+              <li><strong>Choisir une alimentation sans marque très bon marché</strong>&nbsp;: c'est la dernière pièce sur laquelle économiser.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- REFROIDISSEMENT -->
+    <section id="refroidissement" class="part section" aria-labelledby="cool-title">
+      <header class="section-head">
+        <p class="kicker">Pièce 7/8 · La hotte</p>
+        <h2 id="cool-title">Le refroidissement (ventirad et ventilateurs)</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="cooler" data-alt-parts="cooler,fan" aria-label="Ventirad tour en 3D : glisser pour le faire tourner. Un bouton permet d'afficher un ventilateur de boîtier.">
+            <img class="viewer-poster" src="img/previews/cooler.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">La 3D se charge quand cette zone devient visible…</p>
+          </figure>
+          <p class="viewer-caption">Ventirad tour (12,5 × 7 × 15,5 cm) avec 4 caloducs, et ventilateur de boîtier 120 mm.</p>
+        </div>
+        <div class="part-text">
+          <h3>Son rôle</h3>
+          <p>Toute l'électricité consommée par les composants finit en chaleur. Le <span class="term" data-g="ventirad">ventirad</span> (ventilateur + radiateur) capte la chaleur du processeur et la transmet à l'air&nbsp;; les ventilateurs du boîtier renouvellent cet air.</p>
+          <ol class="steps-inline">
+            <li><strong><span class="term" data-g="pate">La pâte thermique</span></strong> comble les micro-creux entre l'IHS du processeur et la base du ventirad (l'air, qui conduit très mal la chaleur, en est chassé).</li>
+            <li><strong>Les caloducs</strong> (tubes de cuivre) contiennent un peu de liquide qui s'évapore au contact de la base chaude, monte, puis se condense dans les ailettes en y déposant sa chaleur&nbsp;: un transport de chaleur très efficace.</li>
+            <li><strong>Les ailettes</strong> en aluminium offrent une grande surface d'échange avec l'air.</li>
+            <li><strong>Le ventilateur</strong> pousse l'air à travers les ailettes, de l'avant vers l'arrière du boîtier.</li>
+          </ol>
+          <p><strong>Le flux d'air du boîtier&nbsp;:</strong> 3 ventilateurs de 120&nbsp;mm en façade <em>aspirent</em> l'air frais, 1 ventilateur à l'arrière <em>expulse</em> l'air chaud. Le ventirad souffle dans le même sens. Avec un peu plus d'air entrant que sortant (légère surpression), la poussière entre surtout par les filtres.</p>
+          <p class="muted">Alternative&nbsp;: un watercooling «&nbsp;tout-en-un&nbsp;» (<span class="term" data-g="aio">AIO</span>) 240&nbsp;mm remplace le ventirad par un radiateur fixé au boîtier&nbsp;; plus cher, il se justifie surtout pour les processeurs très gourmands.</p>
+          <div class="analogy-box"><span class="analogy-tag">Analogie</span> Le refroidissement, c'est <strong>la hotte et les fenêtres</strong> de la cuisine&nbsp;: sans elles, la chaleur des fourneaux rend la cuisine invivable et le chef doit ralentir.</div>
+
+          <h3>Comment lire sa fiche technique</h3>
+          <div class="spec">
+            <p class="spec-title">Fiche type&nbsp;: ventirad tour + ventilateur 120 mm</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Hauteur</dt><dd class="spec-value">155 mm</dd>
+                <dd class="spec-help">À comparer à la «&nbsp;hauteur maximale de ventirad&nbsp;» du boîtier (ici 165&nbsp;mm).</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Caloducs</dt><dd class="spec-value">4 × 6 mm</dd>
+                <dd class="spec-help">Leur nombre et leur diamètre donnent une idée de la chaleur transportable. 4 caloducs conviennent aux processeurs de milieu de gamme.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Ventilateur</dt><dd class="spec-value">120 mm, PWM, 500–1 800 tr/min</dd>
+                <dd class="spec-help">Le connecteur 4 broches <span class="term" data-g="pwm">PWM</span> permet à la carte mère de régler la vitesse selon la température&nbsp;: silencieux au repos, plus rapide en charge.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Bruit / débit</dt><dd class="spec-value">≤ 30 dB(A) · ~60 CFM</dd>
+                <dd class="spec-help">Le bruit maximal (en décibels) et le débit d'air (en <span class="term" data-g="cfm">CFM</span>). Ces valeurs dépendent de la façon dont chaque fabricant mesure&nbsp;: compare-les avec prudence.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Compatibilité</dt><dd class="spec-value">AM5 / AM4 / LGA 1851 / LGA 1700</dd>
+                <dd class="spec-help">Les sockets pour lesquels le kit de fixation est fourni.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>Ordres de grandeur</h3>
+          <ul class="magnitudes">
+            <li><strong>25 tours/s</strong> Un ventilateur à 1&nbsp;500&nbsp;tr/min fait 25 tours par seconde.</li>
+            <li><strong>~50×</strong> Une pâte thermique conduit la chaleur environ 50 fois moins bien que le cuivre&nbsp;: il en faut la couche la plus fine possible, juste de quoi boucher les creux.</li>
+            <li><strong>~100 W</strong> de chaleur à évacuer pour un processeur en pleine charge&nbsp;: autant qu'une ampoule à incandescence d'autrefois, mais produite par des puces de quelques cm² seulement.</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibilité">
+            <h4>Compatibilité</h4>
+            <ul>
+              <li><strong>Boîtier&nbsp;:</strong> hauteur du ventirad &lt; hauteur maximale acceptée.</li>
+              <li><strong>Socket&nbsp;:</strong> kit de fixation fourni pour ton socket.</li>
+              <li><strong>RAM&nbsp;:</strong> espace suffisant sous le ventilateur pour des barrettes hautes.</li>
+              <li><strong>Carte mère&nbsp;:</strong> assez d'en-têtes de ventilateur (CPU_FAN + SYS_FAN), sinon un répartiteur.</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Erreurs de débutant">
+            <h4>Erreurs de débutant</h4>
+            <ul>
+              <li><strong>Laisser le film plastique sous la base du ventirad.</strong> Le grand classique&nbsp;: le processeur surchauffe en quelques secondes.</li>
+              <li><strong>Trop (ou pas) de pâte.</strong> Un «&nbsp;petit pois&nbsp;» au centre suffit&nbsp;; si la base a déjà de la pâte pré-appliquée, n'en rajoute pas.</li>
+              <li><strong>Monter un ventilateur à l'envers.</strong> Des flèches sur le cadre indiquent le sens de l'air&nbsp;; l'air sort du côté des croisillons.</li>
+              <li><strong>Brancher le ventirad ailleurs que sur CPU_FAN</strong>&nbsp;: message d'erreur au démarrage.</li>
+              <li><strong>Serrer un côté à fond puis l'autre.</strong> Serre en croix, progressivement.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- BOÎTIER -->
+    <section id="boitier" class="part section" aria-labelledby="case-title">
+      <header class="section-head">
+        <p class="kicker">Pièce 8/8 · Le bâtiment</p>
+        <h2 id="case-title">Le boîtier</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="case" aria-label="Boîtier moyen tour en 3D : glisser pour le faire tourner.">
+            <img class="viewer-poster" src="img/previews/case.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">La 3D se charge quand cette zone devient visible…</p>
+          </figure>
+          <p class="viewer-caption">Boîtier moyen tour ATX (45 × 22 × 48 cm) avec vitre en verre trempé et façade en mesh.</p>
+        </div>
+        <div class="part-text">
+          <h3>Son rôle</h3>
+          <p>Le boîtier protège les composants, organise le flux d'air, cache les câbles et donne accès aux ports de façade (bouton d'allumage, USB, prise casque). Le format le plus courant est la <strong>moyen tour ATX</strong>&nbsp;: alimentation en bas sous un cache, carte mère sur un plateau, et un espace de 2 à 3&nbsp;cm <em>derrière</em> ce plateau pour faire passer les câbles (le <span class="term" data-g="cablemanagement">cable management</span>).</p>
+          <p>Sur le plateau, des <span class="term" data-g="entretoise">entretoises</span> dorées surélèvent la carte mère pour qu'elle ne touche jamais le métal. Les ouvertures caoutchoutées (<span class="term" data-g="passecables">passe-câbles</span>) laissent passer les câbles d'un côté à l'autre.</p>
+          <div class="analogy-box"><span class="analogy-tag">Analogie</span> Le boîtier est <strong>le bâtiment</strong>&nbsp;: les murs, l'aération, les gaines techniques. Un bâtiment bien conçu rend le travail plus agréable… et l'entretien plus facile.</div>
+
+          <h3>Comment lire sa fiche technique</h3>
+          <div class="spec">
+            <p class="spec-title">Fiche type&nbsp;: boîtier moyen tour ATX</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Formats acceptés</dt><dd class="spec-value">ATX (et plus petits)</dd>
+                <dd class="spec-help">Le format de carte mère maximal accepté.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Carte graphique max</dt><dd class="spec-value">360 mm</dd>
+                <dd class="spec-help">La longueur maximale de carte graphique. Notre carte de 28&nbsp;cm passe largement.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Ventirad max</dt><dd class="spec-value">165 mm</dd>
+                <dd class="spec-help">La hauteur maximale du ventirad, limitée par la largeur du boîtier et la vitre.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Ventilation</dt><dd class="spec-value">3 × 120 mm avant + 1 × 120 mm arrière inclus</dd>
+                <dd class="spec-help">Les ventilateurs fournis et les emplacements libres (en haut, souvent 2 × 120/140&nbsp;mm). Une façade en mesh (grillage fin) laisse beaucoup mieux passer l'air qu'une façade pleine.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Façade</dt><dd class="spec-value">2 × USB-A · 1 × USB-C · audio</dd>
+                <dd class="spec-help">Le port USB-C de façade ne fonctionne que si la carte mère a l'en-tête USB-C interne correspondant.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>Ordres de grandeur</h3>
+          <ul class="magnitudes">
+            <li><strong>~47 L</strong> Le volume d'un moyen tour de 45 × 22 × 48&nbsp;cm.</li>
+            <li><strong>~1 fois/s</strong> En théorie, les ventilateurs avant renouvellent tout l'air du boîtier environ une fois par seconde (moins en pratique, à cause des filtres).</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibilité">
+            <h4>Compatibilité</h4>
+            <ul>
+              <li><strong>Carte mère&nbsp;:</strong> format accepté (ATX).</li>
+              <li><strong>Carte graphique&nbsp;:</strong> longueur &lt; longueur maximale.</li>
+              <li><strong>Ventirad&nbsp;:</strong> hauteur &lt; hauteur maximale.</li>
+              <li><strong>Alimentation&nbsp;:</strong> format ATX et longueur maximale.</li>
+              <li><strong>Façade&nbsp;:</strong> en-têtes USB 3 et USB-C présents sur la carte mère.</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Erreurs de débutant">
+            <h4>Erreurs de débutant</h4>
+            <ul>
+              <li><strong>Faire passer tous les câbles côté vitre</strong>&nbsp;: flux d'air gêné et PC difficile à entretenir. Passe-les derrière le plateau.</li>
+              <li><strong>Oublier de brancher la façade</strong> (USB 3, USB-C, audio)&nbsp;: les ports avant restent inactifs.</li>
+              <li><strong>Poser le PC sur une moquette</strong> alors que l'alimentation aspire par le dessous.</li>
+              <li><strong>Oublier les films de protection</strong> de la vitre (pas grave, mais dommage&nbsp;!).</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================== 4. VUE ÉCLATÉE -->
+    <section id="vue-eclatee" class="section section--wide" aria-labelledby="exp-title">
+      <header class="section-head">
+        <p class="kicker">Tout ensemble</p>
+        <h2 id="exp-title">Vue éclatée interactive</h2>
+        <p class="lead">Fais glisser le curseur pour assembler ou écarter les pièces. Survole une pièce pour l'identifier, clique dessus pour aller à sa fiche.</p>
+      </header>
+      <div class="stage-card">
+        <figure class="viewer viewer--wide" data-viewer="exploded" aria-label="PC complet en vue éclatée. Utilise le curseur sous l'image pour assembler les pièces.">
+          <img class="viewer-poster" src="img/previews/assembly.webp" alt="" loading="lazy" decoding="async">
+          <p class="viewer-status" role="status">La 3D se charge quand cette zone devient visible…</p>
+        </figure>
+        <div class="exploded-controls">
+          <span class="range-label" aria-hidden="true">Éclaté</span>
+          <input type="range" id="explode-range" min="0" max="100" step="1" value="0" aria-label="Degré d'assemblage, de éclaté (0) à assemblé (100)">
+          <span class="range-label" aria-hidden="true">Assemblé</span>
+          <button class="btn btn--small" id="explode-play" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+            <span>Animer</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================== 5. MONTAGE PAS À PAS -->
+    <section id="montage" class="section section--wide" aria-labelledby="mont-title">
+      <header class="section-head">
+        <p class="kicker">Les mains dans le PC</p>
+        <h2 id="mont-title">Montage pas à pas</h2>
+        <p class="lead">Onze étapes, dans l'ordre le plus simple pour un premier montage. À chaque étape, la pièce concernée s'anime jusqu'à sa place&nbsp;; tu peux faire tourner la scène et rejouer l'animation.</p>
+      </header>
+      <div class="assembly">
+        <figure class="viewer viewer--wide" data-viewer="assembly" aria-label="Scène 3D du montage : la pièce de l'étape en cours s'anime jusqu'à sa place.">
+          <img class="viewer-poster" src="img/previews/assembly.webp" alt="" loading="lazy" decoding="async">
+          <p class="viewer-status" role="status">La 3D se charge quand cette zone devient visible…</p>
+        </figure>
+        <div class="assembly-panel" id="assembly-panel">
+          <div class="step-dots" id="step-dots" role="tablist" aria-label="Étapes du montage"></div>
+          <p class="step-count" id="step-count">Étape 1 / 11</p>
+          <div class="step-content" id="step-content" aria-live="polite"></div>
+          <div class="step-nav">
+            <button class="btn btn--ghost" id="step-prev" type="button">← Étape précédente</button>
+            <button class="btn btn--ghost btn--icon" id="step-replay" type="button" aria-label="Rejouer l'animation de l'étape">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="btn btn--primary" id="step-next" type="button">Étape suivante →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenu des étapes (lu par js/views/assembly-view.js ; reste lisible sans JavaScript) -->
+      <ol class="steps-source" id="steps-source">
+        <li data-step="1">
+          <h3>Préparation</h3>
+          <ul>
+            <li><strong>Outils&nbsp;:</strong> un tournevis cruciforme (taille PH2 pour presque toutes les vis), une lampe, des attaches velcro ou des colliers, un petit bol pour les vis.</li>
+            <li><strong>Surface&nbsp;:</strong> une table dégagée et dure, pas de moquette. La boîte de la carte mère servira de support.</li>
+            <li><strong>Électricité statique&nbsp;:</strong> une décharge invisible peut abîmer un composant. Touche régulièrement une partie métallique non peinte (le châssis du boîtier) pour te décharger, évite les pulls en laine. Un bracelet antistatique relié au châssis est un plus.</li>
+            <li><strong>Le manuel de la carte mère</strong> à portée de main&nbsp;: il indique l'emplacement de chaque slot et de chaque en-tête.</li>
+          </ul>
+          <p class="tip">Ne branche rien sur le secteur tant que le montage n'est pas terminé.</p>
+        </li>
+        <li data-step="2">
+          <h3>Le processeur dans son socket</h3>
+          <ul>
+            <li>La carte mère reste <strong>hors du boîtier</strong>, posée sur sa boîte&nbsp;: c'est beaucoup plus pratique.</li>
+            <li>Soulève le levier métallique, puis ouvre le cadre de maintien.</li>
+            <li>Repère le <strong>triangle doré</strong> dans un coin du processeur et le triangle du socket&nbsp;: ils doivent être dans le même coin.</li>
+            <li>Tiens le processeur par les bords et pose-le <strong>sans forcer et sans le faire glisser</strong>&nbsp;: il doit tomber à plat tout seul.</li>
+            <li>Referme le cadre et abaisse le levier (une résistance est normale). Le cache plastique saute&nbsp;: garde-le.</li>
+          </ul>
+        </li>
+        <li data-step="3">
+          <h3>La RAM dans les slots A2 et B2</h3>
+          <ul>
+            <li>Ouvre les loquets des slots <strong>A2 et B2</strong>&nbsp;: le 2<sup>e</sup> et le 4<sup>e</sup> en partant du processeur (vérifie dans le manuel).</li>
+            <li>Aligne l'encoche de la barrette avec le détrompeur du slot&nbsp;: dans un sens seulement.</li>
+            <li>Appuie fermement, bien verticalement, des deux côtés à la fois, jusqu'au <strong>clic</strong> des loquets. Ça demande plus de force qu'on ne l'imagine.</li>
+          </ul>
+        </li>
+        <li data-step="4">
+          <h3>Le SSD M.2 et sa vis</h3>
+          <ul>
+            <li>Retire la petite vis du slot <strong>M.2_1</strong> (le plus proche du processeur). S'il y a un dissipateur M.2, retire-le et enlève le film plastique de son pad thermique.</li>
+            <li>Insère le SSD <strong>en biais (environ 30°)</strong>, contacts dorés en premier, l'encoche alignée sur la clé du connecteur.</li>
+            <li>Abaisse-le à plat et revisse, sans forcer.</li>
+          </ul>
+        </li>
+        <li data-step="5">
+          <h3>La pâte thermique, puis le ventirad</h3>
+          <ul>
+            <li>Si la base du ventirad porte déjà de la pâte (souvent un carré gris), n'en ajoute pas.</li>
+            <li>Sinon, dépose un <strong>petit pois</strong> de pâte (4 à 5&nbsp;mm) au centre du processeur&nbsp;: la pression du ventirad l'étalera.</li>
+            <li><strong>Retire le film plastique sous la base du ventirad&nbsp;!</strong></li>
+            <li>Monte les fixations fournies pour ton socket, pose le ventirad bien à plat, ventilateur orienté pour souffler <strong>vers l'arrière</strong> du boîtier.</li>
+            <li>Serre <strong>en croix, progressivement</strong>, jusqu'en butée, puis branche son ventilateur sur l'en-tête <strong>CPU_FAN</strong>.</li>
+          </ul>
+        </li>
+        <li data-step="6">
+          <h3>Les entretoises, puis la carte mère dans le boîtier</h3>
+          <ul>
+            <li>Vérifie que les <strong>entretoises</strong> du plateau correspondent aux 9 trous de la carte ATX (elles sont souvent déjà vissées). Jamais d'entretoise sans trou en face.</li>
+            <li>Si la plaque I/O n'est pas intégrée à la carte, clipse-la dans le boîtier <strong>avant</strong>.</li>
+            <li>Présente la carte en biais, les ports arrière d'abord dans l'ouverture, puis pose-la sur les entretoises.</li>
+            <li>Visse les 9 vis sans forcer, en commençant par celle du centre qui sert de repère.</li>
+          </ul>
+          <p class="tip">Astuce&nbsp;: passe le câble 8 broches EPS par le trou du haut avant de visser la carte, c'est beaucoup plus facile.</p>
+        </li>
+        <li data-step="7">
+          <h3>L'alimentation en bas du boîtier</h3>
+          <ul>
+            <li><strong>Orientation du ventilateur&nbsp;:</strong> vers le bas si le boîtier a une grille filtrée sous l'alimentation (c'est le cas ici), vers le haut sinon.</li>
+            <li>Branche d'abord les câbles modulaires dont tu auras besoin (ici, le PCIe 8 broches de la carte graphique)&nbsp;: c'est plus simple hors du boîtier.</li>
+            <li>Glisse l'alimentation dans son logement, <strong>interrupteur sur O</strong>, et visse-la à l'arrière (4 vis).</li>
+          </ul>
+        </li>
+        <li data-step="8">
+          <h3>Les câbles</h3>
+          <ul>
+            <li><strong>24 broches ATX</strong>&nbsp;: le plus gros connecteur, à droite de la carte. Enfonce-le jusqu'au clic (il faut appuyer franchement).</li>
+            <li><strong>8 broches EPS</strong> (marqué «&nbsp;CPU&nbsp;»)&nbsp;: en haut à gauche, il alimente le processeur.</li>
+            <li><strong>Façade</strong>&nbsp;: les petits fils (Power SW, Reset SW, Power LED +/−, HDD LED) vont sur l'en-tête <strong>F_PANEL</strong> en suivant le schéma du manuel. Le bouton n'a pas de sens, les LED oui.</li>
+            <li><strong>USB 3</strong> (connecteur bleu à 19 broches)&nbsp;: il a un détrompeur, ne force pas. Puis l'USB-C de façade et l'audio (HD_AUDIO).</li>
+            <li><strong>Ventilateurs</strong>&nbsp;: le ventirad sur CPU_FAN, ceux du boîtier sur SYS_FAN (ou via un répartiteur).</li>
+          </ul>
+        </li>
+        <li data-step="9">
+          <h3>La carte graphique dans le slot PCIe x16</h3>
+          <ul>
+            <li>Retire les <strong>caches</strong> métalliques à l'arrière du boîtier en face du slot x16 (2 ici, selon l'épaisseur de la carte).</li>
+            <li>Insère la carte bien droite dans le slot <strong>PCIe x16</strong> jusqu'au clic du loquet, l'équerre dans l'ouverture des caches.</li>
+            <li>Visse l'équerre au boîtier.</li>
+            <li>Branche le câble <strong>PCIe 8 broches</strong> de l'alimentation (pas un câble marqué «&nbsp;CPU&nbsp;»), jusqu'au clic.</li>
+          </ul>
+        </li>
+        <li data-step="10">
+          <h3>Le cable management</h3>
+          <ul>
+            <li>Fais passer chaque câble <strong>derrière le plateau</strong>, par le passe-câbles le plus proche de sa destination.</li>
+            <li>Regroupe les câbles en faisceaux avec des attaches velcro, sans trop serrer, et laisse un peu de mou près des connecteurs.</li>
+            <li>Objectifs&nbsp;: un flux d'air dégagé, des pièces faciles d'accès pour plus tard… et un intérieur propre à travers la vitre.</li>
+          </ul>
+        </li>
+        <li data-step="11">
+          <h3>Le premier démarrage</h3>
+          <ul>
+            <li>Branche l'écran <strong>sur la carte graphique</strong>, puis le clavier, la souris et le câble secteur.</li>
+            <li>Passe l'interrupteur de l'alimentation sur <strong>I</strong> et appuie sur le bouton du boîtier.</li>
+            <li>Normal&nbsp;: les ventilateurs tournent, les LED de diagnostic s'allument une à une puis s'éteignent. Le premier démarrage peut durer plusieurs minutes (entraînement de la mémoire DDR5)&nbsp;: patience.</li>
+            <li>L'écran du BIOS/UEFI apparaît&nbsp;: direction la <a href="#bios">section suivante</a>.</li>
+          </ul>
+          <details class="trouble" open>
+            <summary>Rien ne s'allume (aucun ventilateur ne tourne)&nbsp;?</summary>
+            <ul class="checklist-mini">
+              <li>Prise branchée, multiprise allumée, interrupteur de l'alimentation sur <strong>I</strong>&nbsp;?</li>
+              <li>24 broches et 8 broches EPS enfoncés jusqu'au clic&nbsp;?</li>
+              <li>Fil «&nbsp;Power SW&nbsp;» sur les bonnes broches de F_PANEL&nbsp;? Test&nbsp;: touche brièvement ces deux broches avec la pointe d'un tournevis (c'est l'équivalent du bouton).</li>
+            </ul>
+          </details>
+          <details class="trouble">
+            <summary>Ça tourne, mais pas d'image&nbsp;?</summary>
+            <ul class="checklist-mini">
+              <li>Écran branché sur la <strong>carte graphique</strong>, et bonne entrée choisie sur l'écran&nbsp;?</li>
+              <li>Câble PCIe de la carte graphique bien branché&nbsp;?</li>
+              <li>Attends quelques minutes&nbsp;: l'entraînement de la mémoire peut être long.</li>
+              <li>Regarde la LED de diagnostic restée allumée&nbsp;: <strong>CPU</strong> (processeur, câble EPS), <strong>DRAM</strong> (barrettes mal enfoncées ou mauvais slots&nbsp;: teste avec une seule barrette en A2), <strong>VGA</strong> (carte graphique ou son câble), <strong>BOOT</strong> (aucun système installé&nbsp;: normal avant d'installer l'OS).</li>
+              <li>Processeur plus récent que la carte&nbsp;? Mets à jour le BIOS avec le bouton BIOS Flashback.</li>
+            </ul>
+          </details>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ====================================================== 6. BIOS / UEFI -->
+    <section id="bios" class="section" aria-labelledby="bios-title">
+      <header class="section-head">
+        <p class="kicker">Après le premier démarrage</p>
+        <h2 id="bios-title">Le BIOS / UEFI et l'installation du système</h2>
+        <p class="lead">Le <strong>BIOS</strong> (aujourd'hui remplacé par l'<span class="term" data-g="uefi">UEFI</span>, mais on dit encore «&nbsp;BIOS&nbsp;» par habitude) est un petit logiciel stocké dans une puce de la carte mère. À chaque allumage, il vérifie le matériel (le <span class="term" data-g="post">POST</span>), l'initialise, puis passe la main au système d'exploitation.</p>
+      </header>
+
+      <div class="bios-layout">
+        <div class="bios-text">
+          <h3>Comment y entrer</h3>
+          <p>Dès l'allumage, appuie plusieurs fois sur <kbd>Suppr</kbd> (<kbd>Del</kbd>) ou <kbd>F2</kbd> selon la carte. Depuis Windows 11&nbsp;: <em>Paramètres → Système → Récupération → Démarrage avancé → Redémarrer maintenant</em>, puis <em>Dépannage → Options avancées → Paramètres du microprogramme UEFI</em>.</p>
+
+          <h3>Les 4 réglages à faire</h3>
+          <ol class="numbered">
+            <li><strong>Vérifier que tout est détecté&nbsp;:</strong> le processeur (et sa température, autour de 30 à 45&nbsp;°C au repos), <strong>32&nbsp;Go</strong> de mémoire (si tu ne vois que 16&nbsp;Go, une barrette est mal enfoncée), le SSD NVMe, et le ventilateur CPU_FAN qui tourne.</li>
+            <li><strong>Activer le profil EXPO (AMD) ou XMP (Intel)&nbsp;:</strong> la mémoire passe de sa vitesse de base (par exemple 4&nbsp;800&nbsp;MT/s) à sa vitesse annoncée (6&nbsp;000&nbsp;MT/s). Le redémarrage suivant peut être long (nouvel entraînement). En cas d'instabilité, désactive-le.</li>
+            <li><strong>Régler l'ordre de démarrage&nbsp;:</strong> pour installer le système, la clé USB en premier. Plus simple&nbsp;: le <span class="term" data-g="bootmenu">menu de démarrage</span> (souvent <kbd>F8</kbd>, <kbd>F11</kbd> ou <kbd>F12</kbd>) permet de démarrer une seule fois sur la clé.</li>
+            <li><strong>Enregistrer et quitter&nbsp;:</strong> <kbd>F10</kbd>, puis confirmer.</li>
+          </ol>
+          <p class="note">Essaie dans la simulation&nbsp;: active EXPO dans l'onglet «&nbsp;Mémoire&nbsp;», range la clé USB en tête dans «&nbsp;Démarrage&nbsp;», puis enregistre avec <kbd>F10</kbd>.</p>
+
+          <h3>Installer le système d'exploitation depuis une clé USB</h3>
+          <ol class="numbered">
+            <li><strong>Préparer la clé sur un autre PC&nbsp;:</strong> pour Windows 11, l'outil officiel de Microsoft («&nbsp;outil de création de support&nbsp;») et une clé d'au moins 8&nbsp;Go (elle sera effacée). Pour Linux (Ubuntu, Fedora…), télécharger l'image <span class="term" data-g="iso">ISO</span> sur le site officiel et l'écrire sur la clé avec un outil comme balenaEtcher ou Rufus.</li>
+            <li><strong>Démarrer sur la clé</strong> grâce à l'ordre de démarrage ou au menu de démarrage.</li>
+            <li><strong>Suivre l'installeur</strong> et choisir le <strong>SSD NVMe</strong> comme disque d'installation. Windows 11 demande la puce de sécurité <span class="term" data-g="tpm">TPM 2.0</span> et le <span class="term" data-g="secureboot">Secure Boot</span>, déjà activés par défaut sur les cartes récentes.</li>
+            <li><strong>Après l'installation&nbsp;:</strong> les <span class="term" data-g="pilote">pilotes</span> de la carte graphique (site du fabricant de la puce), les pilotes du chipset (site du fabricant de la carte mère ou du processeur), puis les mises à jour du système. Enfin, remets le SSD en tête de l'ordre de démarrage si besoin.</li>
+          </ol>
+        </div>
+
+        <!-- Faux écran UEFI (HTML/CSS + js/ui/bios.js) -->
+        <div class="bios-wrap">
+          <div class="bios" id="bios-screen" tabindex="0" aria-label="Simulation d'un écran UEFI. Flèches gauche/droite pour changer d'onglet, F10 pour enregistrer.">
+            <div class="bios-top">
+              <span class="bios-logo">UEFI BIOS Utility · Mode simplifié</span>
+              <span class="bios-clock" id="bios-clock">--/--/---- --:--</span>
+            </div>
+            <div class="bios-tabs" role="tablist" aria-label="Onglets du BIOS">
+              <button role="tab" type="button" aria-selected="true" data-tab="info" id="bt-info" aria-controls="bp-info">Informations</button>
+              <button role="tab" type="button" aria-selected="false" data-tab="memory" id="bt-memory" aria-controls="bp-memory" tabindex="-1">Mémoire</button>
+              <button role="tab" type="button" aria-selected="false" data-tab="boot" id="bt-boot" aria-controls="bp-boot" tabindex="-1">Démarrage</button>
+              <button role="tab" type="button" aria-selected="false" data-tab="exit" id="bt-exit" aria-controls="bp-exit" tabindex="-1">Quitter</button>
+            </div>
+            <div class="bios-body">
+              <div class="bios-panel" role="tabpanel" id="bp-info" aria-labelledby="bt-info" data-panel="info">
+                <div class="bios-grid">
+                  <div class="bios-box">
+                    <p class="bios-h">Processeur</p>
+                    <p>Processeur 8 cœurs · socket AM5</p>
+                    <p>Fréquence&nbsp;: <span class="bios-val">3 800 MHz</span></p>
+                    <p>Température&nbsp;: <span class="bios-val" id="bios-temp">38 °C</span></p>
+                  </div>
+                  <div class="bios-box">
+                    <p class="bios-h">Mémoire</p>
+                    <p>Total&nbsp;: <span class="bios-val">32 768 Mo</span> (DDR5)</p>
+                    <p>Vitesse&nbsp;: <span class="bios-val" data-bios="mem-speed">4 800 MT/s</span></p>
+                    <ul class="bios-dimms">
+                      <li>A1&nbsp;: —</li><li>A2&nbsp;: <span class="bios-ok">16 Go</span></li><li>B1&nbsp;: —</li><li>B2&nbsp;: <span class="bios-ok">16 Go</span></li>
+                    </ul>
+                  </div>
+                  <div class="bios-box">
+                    <p class="bios-h">Stockage</p>
+                    <p>M.2_1&nbsp;: <span class="bios-ok">SSD NVMe 1 To</span></p>
+                    <p>M.2_2&nbsp;: —</p>
+                    <p>SATA 1-4&nbsp;: aucun</p>
+                  </div>
+                  <div class="bios-box">
+                    <p class="bios-h">Ventilateurs</p>
+                    <p>CPU_FAN&nbsp;: <span class="bios-val" id="bios-fan">820 tr/min</span></p>
+                    <p>SYS_FAN1&nbsp;: <span class="bios-val">640 tr/min</span></p>
+                    <p>SYS_FAN2&nbsp;: <span class="bios-val">655 tr/min</span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="bios-panel" role="tabpanel" id="bp-memory" aria-labelledby="bt-memory" data-panel="memory" hidden>
+                <p class="bios-h">Profil mémoire EXPO / XMP</p>
+                <div class="bios-row">
+                  <span>Profil</span>
+                  <button type="button" class="bios-toggle" id="bios-expo" aria-pressed="false">Désactivé</button>
+                </div>
+                <div class="bios-row"><span>Vitesse de la mémoire</span><span class="bios-val" data-bios="mem-speed">4 800 MT/s</span></div>
+                <div class="bios-row"><span>Latence (CL)</span><span class="bios-val" data-bios="mem-cl">40</span></div>
+                <div class="bios-row"><span>Tension DRAM</span><span class="bios-val" data-bios="mem-v">1,10 V</span></div>
+                <p class="bios-help" id="bios-expo-help">Profil désactivé&nbsp;: la mémoire tourne à sa vitesse standard (JEDEC), plus basse que celle annoncée sur la boîte.</p>
+              </div>
+              <div class="bios-panel" role="tabpanel" id="bp-boot" aria-labelledby="bt-boot" data-panel="boot" hidden>
+                <p class="bios-h">Priorité de démarrage</p>
+                <ol class="bios-boot" id="bios-boot">
+                  <li data-dev="ssd"><span>Windows Boot Manager (SSD NVMe 1 To)</span><span class="bios-move"><button type="button" data-move="up" aria-label="Monter">▲</button><button type="button" data-move="down" aria-label="Descendre">▼</button></span></li>
+                  <li data-dev="usb"><span>UEFI&nbsp;: Clé USB 16 Go (installation)</span><span class="bios-move"><button type="button" data-move="up" aria-label="Monter">▲</button><button type="button" data-move="down" aria-label="Descendre">▼</button></span></li>
+                  <li data-dev="net"><span>Réseau (PXE)&nbsp;: désactivé</span><span class="bios-move"><button type="button" data-move="up" aria-label="Monter">▲</button><button type="button" data-move="down" aria-label="Descendre">▼</button></span></li>
+                </ol>
+                <div class="bios-row"><span>Secure Boot</span><span class="bios-ok">Activé</span></div>
+                <div class="bios-row"><span>TPM 2.0 (fTPM)</span><span class="bios-ok">Activé</span></div>
+                <p class="bios-help" id="bios-boot-help">Pour installer le système, place la clé USB en premier.</p>
+              </div>
+              <div class="bios-panel" role="tabpanel" id="bp-exit" aria-labelledby="bt-exit" data-panel="exit" hidden>
+                <p class="bios-h">Quitter</p>
+                <button type="button" class="bios-action" id="bios-save">Enregistrer les modifications et redémarrer (F10)</button>
+                <button type="button" class="bios-action" id="bios-discard">Quitter sans enregistrer</button>
+              </div>
+            </div>
+            <div class="bios-foot">
+              <span><kbd>←</kbd><kbd>→</kbd> Onglets</span><span><kbd>F7</kbd> Mode avancé</span><span><kbd>F10</kbd> Enregistrer et quitter</span>
+            </div>
+            <div class="bios-dialog" id="bios-dialog" hidden role="alertdialog" aria-labelledby="bios-dialog-title">
+              <p id="bios-dialog-title" class="bios-h">Enregistrer et redémarrer&nbsp;?</p>
+              <ul id="bios-dialog-list"></ul>
+              <div class="bios-dialog-actions">
+                <button type="button" id="bios-ok">Oui</button>
+                <button type="button" id="bios-cancel">Non</button>
+              </div>
+            </div>
+            <div class="bios-reboot" id="bios-reboot" hidden><span>Redémarrage…</span></div>
+          </div>
+          <p class="viewer-caption">Simulation simplifiée et générique&nbsp;: l'apparence réelle varie selon le fabricant de la carte mère.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================== 7. PÉRIPHÉRIQUES ET CONNECTIQUE -->
+    <section id="peripheriques" class="section" aria-labelledby="peri-title">
+      <header class="section-head">
+        <p class="kicker">Autour de la tour</p>
+        <h2 id="peri-title">Périphériques et connectique</h2>
+        <p class="lead">L'écran, le clavier et la souris sont ce que tu touches et regardes toute la journée&nbsp;: ils comptent autant que ce qu'il y a dans la tour.</p>
+      </header>
+
+      <div class="peri-grid">
+        <article class="peri-card">
+          <svg class="peri-icon" viewBox="0 0 64 48" aria-hidden="true"><rect x="4" y="3" width="56" height="33" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><path d="M26 36l-3 8h18l-3-8" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M10 9h44v21H10z" fill="var(--accent)" opacity=".18"/></svg>
+          <h3>L'écran</h3>
+          <dl class="kv">
+            <dt>Taille</dt><dd>La diagonale en pouces (1" = 2,54&nbsp;cm)&nbsp;: 24" ≈ 61&nbsp;cm, 27" ≈ 69&nbsp;cm.</dd>
+            <dt><span class="term" data-g="resolution">Résolution</span></dt><dd>Le nombre de pixels&nbsp;: <strong>1080p</strong> (1&nbsp;920 × 1&nbsp;080, «&nbsp;Full HD&nbsp;») ou <strong>1440p</strong> (2&nbsp;560 × 1&nbsp;440, «&nbsp;QHD&nbsp;»). Les couples classiques&nbsp;: 24" en 1080p, 27" en 1440p (même finesse, environ 90 à 110 pixels par pouce).</dd>
+            <dt>Fréquence</dt><dd>Le nombre d'images affichées par seconde, en <span class="term" data-g="hz">hertz</span>. À <strong>144–165&nbsp;Hz</strong>, tout est beaucoup plus fluide qu'à 60&nbsp;Hz, en jeu comme sur le bureau, à condition que la carte graphique suive.</dd>
+            <dt>Dalle</dt><dd><span class="term" data-g="dalle">IPS</span> (couleurs fidèles), VA (bon contraste) ou OLED (noirs parfaits, plus cher). La synchronisation adaptative (FreeSync, G-SYNC Compatible) évite les images «&nbsp;déchirées&nbsp;».</dd>
+          </dl>
+        </article>
+
+        <article class="peri-card">
+          <svg class="peri-icon" viewBox="0 0 64 48" aria-hidden="true"><rect x="3" y="12" width="58" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><path d="M10 19h4M18 19h4M26 19h4M34 19h4M42 19h4M50 19h4M10 25h4M18 25h4M26 25h4M34 25h4M42 25h4M50 25h4M18 31h28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          <h3>Le clavier mécanique</h3>
+          <p>Chaque touche a son propre <span class="term" data-g="switch">switch</span>&nbsp;: un petit interrupteur à ressort, plus précis et plus durable qu'une membrane. Trois familles&nbsp;:</p>
+          <ul class="switches">
+            <li>
+              <svg viewBox="0 0 120 64" aria-hidden="true"><path d="M10 54H114M10 54V6" stroke="var(--line)" stroke-width="1.5"/><path d="M12 50L110 12" stroke="var(--accent)" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+              <p><strong>Linéaire</strong> (souvent «&nbsp;rouge&nbsp;»)&nbsp;: course fluide et silencieuse, appréciée en jeu.</p>
+            </li>
+            <li>
+              <svg viewBox="0 0 120 64" aria-hidden="true"><path d="M10 54H114M10 54V6" stroke="var(--line)" stroke-width="1.5"/><path d="M12 50L40 30Q48 18 56 34L110 14" stroke="var(--accent)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p><strong>Tactile</strong> («&nbsp;marron&nbsp;»)&nbsp;: une petite bosse se sent au moment où la touche s'active. Bon compromis.</p>
+            </li>
+            <li>
+              <svg viewBox="0 0 120 64" aria-hidden="true"><path d="M10 54H114M10 54V6" stroke="var(--line)" stroke-width="1.5"/><path d="M12 50L40 30Q48 16 56 34L110 14" stroke="var(--accent)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 10l4 6M60 8l-1 7M66 13l-6 4" stroke="var(--ink-2)" stroke-width="2" stroke-linecap="round"/></svg>
+              <p><strong>Clicky</strong> («&nbsp;bleu&nbsp;»)&nbsp;: bosse + clic sonore. Agréable… pour toi, beaucoup moins pour tes voisins.</p>
+            </li>
+          </ul>
+          <p class="muted">Les couleurs ne sont qu'une convention qui varie selon les marques. Courbes&nbsp;: force (verticale) selon l'enfoncement (horizontal). Format&nbsp;: <strong>standard</strong> (avec pavé numérique) ou <span class="term" data-g="tkl">TKL</span> (sans pavé, plus de place pour la souris)&nbsp;; disposition AZERTY en France.</p>
+        </article>
+
+        <article class="peri-card">
+          <svg class="peri-icon" viewBox="0 0 64 48" aria-hidden="true"><rect x="20" y="4" width="24" height="40" rx="12" fill="none" stroke="currentColor" stroke-width="3"/><path d="M32 6v12" stroke="currentColor" stroke-width="3"/></svg>
+          <h3>La souris</h3>
+          <dl class="kv">
+            <dt>Capteur et DPI</dt><dd>Le capteur optique mesure les déplacements&nbsp;; les <span class="term" data-g="dpi">DPI</span> règlent la sensibilité (800 à 1&nbsp;600 conviennent à la plupart des usages).</dd>
+            <dt>Connexion</dt><dd>Filaire, ou sans fil avec un petit récepteur USB 2,4&nbsp;GHz (plus réactif que le Bluetooth).</dd>
+            <dt>Prise en main</dt><dd>Le critère n°1&nbsp;: la forme doit correspondre à ta main.</dd>
+          </dl>
+        </article>
+      </div>
+
+      <h3 class="subhead">Les connecteurs</h3>
+      <ul class="ports">
+        <li class="port-card">
+          <svg viewBox="0 0 160 72" aria-hidden="true"><rect x="12" y="14" width="136" height="44" rx="3" fill="none" stroke="var(--ink-2)" stroke-width="3"/><rect x="18" y="20" width="124" height="32" fill="var(--bg)"/><rect x="24" y="23" width="112" height="13" rx="1.5" fill="#1d4ed8"/><g fill="#d8b35d"><rect x="36" y="34" width="14" height="2.5"/><rect x="62" y="34" width="14" height="2.5"/><rect x="88" y="34" width="14" height="2.5"/><rect x="114" y="34" width="14" height="2.5"/></g></svg>
+          <h4>USB-A</h4>
+          <p>Le rectangle classique, qui ne se branche que dans un sens. Intérieur noir ou blanc&nbsp;: USB&nbsp;2.0 (480&nbsp;Mbit/s)&nbsp;; bleu&nbsp;: USB 5&nbsp;Gbit/s&nbsp;; souvent rouge ou turquoise&nbsp;: 10&nbsp;Gbit/s.</p>
+        </li>
+        <li class="port-card">
+          <svg viewBox="0 0 160 72" aria-hidden="true"><rect x="34" y="20" width="92" height="32" rx="16" fill="none" stroke="var(--ink-2)" stroke-width="3"/><rect x="40" y="26" width="80" height="20" rx="10" fill="var(--bg)"/><rect x="52" y="32" width="56" height="8" rx="4" fill="var(--ink-3)"/></svg>
+          <h4>USB-C</h4>
+          <p>Prise ovale et <strong>réversible</strong>. Attention&nbsp;: c'est une <em>forme</em> de prise. Derrière, il peut y avoir de l'USB&nbsp;2.0 comme de l'USB4 à 40&nbsp;Gbit/s, de la vidéo (DisplayPort) ou de la charge jusqu'à 240&nbsp;W&nbsp;: lis la fiche technique.</p>
+        </li>
+        <li class="port-card">
+          <svg viewBox="0 0 160 72" aria-hidden="true"><path d="M14 16H146V42L132 58H28L14 42Z" fill="none" stroke="var(--ink-2)" stroke-width="3" stroke-linejoin="round"/><path d="M22 23H138V39L127 51H33L22 39Z" fill="var(--bg)"/><rect x="34" y="31" width="92" height="9" rx="1" fill="var(--ink-3)"/></svg>
+          <h4>HDMI</h4>
+          <p>Le trapèze des TV et des consoles. HDMI&nbsp;2.1 monte à 48&nbsp;Gbit/s (assez pour de la 4K à 120&nbsp;Hz et plus). Une version 2.2 a été annoncée, mais les appareils compatibles ne sont pas attendus avant 2027.</p>
+        </li>
+        <li class="port-card">
+          <svg viewBox="0 0 160 72" aria-hidden="true"><path d="M12 14H148V46L134 60H12Z" fill="none" stroke="var(--ink-2)" stroke-width="3" stroke-linejoin="round"/><path d="M19 21H141V43L131 53H19Z" fill="var(--bg)"/><rect x="30" y="30" width="96" height="9" rx="1" fill="var(--ink-3)"/></svg>
+          <h4>DisplayPort</h4>
+          <p>Un rectangle avec <strong>un seul coin coupé</strong>, souvent avec un clip de verrouillage. C'est le standard des écrans PC&nbsp;: DP&nbsp;1.4 (32,4&nbsp;Gbit/s) suffit pour du 1440p à 165&nbsp;Hz&nbsp;; DP&nbsp;2.1 monte jusqu'à 80&nbsp;Gbit/s.</p>
+        </li>
+        <li class="port-card">
+          <svg viewBox="0 0 160 72" aria-hidden="true"><rect x="20" y="20" width="92" height="32" rx="16" fill="none" stroke="var(--ink-2)" stroke-width="3"/><rect x="26" y="26" width="80" height="20" rx="10" fill="var(--bg)"/><rect x="38" y="32" width="56" height="8" rx="4" fill="var(--ink-3)"/><path d="M134 12l-12 26h10l-6 22 18-30h-11l7-18z" fill="var(--accent)"/></svg>
+          <h4>Thunderbolt</h4>
+          <p>Utilise la prise USB-C, avec un logo en forme d'éclair&nbsp;: données, vidéo et alimentation dans un seul câble, 40&nbsp;Gbit/s (Thunderbolt&nbsp;4) ou 80&nbsp;Gbit/s (Thunderbolt&nbsp;5). Fréquent sur les portables&nbsp;; sur un PC fixe, il faut une carte mère compatible.</p>
+        </li>
+      </ul>
+
+      <div class="table-wrap">
+        <table class="compare">
+          <caption>Lequel utiliser pour quoi&nbsp;?</caption>
+          <thead><tr><th scope="col">Besoin</th><th scope="col">Connecteur conseillé</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Écran PC 144–165 Hz</th><td><strong>DisplayPort</strong>, sur la carte graphique</td></tr>
+            <tr><th scope="row">TV, console, écran sans DisplayPort</th><td><strong>HDMI</strong> (2.1 de préférence)</td></tr>
+            <tr><th scope="row">Clavier, souris, manette</th><td><strong>USB-A</strong> (l'USB 2.0 suffit)</td></tr>
+            <tr><th scope="row">Clé USB, disque externe</th><td><strong>USB-A bleu/rouge</strong> (5–10 Gbit/s) ou <strong>USB-C</strong> 10 Gbit/s et plus</td></tr>
+            <tr><th scope="row">SSD externe très rapide, station d'accueil</th><td><strong>USB-C USB4</strong> ou <strong>Thunderbolt</strong></td></tr>
+            <tr><th scope="row">Téléphone (charge + transfert)</th><td><strong>USB-C</strong></td></tr>
+            <tr><th scope="row">Casque filaire</th><td>Prise <strong>jack 3,5 mm</strong> (ou USB)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="reminder">
+        <svg class="reminder-svg" viewBox="0 0 280 300" role="img" aria-labelledby="rem-t rem-d">
+          <title id="rem-t">Arrière d'une tour</title>
+          <desc id="rem-d">Les sorties vidéo de la carte mère, en haut, sont barrées. Les sorties de la carte graphique, plus bas, sont marquées comme le bon endroit pour brancher l'écran.</desc>
+          <rect x="40" y="10" width="200" height="280" rx="10" fill="var(--surface-2)" stroke="var(--line)" stroke-width="2"/>
+          <rect x="62" y="30" width="46" height="120" rx="4" fill="var(--bg)" stroke="var(--line)" stroke-width="2"/>
+          <g fill="var(--ink-3)"><rect x="70" y="40" width="30" height="9" rx="2"/><rect x="70" y="54" width="30" height="9" rx="2"/><rect x="70" y="88" width="30" height="9" rx="2"/><rect x="70" y="102" width="30" height="9" rx="2"/><rect x="70" y="116" width="30" height="9" rx="2"/></g>
+          <g><rect x="68" y="69" width="34" height="13" rx="2" fill="var(--danger)" opacity=".85"/><path d="M60 64l50 24M110 64L60 88" stroke="var(--danger)" stroke-width="4" stroke-linecap="round"/></g>
+          <circle cx="182" cy="74" r="38" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="182" cy="74" r="10" fill="var(--line)"/>
+          <g fill="var(--bg)" stroke="var(--line)" stroke-width="2">
+            <rect x="62" y="160" width="160" height="18" rx="2"/><rect x="62" y="182" width="160" height="18" rx="2"/>
+          </g>
+          <rect x="62" y="160" width="160" height="40" rx="3" fill="none" stroke="var(--success)" stroke-width="3"/>
+          <g fill="var(--ink-2)"><rect x="76" y="165" width="22" height="8" rx="1.5"/><rect x="104" y="165" width="22" height="8" rx="1.5"/><rect x="132" y="165" width="22" height="8" rx="1.5"/><rect x="160" y="165" width="22" height="8" rx="1.5"/></g>
+          <g stroke="var(--line)" stroke-width="2" fill="var(--bg)"><rect x="62" y="206" width="160" height="12" rx="2"/><rect x="62" y="222" width="160" height="12" rx="2"/><rect x="62" y="238" width="160" height="12" rx="2"/></g>
+          <rect x="70" y="256" width="140" height="26" rx="3" fill="var(--bg)" stroke="var(--line)" stroke-width="2"/>
+          <path d="M8 180h44" stroke="var(--success)" stroke-width="4" stroke-linecap="round"/><path d="M42 170l12 10-12 10" fill="none" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <h3>Rappel important</h3>
+          <p>L'écran se branche <strong>sur la carte graphique</strong> (les sorties alignées sur son équerre, plus bas à l'arrière de la tour), <strong>pas sur la carte mère</strong> (les sorties près des ports USB, en haut). Celles de la carte mère ne servent qu'au graphique intégré du processeur&nbsp;: branché là, l'écran reste noir ou la carte graphique ne travaille pas.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================== 8. CHECKLIST DE COMPATIBILITÉ -->
+    <section id="compatibilite" class="section" aria-labelledby="cl-title">
+      <header class="section-head">
+        <p class="kicker">Avant d'acheter</p>
+        <h2 id="cl-title">Checklist de compatibilité finale</h2>
+        <p class="lead">Six vérifications, et ta configuration est compatible. Coche chaque point une fois vérifié&nbsp;; ta progression est gardée sur cet appareil.</p>
+      </header>
+      <div class="checklist" id="checklist">
+        <div class="cl-progress" aria-live="polite">
+          <div class="cl-bar" aria-hidden="true"><span id="cl-bar"></span></div>
+          <p><strong id="cl-count">0</strong> / 6 vérifications</p>
+        </div>
+        <ul class="cl-list">
+          <li class="cl-item">
+            <input type="checkbox" id="cl-1" data-cl="socket">
+            <label for="cl-1"><span class="cl-title">Socket du processeur = socket de la carte mère</span><span class="cl-example">ex. AM5 ↔ AM5</span></label>
+            <details><summary>Comment vérifier</summary><p>Compare la ligne «&nbsp;Socket&nbsp;» des deux fiches techniques. Puis cherche ton processeur dans la liste des processeurs supportés de la carte mère (site du fabricant)&nbsp;: elle indique la version de BIOS minimale.</p></details>
+          </li>
+          <li class="cl-item">
+            <input type="checkbox" id="cl-2" data-cl="ram">
+            <label for="cl-2"><span class="cl-title">Type de RAM = type supporté par la carte mère</span><span class="cl-example">ex. DDR5 ↔ DDR5</span></label>
+            <details><summary>Comment vérifier</summary><p>La rubrique «&nbsp;Mémoire&nbsp;» de la carte mère donne la génération (DDR4 ou DDR5), le nombre de slots et la capacité maximale. La liste QVL indique les kits testés.</p></details>
+          </li>
+          <li class="cl-item">
+            <input type="checkbox" id="cl-3" data-cl="format">
+            <label for="cl-3"><span class="cl-title">Format de la carte mère accepté par le boîtier</span><span class="cl-example">ex. ATX ↔ boîtier ATX</span></label>
+            <details><summary>Comment vérifier</summary><p>La fiche du boîtier liste les formats de carte mère acceptés. Un boîtier ATX accepte aussi les formats plus petits.</p></details>
+          </li>
+          <li class="cl-item">
+            <input type="checkbox" id="cl-4" data-cl="gpu">
+            <label for="cl-4"><span class="cl-title">Longueur de la carte graphique &lt; place disponible dans le boîtier</span><span class="cl-example">ex. 28 cm &lt; 36 cm</span></label>
+            <details><summary>Comment vérifier</summary><p>Compare la longueur de la carte (fiche de la carte graphique) à la «&nbsp;longueur maximale de carte graphique&nbsp;» du boîtier. Les ventilateurs ou un radiateur en façade peuvent réduire cette place&nbsp;: la fiche le précise souvent.</p></details>
+          </li>
+          <li class="cl-item">
+            <input type="checkbox" id="cl-5" data-cl="cooler">
+            <label for="cl-5"><span class="cl-title">Hauteur du ventirad &lt; largeur disponible dans le boîtier</span><span class="cl-example">ex. 15,5 cm &lt; 16,5 cm</span></label>
+            <details><summary>Comment vérifier</summary><p>Compare la hauteur du ventirad à la «&nbsp;hauteur maximale de ventirad&nbsp;» du boîtier. Vérifie aussi que le kit de fixation gère ton socket.</p></details>
+          </li>
+          <li class="cl-item">
+            <input type="checkbox" id="cl-6" data-cl="psu">
+            <label for="cl-6"><span class="cl-title">Puissance de l'alimentation suffisante</span><span class="cl-example">ex. 750 W pour ~400 W consommés</span></label>
+            <details open><summary>Comment vérifier (calculateur)</summary>
+              <div class="psu-calc" id="psu-calc">
+                <label for="calc-cpu">Processeur (TDP)&nbsp;: <output id="calc-cpu-out">105 W</output></label>
+                <input type="range" id="calc-cpu" min="65" max="170" step="5" value="105">
+                <label for="calc-gpu">Carte graphique (consommation)&nbsp;: <output id="calc-gpu-out">200 W</output></label>
+                <input type="range" id="calc-gpu" min="100" max="350" step="10" value="200">
+                <p class="calc-result">Consommation estimée en charge&nbsp;: <strong id="calc-load">405 W</strong><br>Alimentation conseillée&nbsp;: <strong id="calc-psu" class="accent-text">650 W</strong></p>
+                <p class="muted">Calcul&nbsp;: (processeur + carte graphique + 100&nbsp;W pour le reste) × 1,5 de marge, arrondi aux 50&nbsp;W supérieurs. En cas de doute, suis la recommandation du fabricant de la carte graphique, et vérifie que l'alimentation a les bons connecteurs.</p>
+              </div>
+            </details>
+          </li>
+        </ul>
+        <p class="cl-done" id="cl-done" hidden>Tout est vérifié&nbsp;: ta configuration est compatible. Tu peux passer commande… puis revenir au <a href="#montage">montage</a>.</p>
+        <button class="btn btn--ghost btn--small" id="cl-reset" type="button">Tout décocher</button>
+      </div>
+    </section>
+
+    <!-- ====================================================== 9. GLOSSAIRE -->
+    <section id="glossaire" class="section" aria-labelledby="glo-title">
+      <header class="section-head">
+        <p class="kicker">Pour s'y retrouver</p>
+        <h2 id="glo-title">Glossaire</h2>
+        <p class="lead">Tous les termes techniques du site. Dans le texte, les mots soulignés en pointillés affichent leur définition au survol (ou au toucher).</p>
+      </header>
+      <div class="glossary-tools">
+        <label for="glossary-search" class="visually-hidden">Rechercher un terme</label>
+        <input type="search" id="glossary-search" placeholder="Rechercher un terme (ex. socket, NVMe, EXPO…)" autocomplete="off">
+        <p class="muted" id="glossary-count" aria-live="polite"></p>
+      </div>
+      <dl class="glossary" id="glossary">
+        <div class="g-item" id="g-80plus"><dt>80 PLUS</dt><dd>Certification du rendement d'une alimentation&nbsp;: la part de l'énergie prise à la prise qui arrive vraiment aux composants. Niveaux courants&nbsp;: Bronze (~85&nbsp;% à mi-charge), Gold (~90&nbsp;%), puis Platinum et Titanium.</dd></div>
+        <div class="g-item" id="g-12v2x6"><dt>12V-2x6</dt><dd>Connecteur d'alimentation à 16 broches (12 grosses + 4 petites) des cartes graphiques puissantes, capable de fournir jusqu'à 600&nbsp;W.</dd></div>
+        <div class="g-item" id="g-aio"><dt>AIO</dt><dd>«&nbsp;All-in-one&nbsp;»&nbsp;: watercooling tout-en-un, fermé et prérempli. Une pompe sur le processeur envoie le liquide vers un radiateur ventilé fixé au boîtier (souvent 240&nbsp;mm).</dd></div>
+        <div class="g-item" id="g-atx"><dt>ATX</dt><dd>Norme qui fixe les dimensions des cartes mères (30,5 × 24,4&nbsp;cm pour l'ATX), la position de leurs trous de fixation et les connecteurs de l'alimentation. Les alimentations ATX&nbsp;3.x encaissent mieux les pics de consommation des cartes graphiques.</dd></div>
+        <div class="g-item" id="g-bios"><dt>BIOS</dt><dd>«&nbsp;Basic Input/Output System&nbsp;»&nbsp;: logiciel de démarrage stocké sur la carte mère. Le mot désigne aujourd'hui, par habitude, son successeur l'UEFI.</dd></div>
+        <div class="g-item" id="g-flashback"><dt>BIOS Flashback</dt><dd>Bouton de la carte mère qui met à jour le BIOS depuis une clé USB, sans processeur ni mémoire installés.</dd></div>
+        <div class="g-item" id="g-bus"><dt>Bus</dt><dd>Ensemble de liaisons qui transportent les données entre les composants&nbsp;: les «&nbsp;routes&nbsp;» de la carte mère.</dd></div>
+        <div class="g-item" id="g-cablemanagement"><dt>Cable management</dt><dd>L'art de ranger les câbles (derrière le plateau, en faisceaux attachés) pour le flux d'air, l'entretien et l'esthétique.</dd></div>
+        <div class="g-item" id="g-cache"><dt>Cache</dt><dd>Petite mémoire ultra-rapide intégrée au processeur (niveaux L1, L2, L3) qui garde les données les plus utilisées pour ne pas attendre la RAM.</dd></div>
+        <div class="g-item" id="g-heatpipe"><dt>Caloduc (heatpipe)</dt><dd>Tube de cuivre scellé contenant un peu de liquide&nbsp;: il s'évapore côté chaud, se condense côté froid, et transporte ainsi la chaleur très efficacement.</dd></div>
+        <div class="g-item" id="g-cl"><dt>CAS latency (CL)</dt><dd>Nombre de cycles entre la demande d'une donnée à la RAM et son arrivée. À combiner avec la vitesse&nbsp;: latence (ns) ≈ CL × 2&nbsp;000 ÷ vitesse (MT/s).</dd></div>
+        <div class="g-item" id="g-cfm"><dt>CFM</dt><dd>«&nbsp;Cubic Feet per Minute&nbsp;»&nbsp;: unité de débit d'air d'un ventilateur (1&nbsp;CFM ≈ 1,7&nbsp;m³/h).</dd></div>
+        <div class="g-item" id="g-chipset"><dt>Chipset</dt><dd>Puce de la carte mère qui gère une partie des connexions (USB, SATA, certains slots M.2 et PCIe) et définit la gamme de la carte.</dd></div>
+        <div class="g-item" id="g-coeur"><dt>Cœur</dt><dd>Unité de calcul complète à l'intérieur d'un processeur, capable d'exécuter un programme indépendamment des autres.</dd></div>
+        <div class="g-item" id="g-cpu"><dt>CPU</dt><dd>«&nbsp;Central Processing Unit&nbsp;»&nbsp;: le processeur.</dd></div>
+        <div class="g-item" id="g-dalle"><dt>Dalle (IPS, VA, OLED)</dt><dd>Technologie de l'écran&nbsp;: IPS (couleurs fidèles, bons angles de vue), VA (bon contraste), OLED (chaque pixel produit sa propre lumière&nbsp;: noirs parfaits).</dd></div>
+        <div class="g-item" id="g-ddr5"><dt>DDR5</dt><dd>5<sup>e</sup> génération de mémoire vive DDR. Plus rapide que la DDR4 et incompatible avec elle (l'encoche n'est pas au même endroit).</dd></div>
+        <div class="g-item" id="g-debit"><dt>Débit</dt><dd>Quantité de données transférées par seconde (Mo/s, Go/s). À ne pas confondre avec la latence (le temps d'attente).</dd></div>
+        <div class="g-item" id="g-die"><dt>Die</dt><dd>La puce de silicium elle-même, où sont gravés les transistors. Un processeur moderne peut en contenir plusieurs sous son capot.</dd></div>
+        <div class="g-item" id="g-displayport"><dt>DisplayPort</dt><dd>Connecteur vidéo standard des écrans PC, reconnaissable à son unique coin coupé.</dd></div>
+        <div class="g-item" id="g-dpi"><dt>DPI</dt><dd>«&nbsp;Dots per inch&nbsp;»&nbsp;: sensibilité d'une souris, le nombre de points détectés par pouce de déplacement.</dd></div>
+        <div class="g-item" id="g-dualchannel"><dt>Dual channel</dt><dd>Mode où le processeur accède à deux barrettes en parallèle (une par canal), ce qui double la bande passante. Il faut les bons slots, souvent A2 et B2.</dd></div>
+        <div class="g-item" id="g-header"><dt>En-tête (header)</dt><dd>Groupe de broches sur la carte mère pour brancher les câbles internes&nbsp;: ventilateurs, façade du boîtier, USB, audio.</dd></div>
+        <div class="g-item" id="g-entretoise"><dt>Entretoise</dt><dd>Petite colonnette vissée dans le boîtier sur laquelle se fixe la carte mère, pour qu'elle ne touche jamais le métal.</dd></div>
+        <div class="g-item" id="g-eps"><dt>EPS</dt><dd>Connecteur d'alimentation 8 broches (souvent 4+4) dédié au processeur, en haut à gauche de la carte mère. Il est marqué «&nbsp;CPU&nbsp;» côté alimentation.</dd></div>
+        <div class="g-item" id="g-equerre"><dt>Équerre</dt><dd>Plaque métallique au bout d'une carte d'extension, vissée à l'arrière du boîtier&nbsp;; sur une carte graphique, elle porte les sorties vidéo.</dd></div>
+        <div class="g-item" id="g-expo"><dt>EXPO / XMP</dt><dd>Profils enregistrés dans la barrette par son fabricant (EXPO chez AMD, XMP chez Intel). Les activer dans le BIOS règle la RAM à sa vitesse annoncée.</dd></div>
+        <div class="g-item" id="g-ghz"><dt>GHz</dt><dd>Gigahertz&nbsp;: un milliard de cycles par seconde.</dd></div>
+        <div class="g-item" id="g-gpu"><dt>GPU</dt><dd>«&nbsp;Graphics Processing Unit&nbsp;»&nbsp;: la puce de la carte graphique, faite de milliers d'unités de calcul parallèles.</dd></div>
+        <div class="g-item" id="g-hdd"><dt>HDD</dt><dd>«&nbsp;Hard Disk Drive&nbsp;»&nbsp;: disque dur à plateaux magnétiques et tête de lecture mobile. Grande capacité à bas prix, mais lent et sensible aux chocs.</dd></div>
+        <div class="g-item" id="g-hdmi"><dt>HDMI</dt><dd>Connecteur audio et vidéo en forme de trapèze, standard des TV et des consoles.</dd></div>
+        <div class="g-item" id="g-hz"><dt>Hertz (Hz)</dt><dd>Unité de fréquence&nbsp;: nombre de fois par seconde. Pour un écran, le nombre d'images affichées chaque seconde.</dd></div>
+        <div class="g-item" id="g-igpu"><dt>iGPU</dt><dd>Partie graphique intégrée au processeur&nbsp;: suffisante pour le bureau et le dépannage, pas pour les jeux exigeants.</dd></div>
+        <div class="g-item" id="g-ihs"><dt>IHS</dt><dd>«&nbsp;Integrated Heat Spreader&nbsp;»&nbsp;: le capot métallique du processeur, qui protège la puce et répartit sa chaleur vers le ventirad.</dd></div>
+        <div class="g-item" id="g-io"><dt>I/O</dt><dd>«&nbsp;Input/Output&nbsp;» (entrées/sorties). Les ports à l'arrière de la carte mère forment le panneau I/O.</dd></div>
+        <div class="g-item" id="g-iops"><dt>IOPS</dt><dd>Nombre d'opérations d'entrée/sortie par seconde&nbsp;: mesure la rapidité d'un SSD sur de petits accès aléatoires.</dd></div>
+        <div class="g-item" id="g-iso"><dt>ISO</dt><dd>Fichier «&nbsp;image&nbsp;» contenant tout un disque d'installation, à écrire sur une clé USB pour installer un système.</dd></div>
+        <div class="g-item" id="g-latence"><dt>Latence</dt><dd>Temps d'attente entre une demande et sa réponse&nbsp;: en nanosecondes pour la RAM, en microsecondes pour un SSD, en millisecondes pour un disque dur.</dd></div>
+        <div class="g-item" id="g-lga"><dt>LGA</dt><dd>«&nbsp;Land Grid Array&nbsp;»&nbsp;: socket dont les broches sont sur la carte mère, le processeur n'ayant que des pastilles (AMD AM5, Intel LGA&nbsp;1851).</dd></div>
+        <div class="g-item" id="g-m2"><dt>M.2</dt><dd>Format compact de carte d'extension (SSD, Wi-Fi…) qui se visse à plat sur la carte mère. «&nbsp;2280&nbsp;» signifie 22&nbsp;mm × 80&nbsp;mm.</dd></div>
+        <div class="g-item" id="g-training"><dt>Memory training</dt><dd>Phase du démarrage où la carte mère teste et calibre la mémoire. Avec la DDR5, la première fois peut prendre plusieurs minutes.</dd></div>
+        <div class="g-item" id="g-bootmenu"><dt>Menu de démarrage</dt><dd>Menu affiché à l'allumage (souvent avec F8, F11 ou F12) pour choisir, une seule fois, sur quel périphérique démarrer.</dd></div>
+        <div class="g-item" id="g-modulaire"><dt>Modulaire</dt><dd>Se dit d'une alimentation dont les câbles se branchent à la demande. Semi-modulaire&nbsp;: seuls les câbles indispensables sont fixés.</dd></div>
+        <div class="g-item" id="g-mts"><dt>MT/s</dt><dd>Méga-transferts par seconde&nbsp;: millions de transferts de données par seconde. L'unité de vitesse de la RAM (souvent écrite à tort en MHz).</dd></div>
+        <div class="g-item" id="g-nand"><dt>NAND</dt><dd>Type de mémoire flash des SSD et des clés USB&nbsp;: elle conserve les données sans courant.</dd></div>
+        <div class="g-item" id="g-nanoseconde"><dt>Nanoseconde (ns)</dt><dd>Un milliardième de seconde. 1&nbsp;µs (microseconde) = 1&nbsp;000&nbsp;ns, 1&nbsp;ms (milliseconde) = 1&nbsp;000&nbsp;000&nbsp;ns.</dd></div>
+        <div class="g-item" id="g-nvme"><dt>NVMe</dt><dd>«&nbsp;Non-Volatile Memory express&nbsp;»&nbsp;: protocole qui fait communiquer un SSD directement par des lignes PCIe, bien plus vite que le SATA.</dd></div>
+        <div class="g-item" id="g-passecables"><dt>Passe-câbles</dt><dd>Ouverture du plateau, souvent bordée de caoutchouc, qui laisse passer les câbles derrière la carte mère.</dd></div>
+        <div class="g-item" id="g-pate"><dt>Pâte thermique</dt><dd>Pâte conductrice de chaleur appliquée entre le processeur et le ventirad pour chasser l'air des micro-creux.</dd></div>
+        <div class="g-item" id="g-pcb"><dt>PCB</dt><dd>«&nbsp;Printed Circuit Board&nbsp;»&nbsp;: circuit imprimé, une plaque isolante portant des pistes de cuivre et des composants.</dd></div>
+        <div class="g-item" id="g-pcie"><dt>PCIe</dt><dd>«&nbsp;PCI Express&nbsp;»&nbsp;: bus rapide qui relie le processeur à la carte graphique, aux SSD NVMe, etc. Il compte un certain nombre de lignes (x1, x4, x16) et chaque génération (3.0, 4.0, 5.0) double le débit par ligne.</dd></div>
+        <div class="g-item" id="g-pilote"><dt>Pilote</dt><dd>Logiciel qui permet au système d'exploitation de dialoguer avec un matériel (carte graphique, chipset, réseau…).</dd></div>
+        <div class="g-item" id="g-pixel"><dt>Pixel</dt><dd>Le plus petit point d'une image affichée. Un écran 1080p en compte environ 2 millions.</dd></div>
+        <div class="g-item" id="g-post"><dt>POST</dt><dd>«&nbsp;Power-On Self-Test&nbsp;»&nbsp;: autotest du matériel réalisé par le BIOS à chaque allumage.</dd></div>
+        <div class="g-item" id="g-protections"><dt>Protections</dt><dd>Circuits de sécurité d'une alimentation (surtension, surintensité, court-circuit, surchauffe…) qui coupent le courant en cas de problème.</dd></div>
+        <div class="g-item" id="g-psu"><dt>PSU</dt><dd>«&nbsp;Power Supply Unit&nbsp;»&nbsp;: l'alimentation.</dd></div>
+        <div class="g-item" id="g-pwm"><dt>PWM</dt><dd>«&nbsp;Pulse Width Modulation&nbsp;»&nbsp;: commande de vitesse transmise par le 4<sup>e</sup> fil d'un ventilateur&nbsp;; la carte mère adapte ainsi la vitesse à la température.</dd></div>
+        <div class="g-item" id="g-qvl"><dt>QVL</dt><dd>«&nbsp;Qualified Vendor List&nbsp;»&nbsp;: liste des composants (surtout des kits de RAM) testés par le fabricant de la carte mère.</dd></div>
+        <div class="g-item" id="g-ram"><dt>RAM</dt><dd>«&nbsp;Random Access Memory&nbsp;»&nbsp;: la mémoire vive, rapide et volatile.</dd></div>
+        <div class="g-item" id="g-resolution"><dt>Résolution</dt><dd>Nombre de pixels d'une image, en largeur × hauteur&nbsp;: par exemple 2&nbsp;560 × 1&nbsp;440.</dd></div>
+        <div class="g-item" id="g-sata"><dt>SATA</dt><dd>Interface plus ancienne des SSD 2,5" et des disques durs, limitée à environ 550&nbsp;Mo/s. Il faut un câble de données et un câble d'alimentation.</dd></div>
+        <div class="g-item" id="g-secureboot"><dt>Secure Boot</dt><dd>Fonction de l'UEFI qui ne laisse démarrer que des systèmes signés, pour bloquer certains logiciels malveillants au démarrage.</dd></div>
+        <div class="g-item" id="g-slot"><dt>Slot</dt><dd>Emplacement où l'on enfiche un composant&nbsp;: slot de RAM, slot PCIe, slot M.2.</dd></div>
+        <div class="g-item" id="g-smt"><dt>SMT</dt><dd>«&nbsp;Simultaneous Multithreading&nbsp;» (Hyper-Threading chez Intel)&nbsp;: un cœur gère deux threads à la fois pour éviter les temps morts.</dd></div>
+        <div class="g-item" id="g-socket"><dt>Socket</dt><dd>Le support du processeur sur la carte mère. Processeur et carte doivent avoir exactement le même socket.</dd></div>
+        <div class="g-item" id="g-ssd"><dt>SSD</dt><dd>«&nbsp;Solid State Drive&nbsp;»&nbsp;: stockage à mémoire flash, sans pièce mobile.</dd></div>
+        <div class="g-item" id="g-switch"><dt>Switch</dt><dd>Le mécanisme sous chaque touche d'un clavier mécanique&nbsp;: linéaire, tactile ou clicky.</dd></div>
+        <div class="g-item" id="g-os"><dt>Système d'exploitation (OS)</dt><dd>Le logiciel principal qui gère l'ordinateur et lance les programmes&nbsp;: Windows, Linux, macOS…</dd></div>
+        <div class="g-item" id="g-tbw"><dt>TBW</dt><dd>«&nbsp;Terabytes Written&nbsp;»&nbsp;: quantité totale de données qu'on peut écrire sur un SSD pendant sa garantie.</dd></div>
+        <div class="g-item" id="g-tdp"><dt>TDP</dt><dd>«&nbsp;Thermal Design Power&nbsp;»&nbsp;: ordre de grandeur de la chaleur (en watts) dégagée par un processeur, que le refroidissement doit évacuer.</dd></div>
+        <div class="g-item" id="g-thread"><dt>Thread</dt><dd>Fil d'exécution&nbsp;: une suite d'instructions exécutée par un cœur.</dd></div>
+        <div class="g-item" id="g-throttling"><dt>Throttling</dt><dd>Baisse automatique de la fréquence d'un composant trop chaud, pour se protéger.</dd></div>
+        <div class="g-item" id="g-thunderbolt"><dt>Thunderbolt</dt><dd>Norme de connexion très rapide (40 à 80&nbsp;Gbit/s) qui utilise la prise USB-C&nbsp;: données, vidéo et alimentation.</dd></div>
+        <div class="g-item" id="g-tkl"><dt>TKL</dt><dd>«&nbsp;Tenkeyless&nbsp;»&nbsp;: clavier sans pavé numérique.</dd></div>
+        <div class="g-item" id="g-tpm"><dt>TPM 2.0</dt><dd>Puce de sécurité (ou fonction intégrée au processeur&nbsp;: fTPM chez AMD, PTT chez Intel) qui stocke des clés de chiffrement. Exigée par Windows 11.</dd></div>
+        <div class="g-item" id="g-uefi"><dt>UEFI</dt><dd>«&nbsp;Unified Extensible Firmware Interface&nbsp;»&nbsp;: successeur moderne du BIOS, avec une interface graphique, la souris et le Secure Boot.</dd></div>
+        <div class="g-item" id="g-usb"><dt>USB / USB-C</dt><dd>Norme de connexion universelle. «&nbsp;USB-C&nbsp;» désigne la forme de la prise (réversible), pas sa vitesse.</dd></div>
+        <div class="g-item" id="g-ventirad"><dt>Ventirad</dt><dd>Contraction de «&nbsp;ventilateur&nbsp;» et «&nbsp;radiateur&nbsp;»&nbsp;: le refroidisseur à air fixé sur le processeur.</dd></div>
+        <div class="g-item" id="g-volatile"><dt>Volatile</dt><dd>Qui perd ses données sans courant, comme la RAM. Le stockage, lui, est non volatile.</dd></div>
+        <div class="g-item" id="g-vram"><dt>VRAM</dt><dd>La mémoire de la carte graphique (GDDR6, GDDR7), très rapide, où sont stockées les textures et les images en cours de calcul.</dd></div>
+        <div class="g-item" id="g-vrm"><dt>VRM</dt><dd>«&nbsp;Voltage Regulator Module&nbsp;»&nbsp;: l'étage d'alimentation de la carte mère qui transforme le 12&nbsp;V en la tension très basse du processeur (~1&nbsp;V).</dd></div>
+      </dl>
+      <p class="muted" id="glossary-empty" hidden>Aucun terme ne correspond à ta recherche.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p><strong>PC Builder</strong>, un guide pour apprendre à monter un PC fixe. Informations vérifiées en octobre 2026&nbsp;: le matériel évolue vite, vérifie toujours les fiches des fabricants avant d'acheter.</p>
+      <p>Les 9 modèles 3D sont génériques (sans marque) et générés par les scripts Blender fournis dans <code>scripts/blender/</code>. Moteur 3D&nbsp;: Three.js 0.160.0 (licence MIT). Détail des sources et licences&nbsp;: <a href="CREDITS.md">CREDITS.md</a>.</p>
+      <p><a href="#accueil">↑ Revenir en haut</a></p>
+    </div>
+  </footer>
+
+  <div class="tooltip" id="term-tooltip" role="tooltip" hidden></div>
+  <noscript><p class="noscript">JavaScript est désactivé&nbsp;: tout le texte reste lisible, mais les visionneuses 3D et les animations ne fonctionneront pas.</p></noscript>
+</body>
+</html>

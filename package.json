@@ -1,0 +1,20 @@
+{
+  "name": "pc-builder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site éducatif en 3D : monter son PC de A à Z (Three.js + modèles générés par Blender).",
+  "type": "module",
+  "scripts": {
+    "start": "npx --yes http-server . -p 8000 -c-1 -o",
+    "models": "blender -b -P scripts/blender/build_all.py && node scripts/optimize-models.mjs",
+    "optimize": "node scripts/optimize-models.mjs",
+    "assembly": "blender -b -P scripts/blender/render_assembly.py"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
+    "meshoptimizer": "1.3.0",
+    "sharp": "0.35.5"
+  }
+}

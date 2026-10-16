@@ -1,0 +1,10 @@
+# fichiers intermédiaires générés par les scripts Blender (modèles bruts, aperçus PNG, textures)
+.build/
+# dépendances Node (réinstallées avec `npm install`)
+node_modules/
+# caches Python
+__pycache__/
+*.pyc
+# fichiers système
+.DS_Store
+Thumbs.db
