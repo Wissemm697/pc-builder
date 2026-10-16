@@ -1,5 +1,7 @@
 # Monter son PC de A à Z — guide 3D interactif
 
+👉 **[Voir le site en ligne](https://wissemm697.github.io/pc-builder/)**
+
 Un site en français, avec de la 3D interactive, qui explique **de A à Z** comment choisir et monter un PC fixe de **milieu de gamme** (boîtier moyen tour ATX). Il est écrit pour un débutant : chaque terme technique est expliqué la première fois qu'il apparaît, et on peut le survoler pour revoir sa définition.
 
 ![Le PC assemblé](img/previews/assembly.webp)
