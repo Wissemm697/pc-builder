@@ -1,5 +1,5 @@
 /**
- * nav.js — Navigation fixe : sommaire (panneau latéral), section active,
+ * nav.js : Navigation fixe : sommaire (panneau latéral), section active,
  * barre de progression de lecture et nom de la section courante.
  */
 export function initNav() {

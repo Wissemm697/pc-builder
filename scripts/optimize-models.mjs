@@ -1,5 +1,5 @@
 /**
- * optimize-models.mjs — Compresse les modèles exportés par Blender et prépare les
+ * optimize-models.mjs : Compresse les modèles exportés par Blender et prépare les
  * données utilisées par le site.
  *
  *   .build/raw/*.glb        ->  models/*.glb            (meshopt + textures WebP ≤ 1024 px)
@@ -68,7 +68,7 @@ for (const f of (await readdir(MAN)).filter((f) => f.endsWith('.json')).sort()) 
   };
 }
 const js = `/**
- * manifest.js — GÉNÉRÉ AUTOMATIQUEMENT par scripts/optimize-models.mjs (ne pas éditer).
+ * manifest.js : GÉNÉRÉ AUTOMATIQUEMENT par scripts/optimize-models.mjs (ne pas éditer).
  * Pour chaque modèle : boîte englobante, ancres et pivots des pièces animables,
  * en centimètres dans l'espace du site (X = avant, Y = haut, Z = vers la vitre).
  */

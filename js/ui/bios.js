@@ -1,7 +1,9 @@
 /**
- * bios.js — Faux écran UEFI interactif (onglets, profil EXPO/XMP, ordre de démarrage,
+ * bios.js : Faux écran UEFI interactif (onglets, profil EXPO/XMP, ordre de démarrage,
  * enregistrement avec F10). Purement pédagogique : rien n'est réellement modifié.
  */
+import { L, LOCALE } from '../i18n.js';
+
 export function initBios() {
   const root = document.getElementById('bios-screen');
   if (!root) return;
@@ -36,11 +38,11 @@ export function initBios() {
     if (e.key === 'ArrowLeft' && !dialog.contains(e.target)) { e.preventDefault(); select((i - 1 + tabs.length) % tabs.length, true); }
     if (e.key === 'F10') { e.preventDefault(); openSave(); }
     if (e.key === 'Escape' && !dialog.hidden) { e.preventDefault(); closeDialog(); }
-    if (e.key === 'F7') { e.preventDefault(); bootHelp.textContent = 'Le mode avancé donne accès à tous les réglages : à explorer plus tard, une fois le PC stable.'; }
+    if (e.key === 'F7') { e.preventDefault(); bootHelp.textContent = L('Le mode avancé donne accès à tous les réglages : à explorer plus tard, une fois le PC stable.', 'Advanced mode unlocks every setting. Leave it for later, once your PC is running smoothly.'); }
   });
 
   // ---------------------------------------------------------------- horloge et capteurs
-  const fmt = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short', timeStyle: 'short' });
+  const fmt = new Intl.DateTimeFormat(LOCALE, { dateStyle: 'short', timeStyle: 'short' });
   const tick = () => { clock.textContent = fmt.format(new Date()); };
   tick();
   setInterval(tick, 30000);
@@ -48,19 +50,21 @@ export function initBios() {
     if (document.hidden) return;
     const t = 37 + Math.round(Math.random() * 4);
     temp.textContent = `${t} °C`;
-    fan.textContent = `${(780 + Math.round(Math.random() * 90)).toLocaleString('fr-FR')} tr/min`;
+    fan.textContent = `${(780 + Math.round(Math.random() * 90)).toLocaleString(LOCALE)} ${L('tr/min', 'RPM')}`;
   }, 2500);
 
   // ---------------------------------------------------------------- profil EXPO / XMP
   function setExpo(on) {
     expo.setAttribute('aria-pressed', String(on));
-    expo.textContent = on ? 'EXPO I · 6000 MT/s' : 'Désactivé';
-    root.querySelectorAll('[data-bios="mem-speed"]').forEach((e) => { e.textContent = on ? '6 000 MT/s' : '4 800 MT/s'; });
+    expo.textContent = on ? 'EXPO I · 6000 MT/s' : L('Désactivé', 'Disabled');
+    root.querySelectorAll('[data-bios="mem-speed"]').forEach((e) => { e.textContent = on ? L('6 000 MT/s', '6,000 MT/s') : L('4 800 MT/s', '4,800 MT/s'); });
     root.querySelectorAll('[data-bios="mem-cl"]').forEach((e) => { e.textContent = on ? '30' : '40'; });
-    root.querySelectorAll('[data-bios="mem-v"]').forEach((e) => { e.textContent = on ? '1,35 V' : '1,10 V'; });
+    root.querySelectorAll('[data-bios="mem-v"]').forEach((e) => { e.textContent = on ? L('1,35 V', '1.35 V') : L('1,10 V', '1.10 V'); });
     expoHelp.textContent = on
-      ? 'Profil activé : la mémoire tournera à sa vitesse annoncée (6 000 MT/s, CL30, 1,35 V) après enregistrement et redémarrage.'
-      : 'Profil désactivé : la mémoire tourne à sa vitesse standard (JEDEC), plus basse que celle annoncée sur la boîte.';
+      ? L('Profil activé : la mémoire tournera à sa vitesse annoncée (6 000 MT/s, CL30, 1,35 V) après enregistrement et redémarrage.',
+        'Profile enabled: once you save and restart, the memory will run at its rated speed (6,000 MT/s, CL30, 1.35 V).')
+      : L('Profil désactivé : la mémoire tourne à sa vitesse standard (JEDEC), plus basse que celle annoncée sur la boîte.',
+        'Profile disabled: the memory runs at its standard (JEDEC) speed, which is slower than the one on the box.');
   }
   expo.addEventListener('click', () => setExpo(expo.getAttribute('aria-pressed') !== 'true'));
 
@@ -69,10 +73,13 @@ export function initBios() {
   function updateBootHelp() {
     const first = firstDevice();
     bootHelp.textContent = first === 'usb'
-      ? 'La clé USB est en tête : au prochain démarrage, le PC lancera l\'installation du système.'
+      ? L('La clé USB est en tête : au prochain démarrage, le PC lancera l\'installation du système.',
+        'The USB stick is first: on the next boot, the PC will start the operating system installer.')
       : first === 'ssd'
-        ? 'Le SSD est en tête : le PC démarre sur le système installé. Pour l\'installation, place la clé USB en premier.'
-        : 'Le démarrage réseau sert surtout en entreprise : remets la clé USB ou le SSD en tête.';
+        ? L('Le SSD est en tête : le PC démarre sur le système installé. Pour l\'installation, place la clé USB en premier.',
+          'The SSD is first: the PC boots into the installed system. To install one, move the USB stick to the top.')
+        : L('Le démarrage réseau sert surtout en entreprise : remets la clé USB ou le SSD en tête.',
+          'Network boot is mostly used in companies. Move the USB stick or the SSD back to the top.');
   }
   bootList.addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-move]');
@@ -91,13 +98,13 @@ export function initBios() {
   function openSave() {
     const changes = [];
     const expoOn = expo.getAttribute('aria-pressed') === 'true';
-    if (expoOn !== saved.expo) changes.push(expoOn ? 'Profil mémoire : EXPO activé (6 000 MT/s)' : 'Profil mémoire : désactivé');
+    if (expoOn !== saved.expo) changes.push(expoOn ? L('Profil mémoire : EXPO activé (6 000 MT/s)', 'Memory profile: EXPO enabled (6,000 MT/s)') : L('Profil mémoire : désactivé', 'Memory profile: disabled'));
     const first = firstDevice();
     if (first !== saved.first) {
       const label = bootList.firstElementChild.querySelector('span').textContent;
-      changes.push(`Premier périphérique de démarrage : ${label}`);
+      changes.push(`${L('Premier périphérique de démarrage : ', 'First boot device: ')}${label}`);
     }
-    dialogList.replaceChildren(...(changes.length ? changes : ['Aucune modification']).map((c) => {
+    dialogList.replaceChildren(...(changes.length ? changes : [L('Aucune modification', 'No changes')]).map((c) => {
       const li = document.createElement('li');
       li.textContent = c;
       return li;

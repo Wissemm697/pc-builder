@@ -1,5 +1,5 @@
 /**
- * cables.js — Câbles du montage, dessinés en Three.js (tubes le long d'une courbe).
+ * cables.js : Câbles du montage, dessinés en Three.js (tubes le long d'une courbe).
  *
  * Chaque câble a deux tracés de même nombre de points :
  *   - `messy` : branché « à la va-vite », bien visible devant la carte mère ;

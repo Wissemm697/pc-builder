@@ -1,5 +1,5 @@
 """
-model_case.py — Boîtier moyen tour ATX (45 x 22 x 48 cm) : panneau latéral en verre
+model_case.py : Boîtier moyen tour ATX (45 x 22 x 48 cm) : panneau latéral en verre
 trempé, alimentation en bas sous un cache, façade en mesh pour 3 ventilateurs de 120 mm,
 emplacement de 120 mm à l'arrière, 7 slots d'extension, plateau avec passe-câbles.
 

@@ -1,5 +1,5 @@
 /**
- * hero-view.js — Le PC complet assemblé, qui tourne lentement (section d'accueil).
+ * hero-view.js : Le PC complet assemblé, qui tourne lentement (section d'accueil).
  * On peut aussi le faire tourner à la souris ou au doigt (sans zoom, pour ne pas gêner
  * le défilement de la page).
  */

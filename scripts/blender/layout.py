@@ -1,5 +1,5 @@
 """
-layout.py — Cotes partagées entre les scripts (source unique de vérité).
+layout.py : Cotes partagées entre les scripts (source unique de vérité).
 
 Toutes les valeurs sont en centimètres, dans l'espace du site (voir common.py) :
 X = avant du boîtier, Y = haut, Z = vers la vitre.
@@ -12,7 +12,7 @@ Repère du BOÎTIER : origine au centre de l'empreinte au sol.
 """
 
 # ---------------------------------------------------------------- carte mère ATX
-MB_W = 24.4          # profondeur (X) — format ATX 305 x 244 mm
+MB_W = 24.4          # profondeur (X), format ATX 305 x 244 mm
 MB_H = 30.5          # hauteur (Y)
 MB_T = 0.16          # épaisseur du PCB
 

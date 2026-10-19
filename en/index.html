@@ -1,0 +1,1486 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Security policy: only resources from the site itself (see SECURITY.md) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-zk++BfPO1SbUQtmOpdziLozk2I/KT371T8jff86cfU4='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' data: blob:; font-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Build Your Own PC from A to Z: an interactive 3D guide</title>
+  <meta name="description" content="Learn what every part of a desktop PC does, check that your parts are compatible and put it all together step by step, with interactive 3D models.">
+  <meta name="theme-color" content="#111317">
+  <link rel="alternate" hreflang="fr" href="../">
+  <link rel="alternate" hreflang="en" href="./">
+  <link rel="alternate" hreflang="x-default" href="../">
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+  <!-- light/dark theme and preferred language, applied before the page is drawn -->
+  <script src="../js/prefs.js"></script>
+  <!-- Three.js pinned to 0.160.0 and bundled with the site, so it works offline.
+       The importmap stays on one line so its CSP hash doesn't depend on line endings. -->
+  <script type="importmap">{"imports":{"three":"../js/vendor/three/three.module.min.js","three/addons/":"../js/vendor/three/addons/"}}</script>
+  <script type="module" src="../js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Skip to content</a>
+
+  <!-- ====================================================== top bar -->
+  <header class="topbar" id="topbar">
+    <a class="brand" href="#accueil" aria-label="Back to the top">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="3" width="17" height="26" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12.5" cy="11" r="3.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 20h9M8 24h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M25 8v16" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/></svg>
+      <span>PC&nbsp;Builder</span>
+    </a>
+    <p class="topbar-current" id="topbar-current" aria-live="polite">Home</p>
+    <div class="topbar-tools">
+      <details class="lang-menu" id="lang-menu">
+        <summary aria-label="Site language: English">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span>EN</span>
+        </summary>
+        <ul>
+          <li><a href="../" hreflang="fr" lang="fr">Français</a></li>
+          <li><a href="./" hreflang="en" lang="en" aria-current="true">English</a></li>
+        </ul>
+      </details>
+      <button class="icon-btn theme-toggle" id="theme-toggle" type="button" aria-label="Change theme" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <button class="toc-toggle" id="toc-toggle" aria-expanded="false" aria-controls="toc">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span>Contents</span>
+    </button>
+    <div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>
+  </header>
+
+  <nav class="toc" id="toc" aria-label="Contents">
+    <div class="toc-inner">
+      <p class="toc-title">Contents</p>
+      <ol>
+        <li class="toc-group">Introduction
+          <ol>
+            <li><a href="#accueil">Home</a></li>
+            <li><a href="#vue-ensemble">The big picture</a></li>
+          </ol>
+        </li>
+        <li class="toc-group">The parts
+          <ol>
+            <li><a href="#cpu">Processor</a></li>
+            <li><a href="#carte-mere">Motherboard</a></li>
+            <li><a href="#ram">Memory (RAM)</a></li>
+            <li><a href="#stockage">Storage</a></li>
+            <li><a href="#gpu">Graphics card</a></li>
+            <li><a href="#alimentation">Power supply</a></li>
+            <li><a href="#refroidissement">Cooling</a></li>
+            <li><a href="#boitier">Case</a></li>
+          </ol>
+        </li>
+        <li class="toc-group">Building it
+          <ol>
+            <li><a href="#vue-eclatee">Exploded view</a></li>
+            <li><a href="#securite">Safety</a></li>
+            <li><a href="#montage">Step-by-step build</a></li>
+            <li><a href="#bios">BIOS / UEFI</a></li>
+          </ol>
+        </li>
+        <li class="toc-group">Finishing touches
+          <ol>
+            <li><a href="#peripheriques">Peripherals</a></li>
+            <li><a href="#compatibilite">Checklist</a></li>
+            <li><a href="#glossaire">Glossary</a></li>
+          </ol>
+        </li>
+      </ol>
+    </div>
+  </nav>
+
+  <main id="contenu">
+
+    <!-- ====================================================== 1. HERO -->
+    <section id="accueil" class="hero" aria-labelledby="hero-title">
+      <div class="hero-stage">
+        <figure class="viewer viewer--hero" data-viewer="hero" aria-label="A fully built PC in 3D, slowly turning">
+          <img class="viewer-poster" src="../img/previews/assembly.webp" alt="" decoding="async">
+          <p class="viewer-status" role="status">Loading the 3D view…</p>
+        </figure>
+      </div>
+      <div class="hero-content">
+        <p class="kicker">An interactive 3D guide</p>
+        <h1 id="hero-title">Build your own PC <span class="accent-text">from A to Z</span></h1>
+        <p class="hero-lead">Find out what every part does, learn to read a spec sheet, check that everything is compatible, then put a desktop PC together one step at a time. No prior knowledge needed.</p>
+        <div class="hero-actions">
+          <a class="btn btn--primary" href="#vue-ensemble">Get started
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="#montage">Skip to the build</a>
+        </div>
+        <ul class="hero-facts">
+          <li><strong>8</strong> parts explained in detail</li>
+          <li><strong>11</strong> animated build steps</li>
+          <li><strong>2 to 4 hours</strong> for a first build</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ====================================================== 2. THE BIG PICTURE -->
+    <section id="vue-ensemble" class="section" aria-labelledby="ve-title">
+      <header class="section-head">
+        <p class="kicker">Before you start</p>
+        <h2 id="ve-title">How the parts work together</h2>
+        <p class="lead">A computer is a team of specialised parts. To see who does what, picture a <strong>restaurant kitchen</strong>: every part has its own job, and none of them is any use without the others.</p>
+      </header>
+
+      <ul class="analogy-grid">
+        <li class="analogy-card">
+          <a href="#cpu" class="analogy-link">
+            <span class="analogy-role">The head chef</span>
+            <h3>Processor <abbr title="Central Processing Unit">(CPU)</abbr></h3>
+            <p>It reads the recipes (the programs' instructions) and does the work, billions of times a second. An 8-<span class="term" data-g="coeur">core</span> processor is like 8 chefs cooking at the same time.</p>
+          </a>
+        </li>
+        <li class="analogy-card">
+          <a href="#ram" class="analogy-link">
+            <span class="analogy-role">The worktop</span>
+            <h3>Memory <abbr title="Random Access Memory">(RAM)</abbr></h3>
+            <p>Whatever ingredients are in use sit here, within the chef's reach. It's very fast, but everything gets cleared away at closing time: RAM empties as soon as the PC is switched off.</p>
+          </a>
+        </li>
+        <li class="analogy-card">
+          <a href="#stockage" class="analogy-link">
+            <span class="analogy-role">The fridge and the pantry</span>
+            <h3>Storage <abbr title="Solid State Drive">(SSD)</abbr></h3>
+            <p>Everything is kept here: the operating system, your programs, your files. Nothing is lost when the power goes off, but fetching something from here takes much longer than grabbing it from the worktop.</p>
+          </a>
+        </li>
+        <li class="analogy-card">
+          <a href="#carte-mere" class="analogy-link">
+            <span class="analogy-role">The kitchen itself</span>
+            <h3>Motherboard</h3>
+            <p>The walls, the corridors, the power sockets: it connects every part, gives each one its power and carries information between them.</p>
+          </a>
+        </li>
+        <li class="analogy-card">
+          <a href="#gpu" class="analogy-link">
+            <span class="analogy-role">1,000 kitchen assistants at once</span>
+            <h3>Graphics card <abbr title="Graphics Processing Unit">(GPU)</abbr></h3>
+            <p>Each assistant does one simple task (working out the colour of a single dot on the screen, say), but there are thousands of them working at the same time. Unbeatable for images, and for artificial intelligence too.</p>
+          </a>
+        </li>
+        <li class="analogy-card">
+          <a href="#alimentation" class="analogy-link">
+            <span class="analogy-role">The power supply to the building</span>
+            <h3>Power supply <abbr title="Power Supply Unit">(PSU)</abbr></h3>
+            <p>It turns the current from the wall socket (230&nbsp;V AC in Europe, 120&nbsp;V in North America) into the low-voltage DC the components need (mostly 12&nbsp;V), and cuts everything off if something goes wrong.</p>
+          </a>
+        </li>
+        <li class="analogy-card">
+          <a href="#boitier" class="analogy-link">
+            <span class="analogy-role">The building and the extractor fan</span>
+            <h3>Case and fans</h3>
+            <p>The case protects and organises everything. Like a kitchen extractor fan, the fans bring in fresh air and push out the heat the parts give off.</p>
+          </a>
+        </li>
+      </ul>
+
+      <h3 class="subhead">A program's journey, from storage to screen</h3>
+      <p class="muted">Say you launch a game. Here's what happens, in order.</p>
+      <ol class="flow" aria-label="How data travels through the PC">
+        <li class="flow-step">
+          <span class="flow-num">1</span>
+          <h4>Storage</h4>
+          <p>The game's files are read from the SSD (the fridge). This is the slowest step: it's what loading screens are made of.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-num">2</span>
+          <h4>RAM</h4>
+          <p>They're copied into RAM (the worktop), where the processor can reach them in a few tens of <span class="term" data-g="nanoseconde">nanoseconds</span>.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-num">3</span>
+          <h4>CPU</h4>
+          <p>The processor (the chef) runs the game's logic: movement, physics, the characters' behaviour, sound… and draws up a list of what needs to be on screen.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-num">4</span>
+          <h4>GPU</h4>
+          <p>The graphics card (the kitchen brigade) works out the millions of dots (<span class="term" data-g="pixel">pixels</span>) in each frame, all in parallel, using its own fast memory: the <span class="term" data-g="vram">VRAM</span>.</p>
+        </li>
+        <li class="flow-step">
+          <span class="flow-num">5</span>
+          <h4>Screen</h4>
+          <p>The image travels down the cable (DisplayPort or HDMI) to the monitor, which shows 60 to 165 of them per second depending on its <span class="term" data-g="hz">refresh rate</span>.</p>
+        </li>
+      </ol>
+      <p class="note">In between all these parts, the motherboard acts as the road network: data travels along "motorways" called <span class="term" data-g="bus">buses</span>, the most important of which is <span class="term" data-g="pcie">PCIe</span>.</p>
+    </section>
+
+    <!-- ====================================================== 3. THE PARTS -->
+    <div class="parts-intro section" id="pieces">
+      <header class="section-head">
+        <p class="kicker">The 8 parts of a desktop PC</p>
+        <h2>Part by part</h2>
+        <p class="lead">For each part you'll find a 3D viewer (drag it round with your mouse or finger, zoom with the scroll wheel or a pinch), what it does, how to read its spec sheet, a few figures to give you a sense of scale, then what to check for compatibility and the classic mistakes. The hardware shown is a <strong>typical, mainstream, mid-range</strong> build.</p>
+      </header>
+    </div>
+
+    <!-- ---------------------------------------------------------------- CPU -->
+    <section id="cpu" class="part section" aria-labelledby="cpu-title">
+      <header class="section-head">
+        <p class="kicker">Part 1 of 8 · The head chef</p>
+        <h2 id="cpu-title">The processor (CPU)</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="cpu" aria-label="Processor in 3D: drag to rotate it, scroll or pinch to zoom.">
+            <img class="viewer-poster" src="../img/previews/cpu.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">The 3D view loads when this area scrolls into view…</p>
+          </figure>
+          <p class="viewer-caption">An AMD AM5 processor (40 × 40 mm). Flip it over to see its ~1,700 gold pads.</p>
+        </div>
+        <div class="part-text">
+          <h3>What it does</h3>
+          <p>The processor (<abbr title="Central Processing Unit">CPU</abbr>, short for "central processing unit") carries out the programs' instructions: additions, comparisons, moving data around… Everything the computer does goes through it at some point.</p>
+          <p>Physically, it's a silicon chip (the <span class="term" data-g="die">die</span>) soldered onto a small green board (the <em>substrate</em>) and covered by a metal lid, the <span class="term" data-g="ihs">IHS</span>, which spreads the heat out towards the cooler. Underneath, gold pads press against the pins of the <span class="term" data-g="socket">socket</span>, the motherboard's processor mount. On modern <span class="term" data-g="lga">LGA</span> sockets (AMD AM5, Intel LGA&nbsp;1851), <strong>the pins are on the motherboard</strong>, not on the processor.</p>
+          <div class="analogy-box"><span class="analogy-tag">Think of it this way</span> The processor is the <strong>head chef</strong>: it follows recipes step by step, very quickly. Each <span class="term" data-g="coeur">core</span> is an independent chef, so 8 cores means 8 chefs working on different dishes at the same time.</div>
+
+          <h3>How to read the spec sheet</h3>
+          <div class="spec">
+            <p class="spec-title">Typical specs: a mainstream mid-range processor</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Cores / threads</dt><dd class="spec-value">8 / 16</dd>
+                <dd class="spec-help">A core is a complete processing unit. A <span class="term" data-g="thread">thread</span> is a sequence of instructions to run; thanks to <span class="term" data-g="smt">SMT</span>, an AMD core switches between 2 threads so it's never left idle. Intel's Core Ultra 200 series mixes "P" (performance) and "E" (efficient) cores, without SMT. 6 to 8 cores is plenty for gaming, coding or data work.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Clock speed</dt><dd class="spec-value">3.8 GHz base · 5.4 GHz boost</dd>
+                <dd class="spec-help">The number of cycles per second: 5&nbsp;<span class="term" data-g="ghz">GHz</span> means 5 billion. The "boost" speed is reached as long as temperature and power draw allow it. Only compare GHz between processors of the same generation: a newer design gets more work done in each cycle.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>L3 cache</dt><dd class="spec-value">32 MB</dd>
+                <dd class="spec-help">The <span class="term" data-g="cache">cache</span> is a small, extremely fast memory built into the processor: the chef's own spice rack, right at hand. The more there is, the less time the processor spends waiting on RAM. AMD's "X3D" models have far more of it (96 MB), which mainly helps in games.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Socket</dt><dd class="spec-value">AM5 (LGA 1718)</dd>
+                <dd class="spec-help">The type of mount. A processor only fits a motherboard with the same socket. Right now that's AM5 for AMD and LGA&nbsp;1851 for Intel (Intel's next generation, expected in early 2027, moves to LGA&nbsp;1954).</dd>
+              </div>
+              <div class="spec-row">
+                <dt>TDP</dt><dd class="spec-value">65 W</dd>
+                <dd class="spec-help">The <span class="term" data-g="tdp">TDP</span> tells you roughly how much heat has to be removed, so it's what you use to choose the cooling. Mainstream processors usually sit between 65 and 125&nbsp;W.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Memory / integrated graphics</dt><dd class="spec-value">DDR5 · iGPU yes</dd>
+                <dd class="spec-help">Which type of RAM it takes (DDR5 only on AM5), and whether it has a small built-in graphics unit (<span class="term" data-g="igpu">iGPU</span>), handy for troubleshooting without a graphics card. Watch out: Intel processors whose name ends in "F" don't have one.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>A sense of scale</h3>
+          <ul class="magnitudes">
+            <li><strong>0.2 ns</strong> That's one cycle at 5&nbsp;GHz. In that time, light travels just 6&nbsp;cm.</li>
+            <li><strong>Billions</strong> of transistors fit on a chip the size of a fingernail.</li>
+            <li><strong>95 °C</strong> At around 95 to 105&nbsp;°C, depending on the model, the processor protects itself by slowing down (<span class="term" data-g="throttling">throttling</span>). That's why the cooler matters.</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibility">
+            <h4>Compatibility</h4>
+            <ul>
+              <li><strong>With the motherboard:</strong> the same socket (AM5 ↔ AM5). Also check the board maker's list of supported processors: a processor newer than the board may need a BIOS update.</li>
+              <li><strong>With the RAM:</strong> the memory type (DDR5 on AM5).</li>
+              <li><strong>With the cooler:</strong> the mounting kit must support your socket (AM5 reuses AM4 mounts), and it must be able to handle the TDP.</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Beginner mistakes">
+            <h4>Beginner mistakes</h4>
+            <ul>
+              <li><strong>Forcing it.</strong> The processor should drop flat into the socket on its own. If it resists, it's the wrong way round: line up the two gold triangles.</li>
+              <li><strong>Touching the socket pins.</strong> They're very thin and bend at the slightest touch, and a bent pin can make the board unusable.</li>
+              <li><strong>Throwing away the socket's plastic cover.</strong> It pops off when you close the lever. Keep it: manufacturers often ask for it if you send the board back.</li>
+              <li><strong>Comparing GHz</strong> between two brands or two generations. It tells you nothing: look at benchmarks instead.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- MOTHERBOARD -->
+    <section id="carte-mere" class="part section" aria-labelledby="mb-title">
+      <header class="section-head">
+        <p class="kicker">Part 2 of 8 · The kitchen that connects everything</p>
+        <h2 id="mb-title">The motherboard</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="motherboard" aria-label="ATX motherboard in 3D: drag to rotate it. The numbered labels point out the important components.">
+            <img class="viewer-poster" src="../img/previews/motherboard.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">The 3D view loads when this area scrolls into view…</p>
+          </figure>
+          <p class="viewer-caption">An ATX motherboard (30.5 × 24.4 cm). Hover over or tap the labels to identify each area.</p>
+        </div>
+        <div class="part-text">
+          <h3>What it does</h3>
+          <p>The motherboard is a large printed circuit board (<span class="term" data-g="pcb">PCB</span>) that everything plugs into. It delivers power to each part, moves data between them, and holds the <span class="term" data-g="bios">BIOS/UEFI</span>, the small piece of software that starts the PC.</p>
+          <p>Its main areas: the processor <strong>socket</strong> and its <span class="term" data-g="vrm">VRM</span> (the stage that produces the processor's voltage, under the finned heatsinks), the 4 <strong>RAM <span class="term" data-g="slot">slots</span></strong>, the <strong>PCIe x16</strong> slot for the graphics card, the <strong>M.2</strong> slots for SSDs, the <span class="term" data-g="chipset">chipset</span>, the <strong>24-pin</strong> and <strong>8-pin <span class="term" data-g="eps">EPS</span></strong> power connectors, the <span class="term" data-g="header">headers</span> (for the case's front panel, fans and USB) and the <strong>rear ports</strong> (<span class="term" data-g="io">I/O</span>).</p>
+          <div class="analogy-box"><span class="analogy-tag">Think of it this way</span> The motherboard is <strong>the kitchen itself</strong>: the worktops, the passages between stations, the power sockets. A badly designed kitchen slows the whole brigade down, however good the chef.</div>
+
+          <h3>How to read the spec sheet</h3>
+          <div class="spec">
+            <p class="spec-title">Typical specs: a mid-range ATX motherboard</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Form factor</dt><dd class="spec-value">ATX (30.5 × 24.4 cm)</dd>
+                <dd class="spec-help">The board's size and the position of its 9 mounting holes. The case must support this size. <span class="term" data-g="atx">ATX</span> is the standard size for tower PCs.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Socket / chipset</dt><dd class="spec-value">AM5 · B-series chipset</dd>
+                <dd class="spec-help">The socket decides which processors fit. The chipset runs some of the ports (USB, SATA, secondary M.2) and sets the feature list. The "B" range (B650/B850 for AMD, B860 for Intel, for example) is the mid-range: everything you need, nothing you don't.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Memory</dt><dd class="spec-value">4 × DDR5 (dual channel)</dd>
+                <dd class="spec-help">The type and number of slots. With 2 sticks, you use slots A2 and B2 to get <span class="term" data-g="dualchannel">dual channel</span>.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Storage</dt><dd class="spec-value">2 × M.2 NVMe · 4 × SATA</dd>
+                <dd class="spec-help">The slots for M.2 SSDs (and their PCIe generation), plus <span class="term" data-g="sata">SATA</span> ports for older drives. The M.2 slot closest to the processor is usually the fastest.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Expansion</dt><dd class="spec-value">1 × PCIe x16 (reinforced) + secondary slots</dd>
+                <dd class="spec-help">The main x16 slot, with a metal reinforcement, takes the graphics card. "x16" means 16 data lanes.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Connectivity</dt><dd class="spec-value">USB-A/C, 2.5 Gb/s Ethernet, Wi-Fi, audio</dd>
+                <dd class="spec-help">The ports on the back and the internal headers (front USB-C, fans…). The motherboard's video outputs only work with the processor's integrated graphics.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>A sense of scale</h3>
+          <ul class="magnitudes">
+            <li><strong>~32 GB/s</strong> The bandwidth of a PCIe 4.0 x16 slot in each direction: the graphics card's motorway.</li>
+            <li><strong>6 to 8 layers</strong> of copper traces are stacked inside the 1.6&nbsp;mm thickness of a modern board.</li>
+            <li><strong>~1 V</strong> The VRM turns the power supply's 12&nbsp;V into roughly 1 to 1.4&nbsp;V for the processor, which can then draw several tens of amps.</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibility">
+            <h4>Compatibility</h4>
+            <ul>
+              <li><strong>Processor:</strong> the same socket, and a compatible BIOS version (see the maker's "CPU support" list). Many boards have a <span class="term" data-g="flashback">BIOS Flashback</span> button to update without a processor installed.</li>
+              <li><strong>RAM:</strong> the same generation (DDR5).</li>
+              <li><strong>Case:</strong> the form factor (ATX) must be on the list of supported sizes.</li>
+              <li><strong>Power supply:</strong> it must provide the 24-pin and the 8-pin EPS (sometimes a second 4/8-pin, optional on mid-range builds).</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Beginner mistakes">
+            <h4>Beginner mistakes</h4>
+            <ul>
+              <li><strong>Forgetting the I/O shield</strong> when it isn't built into the board: it clips into the case <em>before</em> the motherboard goes in.</li>
+              <li><strong>Leaving a standoff with no hole above it:</strong> it touches the back of the board and can cause a short circuit.</li>
+              <li><strong>Forgetting the 8-pin EPS cable</strong> in the top left: the PC won't start.</li>
+              <li><strong>Overtightening the screws:</strong> snug, then a small quarter turn, is enough.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- RAM -->
+    <section id="ram" class="part section" aria-labelledby="ram-title">
+      <header class="section-head">
+        <p class="kicker">Part 3 of 8 · The worktop</p>
+        <h2 id="ram-title">Memory (RAM)</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="ram" aria-label="DDR5 memory stick in 3D: drag to rotate it.">
+            <img class="viewer-poster" src="../img/previews/ram.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">The 3D view loads when this area scrolls into view…</p>
+          </figure>
+          <p class="viewer-caption">A 16 GB DDR5 stick (133 × 31 mm): 8 memory chips, a voltage regulator (PMIC) and 288 contacts.</p>
+        </div>
+        <div class="part-text">
+          <h3>What it does</h3>
+          <p>Memory (<abbr title="Random Access Memory">RAM</abbr>) keeps the data and programs you're <em>currently using</em> close at hand. It responds hundreds of times faster than an SSD, but it's <span class="term" data-g="volatile">volatile</span>: everything in it disappears the moment the power is cut. That's why you "save" a file: you're copying it from RAM to storage.</p>
+          <p>The typical setup in 2026: <strong>2 sticks of 16 GB of <span class="term" data-g="ddr5">DDR5</span></strong>, so 32 GB in total, fitted in slots A2 and B2 to run in dual channel (the two sticks work in parallel, which doubles the bandwidth).</p>
+          <div class="analogy-box"><span class="analogy-tag">Think of it this way</span> RAM is the <strong>worktop</strong>: the bigger it is, the more dishes the chef can prepare at once without running back and forth to the fridge. But at the end of the night, everything gets cleared away.</div>
+
+          <h3>How to read the spec sheet</h3>
+          <div class="spec">
+            <p class="spec-title">Typical specs: a 32 GB (2 × 16 GB) DDR5-6000 CL30 kit</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Capacity</dt><dd class="spec-value">32 GB (2 × 16 GB)</dd>
+                <dd class="spec-help">The size of the worktop. 16&nbsp;GB is a comfortable minimum; 32&nbsp;GB is the safe choice for gaming, coding, data work or video editing. Buy a <strong>kit</strong> of 2 identical sticks.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Generation</dt><dd class="spec-value">DDR5</dd>
+                <dd class="spec-help">DDR5 and DDR4 aren't interchangeable: the notch at the bottom is in a different place, so one can't go into the other's slot (and forcing it is a bad idea).</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Speed</dt><dd class="spec-value">6000 MT/s</dd>
+                <dd class="spec-help">The number of transfers per second (<span class="term" data-g="mts">MT/s</span>, often wrongly written as "MHz"). Out of the box, RAM starts at a slower standard speed: you have to turn on the <span class="term" data-g="expo">EXPO/XMP</span> profile in the BIOS. On AM5, 6000&nbsp;MT/s is the usual sweet spot.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Latency</dt><dd class="spec-value">CL30</dd>
+                <dd class="spec-help">The number of cycles you wait before the data arrives (<span class="term" data-g="cl">CAS latency</span>). Lower is better, but you have to factor in the speed: real latency ≈ CL × 2000 ÷ speed = 30 × 2000 ÷ 6000 = <strong>10&nbsp;ns</strong>.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Voltage / profile</dt><dd class="spec-value">1.35 V · EXPO (AMD) / XMP (Intel)</dd>
+                <dd class="spec-help">The voltage needed to hold the rated speed, applied automatically by the profile. AMD calls it EXPO, Intel calls it XMP, and many kits support both.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>A sense of scale</h3>
+          <div class="chart" data-chart="latency" aria-label="Access times compared, on a logarithmic scale"></div>
+          <ul class="magnitudes">
+            <li><strong>~1,000×</strong> RAM answers in about 80&nbsp;ns, an NVMe SSD in 50 to 100&nbsp;µs. In access time (<span class="term" data-g="latence">latency</span>), RAM is roughly <strong>1,000 times faster</strong>. If a trip to RAM took 1&nbsp;second, a trip to the SSD would take a quarter of an hour, and a hard drive more than a day.</li>
+            <li><strong>~14×</strong> In <span class="term" data-g="debit">throughput</span> (amount of data per second), the gap is smaller: two DDR5-6000 sticks in dual channel reach ~96&nbsp;GB/s in theory, against ~7&nbsp;GB/s for a very good PCIe&nbsp;4.0 SSD.</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibility">
+            <h4>Compatibility</h4>
+            <ul>
+              <li><strong>Motherboard:</strong> the same generation (DDR5). The maker's <span class="term" data-g="qvl">QVL</span> lists the kits it has tested.</li>
+              <li><strong>Slots:</strong> with 2 sticks, A2 and B2 (the 2<sup>nd</sup> and 4<sup>th</sup> slots counting from the processor). The manual says so, and it's often printed on the board.</li>
+              <li><strong>CPU cooler:</strong> very tall sticks (with big heatsinks) can get in the way of the cooler's fan.</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Beginner mistakes">
+            <h4>Beginner mistakes</h4>
+            <ul>
+              <li><strong>Not pushing it in until it clicks.</strong> You have to press hard, on both ends: a stick that isn't fully seated stops the PC from starting.</li>
+              <li><strong>Putting the sticks side by side</strong> (A1 + A2): you lose dual channel.</li>
+              <li><strong>Forgetting EXPO/XMP</strong>: your RAM then runs slower than what you paid for.</li>
+              <li><strong>Panicking on the first boot.</strong> With DDR5, the board "trains" the memory (<span class="term" data-g="training">memory training</span>), so the first start can take several minutes on a black screen. That's normal: don't switch it off.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- STORAGE -->
+    <section id="stockage" class="part section" aria-labelledby="ssd-title">
+      <header class="section-head">
+        <p class="kicker">Part 4 of 8 · The fridge and the pantry</p>
+        <h2 id="ssd-title">Storage (M.2 NVMe SSD)</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="ssd" aria-label="M.2 2280 NVMe SSD in 3D: drag to rotate it.">
+            <img class="viewer-poster" src="../img/previews/ssd.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">The 3D view loads when this area scrolls into view…</p>
+          </figure>
+          <p class="viewer-caption">A 1 TB M.2 2280 SSD: 22 × 80 mm, barely bigger than a stick of gum… and no cables at all.</p>
+        </div>
+        <div class="part-text">
+          <h3>What it does</h3>
+          <p>Storage keeps everything, even with the power off: the operating system, your programs, your files. An <abbr title="Solid State Drive">SSD</abbr> uses flash memory (<span class="term" data-g="nand">NAND</span>) and has no moving parts. The <span class="term" data-g="m2">M.2</span> 2280 format screws straight onto the motherboard, and the <span class="term" data-g="nvme">NVMe</span> protocol lets it talk to the processor over PCIe lanes, which is why it's so fast.</p>
+          <p>The chip on the left is the <strong>controller</strong> (the SSD's brain). It spreads the data across the flash memory chips hidden under the label.</p>
+          <div class="analogy-box"><span class="analogy-tag">Think of it this way</span> Storage is the <strong>fridge and the pantry</strong>: everything is kept there, even overnight, but it takes time to go and fetch the ingredients. An NVMe SSD is a fridge right next to the kitchen; a hard drive is a storeroom at the far end of the yard.</div>
+
+          <h3>How to read the spec sheet</h3>
+          <div class="spec">
+            <p class="spec-title">Typical specs: a 1 TB M.2 2280 NVMe SSD</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Form factor</dt><dd class="spec-value">M.2 2280 (M key)</dd>
+                <dd class="spec-help">22&nbsp;mm wide and 80&nbsp;mm long: by far the most common size. The notch in the contacts (the "M key") matches the M.2 slots meant for SSDs.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Interface</dt><dd class="spec-value">PCIe 4.0 x4, NVMe</dd>
+                <dd class="spec-help">4 fourth-generation PCIe lanes, so about 8&nbsp;GB/s at the theoretical maximum. PCIe&nbsp;5.0 SSDs double that, but run hotter for a gain you'll barely notice in everyday use.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Capacity</dt><dd class="spec-value">1 TB</dd>
+                <dd class="spec-help">1 TB = 1,000 GB. Windows and a few recent games (often 50 to 150 GB each) fill it quickly: 1 TB is a good start, 2 TB if you play a lot.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Sequential speeds</dt><dd class="spec-value">7,000 / 6,000 MB/s</dd>
+                <dd class="spec-help">Reading / writing large files, under ideal conditions. Day to day, how snappy it feels depends mostly on small random accesses (<span class="term" data-g="iops">IOPS</span>) and latency, where every NVMe SSD is already excellent.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Endurance</dt><dd class="spec-value">600 TBW</dd>
+                <dd class="spec-help">The total amount of data you can write before it wears out (<span class="term" data-g="tbw">TBW</span>). 600&nbsp;TB is 160&nbsp;GB written every day for 10 years: more than enough.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>A sense of scale</h3>
+          <div class="chart" data-chart="storage" aria-label="Sequential read speed by type of storage"></div>
+          <ul class="magnitudes">
+            <li><strong>3 s</strong> Copying a 20&nbsp;GB file takes about 3&nbsp;s on a PCIe&nbsp;4.0 NVMe SSD, 40&nbsp;s on a SATA SSD and 2&nbsp;minutes on a hard drive (under ideal conditions).</li>
+          </ul>
+
+          <h3>Other kinds of storage (as extras)</h3>
+          <div class="table-wrap">
+            <table class="compare">
+              <caption>NVMe, SATA SSD and hard drive: the differences</caption>
+              <thead><tr><th scope="col"></th><th scope="col">M.2 NVMe SSD</th><th scope="col">2.5" SATA SSD</th><th scope="col">3.5" hard drive (<span class="term" data-g="hdd">HDD</span>)</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Speed</th><td>3,500 to 14,000 MB/s</td><td>~550 MB/s (the SATA limit)</td><td>150 to 280 MB/s</td></tr>
+                <tr><th scope="row">Access time</th><td>~0.05 to 0.1 ms</td><td>~0.1 ms</td><td>5 to 10 ms (a mechanical head has to move)</td></tr>
+                <tr><th scope="row">Connection</th><td>M.2 slot, no cables</td><td>SATA cable + power cable</td><td>SATA cable + power cable</td></tr>
+                <tr><th scope="row">Best for</th><td>Operating system, programs, games</td><td>Extra storage, reusing an old SSD</td><td>Large archives and backups, lowest cost per GB</td></tr>
+                <tr><th scope="row">Noise</th><td>Silent</td><td>Silent</td><td>Noise and vibration</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <aside class="callout callout--compat" aria-label="Compatibility">
+            <h4>Compatibility</h4>
+            <ul>
+              <li><strong>Motherboard:</strong> an M-key M.2 slot that supports NVMe, of the same or a newer PCIe generation (otherwise the SSD still works, just more slowly).</li>
+              <li><strong>Shared lanes:</strong> on some boards, using an M.2 slot disables SATA ports or slows down a PCIe slot. The manual will tell you.</li>
+              <li><strong>Length:</strong> the slot must take 80&nbsp;mm drives (it almost always does).</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Beginner mistakes">
+            <h4>Beginner mistakes</h4>
+            <ul>
+              <li><strong>Forgetting the screw</strong> (or the latch): the SSD stays tilted up at 30° and eventually loses contact.</li>
+              <li><strong>Leaving the plastic film</strong> on the thermal pad of the motherboard's M.2 heatsink.</li>
+              <li><strong>Installing Windows on the wrong drive</strong>: during setup, make sure you pick the NVMe SSD.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- GPU -->
+    <section id="gpu" class="part section" aria-labelledby="gpu-title">
+      <header class="section-head">
+        <p class="kicker">Part 5 of 8 · A brigade of 1,000 assistants</p>
+        <h2 id="gpu-title">The graphics card (GPU)</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="gpu" aria-label="Dual-fan graphics card in 3D: drag to rotate it.">
+            <img class="viewer-poster" src="../img/previews/gpu.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">The 3D view loads when this area scrolls into view…</p>
+          </figure>
+          <p class="viewer-caption">A mid-range graphics card: 28 cm long, 2 fans, one 8-pin power socket.</p>
+        </div>
+        <div class="part-text">
+          <h3>What it does</h3>
+          <p>The graphics card draws the images you see on screen. Its chip, the <abbr title="Graphics Processing Unit">GPU</abbr>, contains <strong>thousands</strong> of small processing units working in parallel: perfect for handling millions of pixels, and also for artificial intelligence and scientific computing (which is why it's used in data science). It has its own ultra-fast memory, the VRAM, and its own cooling system: a heatsink, <span class="term" data-g="heatpipe">heat pipes</span> and fans.</p>
+          <div class="analogy-box"><span class="analogy-tag">Think of it this way</span> The CPU is a brilliant chef who can cook anything; the GPU is a <strong>brigade of 1,000 kitchen assistants</strong> who can only do simple jobs… but all at the same time. To peel 10,000 potatoes, the brigade wins hands down.</div>
+
+          <h3>How to read the spec sheet</h3>
+          <div class="spec">
+            <p class="spec-title">Typical specs: a mid-range graphics card</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>VRAM</dt><dd class="spec-value">8 to 16 GB (GDDR6/GDDR7)</dd>
+                <dd class="spec-help">The card's memory, where game textures are stored. 8&nbsp;GB is getting tight at 1440p with recent games; 12 to 16&nbsp;GB gives you more headroom.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Power draw</dt><dd class="spec-value">~150 to 220 W</dd>
+                <dd class="spec-help">How much power the card uses (often listed as TGP or TBP). It decides what power supply you need: the maker gives a recommended PSU wattage (often 550 to 650&nbsp;W at this level).</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Dimensions</dt><dd class="spec-value">28 cm · 2.5 slots</dd>
+                <dd class="spec-help">Compare the length with the case's "maximum GPU length". The thickness in "slots" tells you how many expansion slots it takes up at the back (here, it also covers the second M.2 slot).</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Power connector</dt><dd class="spec-value">1 × 8-pin PCIe</dd>
+                <dd class="spec-help">The PCIe slot supplies up to 75&nbsp;W, and an 8-pin connector up to 150&nbsp;W more. Some more powerful cards use a 16-pin connector called <span class="term" data-g="12v2x6">12V-2x6</span>.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Video outputs</dt><dd class="spec-value">3 × DisplayPort · 1 × HDMI</dd>
+                <dd class="spec-help">For connecting one or more screens. DisplayPort is the standard for PC monitors, HDMI for TVs (see the <a href="#peripheriques">Peripherals</a> section).</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Interface</dt><dd class="spec-value">PCIe x16 (4.0 or 5.0)</dd>
+                <dd class="spec-help">PCIe generations work with each other: a PCIe&nbsp;5.0 card runs in a 4.0 slot, usually with very little performance loss for a card at this level.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>A sense of scale</h3>
+          <ul class="magnitudes">
+            <li><strong>600 million</strong> A 1440p frame has 3.7 million pixels. At 165 frames per second, the card works out more than 600 million pixels every second.</li>
+            <li><strong>Thousands</strong> of processing units in the GPU, against 6 to 8 (far more versatile) cores in the processor.</li>
+            <li><strong>3 to 5×</strong> VRAM delivers 300 to more than 500&nbsp;GB/s: 3 to 5 times the bandwidth of the PC's main RAM.</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibility">
+            <h4>Compatibility</h4>
+            <ul>
+              <li><strong>Case:</strong> card length &lt; maximum supported length (fans or a radiator at the front can eat into that space).</li>
+              <li><strong>Power supply:</strong> enough wattage and the right connector (8-pin PCIe or 12V-2x6).</li>
+              <li><strong>Motherboard:</strong> a free PCIe x16 slot (the top, reinforced one).</li>
+              <li><strong>Monitor:</strong> an input that matches the card's outputs (DisplayPort or HDMI).</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Beginner mistakes">
+            <h4>Beginner mistakes</h4>
+            <ul>
+              <li><strong>Plugging the monitor into the motherboard.</strong> Mistake number one: the motherboard's outputs only work with integrated graphics. With a graphics card, the monitor plugs into <em>the graphics card</em>.</li>
+              <li><strong>Forgetting the PCIe power cable</strong>, or not pushing it in until it clicks.</li>
+              <li><strong>Using a "daisy-chained" cable</strong> (two plugs on the same cable) for a card with two connectors: use two separate cables instead.</li>
+              <li><strong>Not screwing the <span class="term" data-g="equerre">bracket</span></strong> to the case: the card wobbles and puts strain on the slot.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- POWER SUPPLY -->
+    <section id="alimentation" class="part section" aria-labelledby="psu-title">
+      <header class="section-head">
+        <p class="kicker">Part 6 of 8 · The power coming in</p>
+        <h2 id="psu-title">The power supply (PSU)</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="psu" aria-label="Semi-modular ATX power supply in 3D: drag to rotate it.">
+            <img class="viewer-poster" src="../img/previews/psu.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">The 3D view loads when this area scrolls into view…</p>
+          </figure>
+          <p class="viewer-caption">A 750 W, 80 PLUS Gold, semi-modular ATX power supply (15 × 8.6 × 14 cm).</p>
+        </div>
+        <div class="part-text">
+          <h3>What it does</h3>
+          <p>The power supply (<abbr title="Power Supply Unit">PSU</abbr>) turns the alternating current from the wall (230&nbsp;V in Europe, 120&nbsp;V in North America) into low-voltage direct current: mostly <strong>12&nbsp;V</strong> (for the processor and the graphics card), plus some 5&nbsp;V and 3.3&nbsp;V. A good PSU delivers steady power and has built-in <span class="term" data-g="protections">protections</span> that cut everything off if there's a short circuit or an overload: it's what keeps every other part safe.</p>
+          <p>This one is <span class="term" data-g="modulaire">semi-modular</span>: the essential cables (the motherboard's 24-pin and the processor's 8-pin EPS) are fixed, and the others plug in as needed.</p>
+          <div class="analogy-box"><span class="analogy-tag">Think of it this way</span> The power supply is the kitchen's <strong>mains connection and fuse box</strong>: it converts the power from the grid for each appliance and cuts everything off if something goes wrong.</div>
+
+          <h3>How to read the spec sheet</h3>
+          <div class="spec">
+            <p class="spec-title">Typical specs: a 750 W ATX power supply</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Wattage</dt><dd class="spec-value">750 W</dd>
+                <dd class="spec-help">The most it can deliver continuously. A mid-range build draws about 300 to 450&nbsp;W while gaming: the headroom means it never runs flat out (louder, less efficient) and leaves room for a future graphics card.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Efficiency rating</dt><dd class="spec-value">80 PLUS Gold</dd>
+                <dd class="spec-help">How efficient it is (<span class="term" data-g="80plus">80 PLUS</span>). At half load, a Gold unit loses about 10&nbsp;% of the energy as heat, a Bronze unit about 15&nbsp;%. Gold means quieter and less waste.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Modularity</dt><dd class="spec-value">Semi-modular</dd>
+                <dd class="spec-help">Fewer unused cables in the case than a non-modular PSU, for less money than a fully modular one.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Standard</dt><dd class="spec-value">ATX 3.1</dd>
+                <dd class="spec-help">A recent version of the standard: it copes better with the very short power spikes of modern graphics cards and provides the 12V-2x6 connector.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Connectors</dt><dd class="spec-value">24-pin · 2 × EPS 4+4 · 3 × PCIe 8 · SATA</dd>
+                <dd class="spec-help">Compare these with what the motherboard (24 + 8 pins), the graphics card (8 pins) and any SATA drives need.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>A sense of scale</h3>
+          <ul class="magnitudes">
+            <li><strong>~445 W</strong> To deliver 400&nbsp;W to the components, a Gold unit draws about 445&nbsp;W from the wall (45&nbsp;W lost as heat); a Bronze unit about 470&nbsp;W.</li>
+            <li><strong>62 A</strong> 750&nbsp;W at 12&nbsp;V is more than 60 amps: serious currents, hence the thick cables and the need for fully seated connectors.</li>
+            <li><strong>~380 kWh/year</strong> That's a PC drawing 350&nbsp;W for 3 hours a day.</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibility">
+            <h4>Compatibility</h4>
+            <ul>
+              <li><strong>Wattage:</strong> (processor + graphics card + ~100&nbsp;W) × 1.5 for headroom, or the graphics card maker's recommendation. The calculator in the <a href="#compatibilite">checklist</a> does the maths for you.</li>
+              <li><strong>Connectors:</strong> enough 24-pin, 8-pin EPS and 8-pin PCIe (or 12V-2x6) connectors.</li>
+              <li><strong>Case:</strong> ATX format and maximum PSU length.</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Beginner mistakes">
+            <h4>Beginner mistakes</h4>
+            <ul>
+              <li><strong>Mixing modular cables from two different power supplies.</strong> The pinout on the PSU side isn't standard, so you can destroy components. Only use the cables that came with your PSU.</li>
+              <li><strong>Mixing up EPS (CPU) and PCIe (GPU).</strong> These two 8-pin plugs look alike but aren't wired the same way. They're labelled "CPU" and "PCIe". Never force one in.</li>
+              <li><strong>Leaving the switch on the back at O</strong> for the first boot.</li>
+              <li><strong>Buying a very cheap no-name PSU</strong>: it's the last part to cut corners on.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- COOLING -->
+    <section id="refroidissement" class="part section" aria-labelledby="cool-title">
+      <header class="section-head">
+        <p class="kicker">Part 7 of 8 · The extractor fan</p>
+        <h2 id="cool-title">Cooling (CPU cooler and fans)</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="cooler" data-alt-parts="cooler,fan" aria-label="Tower CPU cooler in 3D: drag to rotate it. A button switches to a case fan.">
+            <img class="viewer-poster" src="../img/previews/cooler.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">The 3D view loads when this area scrolls into view…</p>
+          </figure>
+          <p class="viewer-caption">A tower CPU cooler (12.5 × 7 × 15.5 cm) with 4 heat pipes, and a 120 mm case fan.</p>
+        </div>
+        <div class="part-text">
+          <h3>What it does</h3>
+          <p>All the electricity the components use ends up as heat. The <span class="term" data-g="ventirad">CPU cooler</span> (a heatsink with a fan) draws heat away from the processor and passes it to the air; the case fans keep that air moving.</p>
+          <ol class="steps-inline">
+            <li><strong><span class="term" data-g="pate">Thermal paste</span></strong> fills the microscopic gaps between the processor's IHS and the cooler's base (pushing out the air, which conducts heat very poorly).</li>
+            <li><strong>Heat pipes</strong> (copper tubes) hold a little liquid that evaporates on the hot base, rises, then condenses in the fins, leaving its heat behind: a very efficient way to move heat.</li>
+            <li><strong>Aluminium fins</strong> give the air a large surface to pick up heat from.</li>
+            <li><strong>The fan</strong> pushes air through the fins, from the front of the case to the back.</li>
+          </ol>
+          <p><strong>Airflow through the case:</strong> three 120&nbsp;mm fans at the front <em>pull in</em> cool air, and one fan at the back <em>pushes out</em> the warm air. The CPU cooler blows in the same direction. With slightly more air coming in than going out (positive pressure), dust mostly gets in through the filters.</p>
+          <p class="muted">The alternative: a 240&nbsp;mm <span class="term" data-g="aio">all-in-one liquid cooler (AIO)</span> replaces the tower cooler with a radiator mounted on the case. It costs more and mainly makes sense for very power-hungry processors.</p>
+          <div class="analogy-box"><span class="analogy-tag">Think of it this way</span> Cooling is the kitchen's <strong>extractor fan and windows</strong>: without them, the heat from the stoves makes the kitchen unbearable and the chef has to slow down.</div>
+
+          <h3>How to read the spec sheet</h3>
+          <div class="spec">
+            <p class="spec-title">Typical specs: a tower cooler + 120 mm fan</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Height</dt><dd class="spec-value">155 mm</dd>
+                <dd class="spec-help">Compare with the case's "maximum CPU cooler height" (165&nbsp;mm here).</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Heat pipes</dt><dd class="spec-value">4 × 6 mm</dd>
+                <dd class="spec-help">How many there are, and how thick, gives you an idea of how much heat they can carry. 4 heat pipes are fine for mid-range processors.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Fan</dt><dd class="spec-value">120 mm, PWM, 500–1,800 RPM</dd>
+                <dd class="spec-help">The 4-pin <span class="term" data-g="pwm">PWM</span> connector lets the motherboard adjust the speed to the temperature: quiet at idle, faster under load.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Noise / airflow</dt><dd class="spec-value">≤ 30 dB(A) · ~60 CFM</dd>
+                <dd class="spec-help">The maximum noise (in decibels) and the airflow (in <span class="term" data-g="cfm">CFM</span>). These figures depend on how each maker measures them, so compare them with care.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Compatibility</dt><dd class="spec-value">AM5 / AM4 / LGA 1851 / LGA 1700</dd>
+                <dd class="spec-help">The sockets the included mounting kit supports.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>A sense of scale</h3>
+          <ul class="magnitudes">
+            <li><strong>25 turns/s</strong> A fan spinning at 1,500&nbsp;RPM makes 25 turns every second.</li>
+            <li><strong>~50×</strong> Thermal paste conducts heat about 50 times less well than copper, so you want the thinnest possible layer, just enough to fill the gaps.</li>
+            <li><strong>~100 W</strong> of heat to get rid of when a processor is working flat out: as much as an old-fashioned incandescent bulb, but coming from chips only a few cm² in size.</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibility">
+            <h4>Compatibility</h4>
+            <ul>
+              <li><strong>Case:</strong> cooler height &lt; maximum supported height.</li>
+              <li><strong>Socket:</strong> a mounting kit for your socket in the box.</li>
+              <li><strong>RAM:</strong> enough room under the fan for tall memory sticks.</li>
+              <li><strong>Motherboard:</strong> enough fan headers (CPU_FAN + SYS_FAN), or else a splitter.</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Beginner mistakes">
+            <h4>Beginner mistakes</h4>
+            <ul>
+              <li><strong>Leaving the plastic film on the cooler's base.</strong> The all-time classic: the processor overheats within seconds.</li>
+              <li><strong>Too much (or no) paste.</strong> A pea-sized blob in the centre is enough. If the base already has paste on it, don't add more.</li>
+              <li><strong>Mounting a fan the wrong way round.</strong> Arrows on the frame show the airflow; air comes out on the side with the struts.</li>
+              <li><strong>Plugging the CPU cooler into anything other than CPU_FAN</strong>: you'll get an error message at startup.</li>
+              <li><strong>Tightening one side all the way, then the other.</strong> Tighten a little at a time, in a criss-cross pattern.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------------------------------------------------------- CASE -->
+    <section id="boitier" class="part section" aria-labelledby="case-title">
+      <header class="section-head">
+        <p class="kicker">Part 8 of 8 · The building</p>
+        <h2 id="case-title">The case</h2>
+      </header>
+      <div class="part-grid">
+        <div class="part-visual">
+          <figure class="viewer" data-viewer="part" data-part="case" aria-label="Mid-tower case in 3D: drag to rotate it.">
+            <img class="viewer-poster" src="../img/previews/case.webp" alt="" loading="lazy" decoding="async">
+            <p class="viewer-status" role="status">The 3D view loads when this area scrolls into view…</p>
+          </figure>
+          <p class="viewer-caption">An ATX mid-tower case (45 × 22 × 48 cm) with a tempered glass side panel and a mesh front.</p>
+        </div>
+        <div class="part-text">
+          <h3>What it does</h3>
+          <p>The case protects the components, organises the airflow, hides the cables and gives you the front ports (power button, USB, headphone jack). The most common type is the <strong>ATX mid-tower</strong>: the power supply sits at the bottom under a shroud, the motherboard is mounted on a tray, and there's a 2 to 3&nbsp;cm gap <em>behind</em> that tray for routing cables (<span class="term" data-g="cablemanagement">cable management</span>).</p>
+          <p>On the tray, brass <span class="term" data-g="entretoise">standoffs</span> raise the motherboard so it never touches the metal. Rubber-lined openings (<span class="term" data-g="passecables">grommets</span>) let cables pass from one side to the other.</p>
+          <div class="analogy-box"><span class="analogy-tag">Think of it this way</span> The case is <strong>the building</strong>: the walls, the ventilation, the service ducts. A well-designed building makes work more pleasant… and maintenance easier.</div>
+
+          <h3>How to read the spec sheet</h3>
+          <div class="spec">
+            <p class="spec-title">Typical specs: an ATX mid-tower case</p>
+            <dl class="spec-list">
+              <div class="spec-row">
+                <dt>Supported boards</dt><dd class="spec-value">ATX (and smaller)</dd>
+                <dd class="spec-help">The largest motherboard size it takes.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Max GPU length</dt><dd class="spec-value">360 mm</dd>
+                <dd class="spec-help">The longest graphics card that fits. Our 28&nbsp;cm card has plenty of room.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Max CPU cooler height</dt><dd class="spec-value">165 mm</dd>
+                <dd class="spec-help">The tallest CPU cooler it can take, limited by the width of the case and the glass panel.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Cooling</dt><dd class="spec-value">3 × 120 mm front + 1 × 120 mm rear included</dd>
+                <dd class="spec-help">The fans that come with it, and the free mounts (often 2 × 120/140&nbsp;mm at the top). A mesh front (fine grille) lets air through far better than a solid one.</dd>
+              </div>
+              <div class="spec-row">
+                <dt>Front panel</dt><dd class="spec-value">2 × USB-A · 1 × USB-C · audio</dd>
+                <dd class="spec-help">The front USB-C port only works if the motherboard has the matching internal USB-C header.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <h3>A sense of scale</h3>
+          <ul class="magnitudes">
+            <li><strong>~47 L</strong> The volume of a 45 × 22 × 48&nbsp;cm mid-tower.</li>
+            <li><strong>~once a second</strong> In theory, the front fans replace all the air in the case about once a second (less in practice, because of the filters).</li>
+          </ul>
+
+          <aside class="callout callout--compat" aria-label="Compatibility">
+            <h4>Compatibility</h4>
+            <ul>
+              <li><strong>Motherboard:</strong> a supported size (ATX).</li>
+              <li><strong>Graphics card:</strong> length &lt; maximum length.</li>
+              <li><strong>CPU cooler:</strong> height &lt; maximum height.</li>
+              <li><strong>Power supply:</strong> ATX format and maximum length.</li>
+              <li><strong>Front panel:</strong> USB 3 and USB-C headers on the motherboard.</li>
+            </ul>
+          </aside>
+          <aside class="callout callout--errors" aria-label="Beginner mistakes">
+            <h4>Beginner mistakes</h4>
+            <ul>
+              <li><strong>Running every cable on the glass side</strong>: it blocks the airflow and makes the PC hard to maintain. Route them behind the tray.</li>
+              <li><strong>Forgetting to connect the front panel</strong> (USB 3, USB-C, audio): the front ports stay dead.</li>
+              <li><strong>Standing the PC on a carpet</strong> when the power supply draws air from underneath.</li>
+              <li><strong>Leaving the protective film</strong> on the glass (no harm done, but a shame!).</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================== 4. EXPLODED VIEW -->
+    <section id="vue-eclatee" class="section section--wide" aria-labelledby="exp-title">
+      <header class="section-head">
+        <p class="kicker">All together now</p>
+        <h2 id="exp-title">Interactive exploded view</h2>
+        <p class="lead">Drag the slider to bring the parts together or pull them apart. Hover over a part to see what it is, and click it to jump to its page.</p>
+      </header>
+      <div class="stage-card">
+        <figure class="viewer viewer--wide" data-viewer="exploded" aria-label="The complete PC in an exploded view. Use the slider below the image to assemble the parts.">
+          <img class="viewer-poster" src="../img/previews/assembly.webp" alt="" loading="lazy" decoding="async">
+          <p class="viewer-status" role="status">The 3D view loads when this area scrolls into view…</p>
+        </figure>
+        <div class="exploded-controls">
+          <span class="range-label" aria-hidden="true">Exploded</span>
+          <input type="range" id="explode-range" min="0" max="100" step="1" value="0" aria-label="How assembled the PC is, from exploded (0) to fully assembled (100)">
+          <span class="range-label" aria-hidden="true">Assembled</span>
+          <button class="btn btn--small" id="explode-play" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+            <span>Animate</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================== SAFETY -->
+    <section id="securite" class="section" aria-labelledby="safety-title">
+      <header class="section-head">
+        <p class="kicker">Before you touch any parts</p>
+        <h2 id="safety-title">Safety first</h2>
+        <p class="lead">Building a PC isn't dangerous for you as long as you follow a few simple rules. The real risk is mostly to the components: a discharge of <span class="term" data-g="esd">static electricity</span> you can't even feel can be enough to damage one.</p>
+      </header>
+      <div class="safety-grid">
+        <article class="safety-card">
+          <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Static electricity</h3>
+          <p>Walking across a carpet or pulling off a jumper can charge your body up to several thousand volts. You only feel a discharge from around 3,000&nbsp;V, but a much smaller one is enough to damage a chip. The damage doesn't always show straight away: a part can work fine, then fail weeks later.</p>
+          <ul>
+            <li><strong>Discharge yourself often:</strong> touch a bare, unpainted metal part of the case before picking up each component, and every so often while you work.</li>
+            <li><strong>Pick your spot:</strong> a hard floor (tiles, wood) rather than carpet, and cotton clothes rather than wool or fleece.</li>
+            <li><strong>Keep each part in its anti-static bag</strong> until you're ready to install it. Build the motherboard while it sits on its cardboard box.</li>
+            <li><strong>Hold everything by the edges:</strong> don't touch the gold contacts, the chips or the socket pins.</li>
+            <li><strong>Safest of all:</strong> an anti-static wrist strap (it costs very little), clipped to a metal part of the case.</li>
+          </ul>
+        </article>
+        <article class="safety-card">
+          <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 16H3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4M12 17v.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Mains power and everything else</h3>
+          <ul>
+            <li><strong>Unplug the power cable</strong> for the whole build, and every time you open the PC later on. Leave the power supply switch on <strong>O</strong>.</li>
+            <li><strong>Never open the power supply.</strong> Its capacitors can hold a dangerous charge long after it's been unplugged. If it fails, you replace it; you don't repair it yourself.</li>
+            <li><strong>Mind the sheet-metal edges</strong> inside the case: they can cut. Take your time, and thin gloves are an option.</li>
+            <li><strong>Never force a connector.</strong> If it won't go in, it's the wrong way round or the wrong plug.</li>
+            <li><strong>Before powering on,</strong> check that no screws or tools are left inside the case: a loose bit of metal can cause a short circuit.</li>
+          </ul>
+          <p class="safety-note">You'll also find safety reminders at the delicate steps of the build.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ====================================================== 5. STEP-BY-STEP BUILD -->
+    <section id="montage" class="section section--wide" aria-labelledby="mont-title">
+      <header class="section-head">
+        <p class="kicker">Hands inside the PC</p>
+        <h2 id="mont-title">Step-by-step build</h2>
+        <p class="lead">Eleven steps, in the easiest order for a first build. At each step, the part in question animates into place; you can turn the scene around and replay the animation.</p>
+      </header>
+      <div class="assembly">
+        <figure class="viewer viewer--wide" data-viewer="assembly" aria-label="3D build scene: the part for the current step animates into place.">
+          <img class="viewer-poster" src="../img/previews/assembly.webp" alt="" loading="lazy" decoding="async">
+          <p class="viewer-status" role="status">The 3D view loads when this area scrolls into view…</p>
+        </figure>
+        <div class="assembly-panel" id="assembly-panel">
+          <div class="step-dots" id="step-dots" role="tablist" aria-label="Build steps"></div>
+          <p class="step-count" id="step-count">Step 1 / 11</p>
+          <div class="step-content" id="step-content" aria-live="polite"></div>
+          <div class="step-nav">
+            <button class="btn btn--ghost" id="step-prev" type="button">← Previous step</button>
+            <button class="btn btn--ghost btn--icon" id="step-replay" type="button" aria-label="Replay this step's animation">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="btn btn--primary" id="step-next" type="button">Next step →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step content (read by js/ui/steps-ui.js; still readable without JavaScript) -->
+      <ol class="steps-source" id="steps-source">
+        <li data-step="1">
+          <h3>Getting ready</h3>
+          <ul>
+            <li><strong>Tools:</strong> a Phillips screwdriver (size PH2 fits nearly every screw), a torch, some Velcro straps or cable ties, and a small bowl for the screws.</li>
+            <li><strong>Work surface:</strong> a clear, hard table, not carpet. The motherboard box will act as a stand.</li>
+            <li><strong><span class="term" data-g="esd">Static electricity</span>:</strong> an invisible discharge can damage a component. Touch a bare metal part of the case regularly to discharge yourself, and avoid woolly jumpers. An anti-static wrist strap clipped to the chassis is a bonus. Read the <a href="#securite">safety rules</a> again if you need to.</li>
+            <li><strong>Keep the motherboard manual</strong> within reach: it shows where every slot and header is.</li>
+          </ul>
+          <p class="tip tip--safety">Don't plug anything into the mains until the build is finished.</p>
+        </li>
+        <li data-step="2">
+          <h3>The processor in its socket</h3>
+          <ul>
+            <li>The motherboard stays <strong>outside the case</strong>, resting on its box: it's much easier this way.</li>
+            <li>Lift the metal lever, then open the retention frame.</li>
+            <li>Find the <strong>gold triangle</strong> in one corner of the processor and the triangle on the socket: they must be in the same corner.</li>
+            <li>Hold the processor by its edges and lower it in <strong>without forcing or sliding it</strong>: it should drop flat into place on its own.</li>
+            <li>Close the frame and push the lever down (some resistance is normal). The plastic cover pops off: keep it.</li>
+          </ul>
+          <p class="tip tip--safety">Before taking the processor out of its box, touch the metal of the case to discharge yourself. Never touch the socket pins.</p>
+        </li>
+        <li data-step="3">
+          <h3>RAM in slots A2 and B2</h3>
+          <ul>
+            <li>Open the latches on slots <strong>A2 and B2</strong>: the 2<sup>nd</sup> and 4<sup>th</sup> slots counting from the processor (check the manual).</li>
+            <li>Line up the notch on the stick with the key in the slot: it only goes in one way.</li>
+            <li>Press down firmly and straight, on both ends at once, until the latches <strong>click</strong>. It takes more force than you'd expect.</li>
+          </ul>
+          <p class="tip tip--safety">Hold the sticks by their sides: don't touch the gold contacts or the chips.</p>
+        </li>
+        <li data-step="4">
+          <h3>The M.2 SSD and its screw</h3>
+          <ul>
+            <li>Remove the small screw from the <strong>M.2_1</strong> slot (the one closest to the processor). If there's an M.2 heatsink, take it off and peel the plastic film off its thermal pad.</li>
+            <li>Slide the SSD in <strong>at an angle (about 30°)</strong>, gold contacts first, with the notch lined up with the key in the connector.</li>
+            <li>Press it down flat and screw it back in, without forcing.</li>
+          </ul>
+          <p class="tip tip--safety">Hold the SSD by its edges, without touching the gold contacts. Keep an eye on that tiny screw: if it falls onto the board, it can cause a short circuit.</p>
+        </li>
+        <li data-step="5">
+          <h3>Thermal paste, then the CPU cooler</h3>
+          <ul>
+            <li>If the base of the cooler already has paste on it (often a grey square), don't add any.</li>
+            <li>Otherwise, put a <strong>pea-sized</strong> blob of paste (4 to 5&nbsp;mm) in the centre of the processor: the pressure of the cooler will spread it.</li>
+            <li><strong>Peel the plastic film off the base of the cooler!</strong></li>
+            <li>Fit the mounting hardware for your socket, then set the cooler down flat, with the fan facing so it blows <strong>towards the back</strong> of the case.</li>
+            <li>Tighten <strong>a little at a time, in a criss-cross pattern</strong>, until it stops, then plug its fan into the <strong>CPU_FAN</strong> header.</li>
+          </ul>
+        </li>
+        <li data-step="6">
+          <h3>Standoffs, then the motherboard goes into the case</h3>
+          <ul>
+            <li>Check that the <strong>standoffs</strong> on the tray line up with the 9 holes of an ATX board (they're often pre-installed). Never leave a standoff without a hole above it.</li>
+            <li>If the I/O shield isn't built into the board, clip it into the case <strong>first</strong>.</li>
+            <li>Lower the board in at an angle, rear ports first into the opening, then rest it on the standoffs.</li>
+            <li>Put in the 9 screws without forcing them, starting with the middle one, which acts as a guide.</li>
+          </ul>
+          <p class="tip">Tip: feed the 8-pin EPS cable through the top hole before you screw the board in. It's much easier that way.</p>
+        </li>
+        <li data-step="7">
+          <h3>The power supply at the bottom of the case</h3>
+          <ul>
+            <li><strong>Fan direction:</strong> facing down if the case has a filtered vent under the power supply (as it does here), facing up if not.</li>
+            <li>Plug in the modular cables you'll need first (here, the graphics card's 8-pin PCIe cable): it's easier outside the case.</li>
+            <li>Slide the power supply into its bay, <strong>switch set to O</strong>, and screw it in at the back (4 screws).</li>
+          </ul>
+        </li>
+        <li data-step="8">
+          <h3>The cables</h3>
+          <ul>
+            <li><strong>24-pin ATX</strong>: the biggest connector, on the right of the board. Push it in until it clicks (it takes a firm press).</li>
+            <li><strong>8-pin EPS</strong> (labelled "CPU"): top left, it powers the processor.</li>
+            <li><strong>Front panel</strong>: the small wires (Power SW, Reset SW, Power LED +/−, HDD LED) go onto the <strong>F_PANEL</strong> header, following the diagram in the manual. The button wires have no polarity, but the LEDs do.</li>
+            <li><strong>USB 3</strong> (the blue 19-pin connector): it's keyed, so don't force it. Then the front USB-C and the audio (HD_AUDIO).</li>
+            <li><strong>Fans</strong>: the CPU cooler goes on CPU_FAN, the case fans on SYS_FAN (or through a splitter).</li>
+          </ul>
+        </li>
+        <li data-step="9">
+          <h3>The graphics card in the PCIe x16 slot</h3>
+          <ul>
+            <li>Remove the metal <strong>slot covers</strong> at the back of the case, level with the x16 slot (2 here, depending on how thick the card is).</li>
+            <li>Push the card straight into the <strong>PCIe x16</strong> slot until the latch clicks, with its bracket sitting in the gap left by the covers.</li>
+            <li>Screw the bracket to the case.</li>
+            <li>Plug in the power supply's <strong>8-pin PCIe</strong> cable (not one labelled "CPU") until it clicks.</li>
+          </ul>
+          <p class="tip tip--safety">Discharge yourself one last time before picking up the graphics card, and hold it by the bracket and the edges.</p>
+        </li>
+        <li data-step="10">
+          <h3>Cable management</h3>
+          <ul>
+            <li>Route each cable <strong>behind the tray</strong>, through the grommet closest to where it's going.</li>
+            <li>Bundle the cables together with Velcro straps, without pulling them too tight, and leave a little slack near the connectors.</li>
+            <li>The goals: clear airflow, parts that are easy to reach later on… and a tidy interior behind the glass.</li>
+          </ul>
+        </li>
+        <li data-step="11">
+          <h3>The first boot</h3>
+          <ul>
+            <li>Plug the monitor into <strong>the graphics card</strong>, then the keyboard, the mouse and the power cable.</li>
+            <li>Flip the power supply switch to <strong>I</strong> and press the case's power button.</li>
+            <li>What's normal: the fans spin, and the diagnostic LEDs light up one after another, then go out. The first boot can take several minutes (DDR5 memory training), so be patient.</li>
+            <li>The BIOS/UEFI screen appears: on to the <a href="#bios">next section</a>.</li>
+          </ul>
+          <p class="tip tip--safety">Before plugging in the mains, check that no screws or tools are left in the case and that the side panel is back on.</p>
+          <details class="trouble" open>
+            <summary>Nothing happens (no fans spinning)?</summary>
+            <ul class="checklist-mini">
+              <li>Is it plugged in, is the power strip on, and is the power supply switch on <strong>I</strong>?</li>
+              <li>Are the 24-pin and 8-pin EPS pushed in until they clicked?</li>
+              <li>Is the "Power SW" wire on the right F_PANEL pins? To test it, briefly touch those two pins with the tip of a screwdriver (that's what the button does).</li>
+            </ul>
+          </details>
+          <details class="trouble">
+            <summary>Fans spin, but no picture?</summary>
+            <ul class="checklist-mini">
+              <li>Is the monitor plugged into the <strong>graphics card</strong>, with the right input selected on the monitor?</li>
+              <li>Is the graphics card's PCIe cable properly plugged in?</li>
+              <li>Wait a few minutes: memory training can take a while.</li>
+              <li>Look at which diagnostic LED stays on: <strong>CPU</strong> (processor, EPS cable), <strong>DRAM</strong> (sticks not fully seated or in the wrong slots: try a single stick in A2), <strong>VGA</strong> (graphics card or its cable), <strong>BOOT</strong> (no operating system installed: that's normal before you install one).</li>
+              <li>Is the processor newer than the board? Update the BIOS with the BIOS Flashback button.</li>
+            </ul>
+          </details>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ====================================================== 6. BIOS / UEFI -->
+    <section id="bios" class="section" aria-labelledby="bios-title">
+      <header class="section-head">
+        <p class="kicker">After the first boot</p>
+        <h2 id="bios-title">The BIOS / UEFI and installing the operating system</h2>
+        <p class="lead">The <strong>BIOS</strong> (now replaced by <span class="term" data-g="uefi">UEFI</span>, though people still say "BIOS" out of habit) is a small piece of software stored on a chip on the motherboard. Every time the PC starts, it checks the hardware (the <span class="term" data-g="post">POST</span>), sets it up, then hands over to the operating system.</p>
+      </header>
+
+      <div class="bios-layout">
+        <div class="bios-text">
+          <h3>How to get into it</h3>
+          <p>As soon as you power on, tap <kbd>Del</kbd> or <kbd>F2</kbd> repeatedly, depending on the board. From Windows 11: <em>Settings → System → Recovery → Advanced startup → Restart now</em>, then <em>Troubleshoot → Advanced options → UEFI Firmware Settings</em>.</p>
+
+          <h3>The 4 settings to change</h3>
+          <ol class="numbered">
+            <li><strong>Check that everything is detected:</strong> the processor (and its temperature, around 30 to 45&nbsp;°C at idle), <strong>32&nbsp;GB</strong> of memory (if you only see 16&nbsp;GB, a stick isn't seated properly), the NVMe SSD, and the CPU_FAN fan spinning.</li>
+            <li><strong>Turn on the EXPO (AMD) or XMP (Intel) profile:</strong> the memory goes from its base speed (4,800&nbsp;MT/s, for example) to its rated speed (6,000&nbsp;MT/s). The next restart can take a while (it trains the memory again). If things become unstable, turn it back off.</li>
+            <li><strong>Set the boot order:</strong> to install the operating system, put the USB stick first. Even simpler: the <span class="term" data-g="bootmenu">boot menu</span> (often <kbd>F8</kbd>, <kbd>F11</kbd> or <kbd>F12</kbd>) lets you boot from the stick just once.</li>
+            <li><strong>Save and exit:</strong> <kbd>F10</kbd>, then confirm.</li>
+          </ol>
+          <p class="note">Try it in the simulator: turn on EXPO in the "Memory" tab, move the USB stick to the top in "Boot", then save with <kbd>F10</kbd>.</p>
+
+          <h3>Installing the operating system from a USB stick</h3>
+          <ol class="numbered">
+            <li><strong>Prepare the stick on another PC:</strong> for Windows 11, use Microsoft's official Media Creation Tool and a stick of at least 8&nbsp;GB (it will be wiped). For Linux (Ubuntu, Fedora…), download the <span class="term" data-g="iso">ISO</span> image from the official website and write it to the stick with a tool such as balenaEtcher or Rufus.</li>
+            <li><strong>Boot from the stick</strong> using the boot order or the boot menu.</li>
+            <li><strong>Follow the installer</strong> and choose the <strong>NVMe SSD</strong> as the installation drive. Windows 11 requires the <span class="term" data-g="tpm">TPM 2.0</span> security chip and <span class="term" data-g="secureboot">Secure Boot</span>, both already turned on by default on recent boards.</li>
+            <li><strong>After installation:</strong> install the graphics card <span class="term" data-g="pilote">drivers</span> (from the chip maker's website), the chipset drivers (from the motherboard or processor maker's website), then the system updates. Finally, put the SSD back at the top of the boot order if needed.</li>
+          </ol>
+        </div>
+
+        <!-- Fake UEFI screen (HTML/CSS + js/ui/bios.js) -->
+        <div class="bios-wrap">
+          <div class="bios" id="bios-screen" tabindex="0" aria-label="Simulated UEFI screen. Left and right arrows switch tabs, F10 saves.">
+            <div class="bios-top">
+              <span class="bios-logo">UEFI BIOS Utility · EZ Mode</span>
+              <span class="bios-clock" id="bios-clock">--/--/---- --:--</span>
+            </div>
+            <div class="bios-tabs" role="tablist" aria-label="BIOS tabs">
+              <button role="tab" type="button" aria-selected="true" data-tab="info" id="bt-info" aria-controls="bp-info">Information</button>
+              <button role="tab" type="button" aria-selected="false" data-tab="memory" id="bt-memory" aria-controls="bp-memory" tabindex="-1">Memory</button>
+              <button role="tab" type="button" aria-selected="false" data-tab="boot" id="bt-boot" aria-controls="bp-boot" tabindex="-1">Boot</button>
+              <button role="tab" type="button" aria-selected="false" data-tab="exit" id="bt-exit" aria-controls="bp-exit" tabindex="-1">Exit</button>
+            </div>
+            <div class="bios-body">
+              <div class="bios-panel" role="tabpanel" id="bp-info" aria-labelledby="bt-info" data-panel="info">
+                <div class="bios-grid">
+                  <div class="bios-box">
+                    <p class="bios-h">Processor</p>
+                    <p>8-core processor · AM5 socket</p>
+                    <p>Frequency: <span class="bios-val">3,800 MHz</span></p>
+                    <p>Temperature: <span class="bios-val" id="bios-temp">38 °C</span></p>
+                  </div>
+                  <div class="bios-box">
+                    <p class="bios-h">Memory</p>
+                    <p>Total: <span class="bios-val">32,768 MB</span> (DDR5)</p>
+                    <p>Speed: <span class="bios-val" data-bios="mem-speed">4,800 MT/s</span></p>
+                    <ul class="bios-dimms">
+                      <li>A1: empty</li><li>A2: <span class="bios-ok">16 GB</span></li><li>B1: empty</li><li>B2: <span class="bios-ok">16 GB</span></li>
+                    </ul>
+                  </div>
+                  <div class="bios-box">
+                    <p class="bios-h">Storage</p>
+                    <p>M.2_1: <span class="bios-ok">1 TB NVMe SSD</span></p>
+                    <p>M.2_2: empty</p>
+                    <p>SATA 1-4: none</p>
+                  </div>
+                  <div class="bios-box">
+                    <p class="bios-h">Fans</p>
+                    <p>CPU_FAN: <span class="bios-val" id="bios-fan">820 RPM</span></p>
+                    <p>SYS_FAN1: <span class="bios-val">640 RPM</span></p>
+                    <p>SYS_FAN2: <span class="bios-val">655 RPM</span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="bios-panel" role="tabpanel" id="bp-memory" aria-labelledby="bt-memory" data-panel="memory" hidden>
+                <p class="bios-h">EXPO / XMP memory profile</p>
+                <div class="bios-row">
+                  <span>Profile</span>
+                  <button type="button" class="bios-toggle" id="bios-expo" aria-pressed="false">Disabled</button>
+                </div>
+                <div class="bios-row"><span>Memory speed</span><span class="bios-val" data-bios="mem-speed">4,800 MT/s</span></div>
+                <div class="bios-row"><span>Latency (CL)</span><span class="bios-val" data-bios="mem-cl">40</span></div>
+                <div class="bios-row"><span>DRAM voltage</span><span class="bios-val" data-bios="mem-v">1.10 V</span></div>
+                <p class="bios-help" id="bios-expo-help">Profile disabled: the memory runs at its standard (JEDEC) speed, which is slower than the one on the box.</p>
+              </div>
+              <div class="bios-panel" role="tabpanel" id="bp-boot" aria-labelledby="bt-boot" data-panel="boot" hidden>
+                <p class="bios-h">Boot priority</p>
+                <ol class="bios-boot" id="bios-boot">
+                  <li data-dev="ssd"><span>Windows Boot Manager (1 TB NVMe SSD)</span><span class="bios-move"><button type="button" data-move="up" aria-label="Move up">▲</button><button type="button" data-move="down" aria-label="Move down">▼</button></span></li>
+                  <li data-dev="usb"><span>UEFI: 16 GB USB stick (installer)</span><span class="bios-move"><button type="button" data-move="up" aria-label="Move up">▲</button><button type="button" data-move="down" aria-label="Move down">▼</button></span></li>
+                  <li data-dev="net"><span>Network (PXE): disabled</span><span class="bios-move"><button type="button" data-move="up" aria-label="Move up">▲</button><button type="button" data-move="down" aria-label="Move down">▼</button></span></li>
+                </ol>
+                <div class="bios-row"><span>Secure Boot</span><span class="bios-ok">Enabled</span></div>
+                <div class="bios-row"><span>TPM 2.0 (fTPM)</span><span class="bios-ok">Enabled</span></div>
+                <p class="bios-help" id="bios-boot-help">To install an operating system, put the USB stick first.</p>
+              </div>
+              <div class="bios-panel" role="tabpanel" id="bp-exit" aria-labelledby="bt-exit" data-panel="exit" hidden>
+                <p class="bios-h">Exit</p>
+                <button type="button" class="bios-action" id="bios-save">Save changes and restart (F10)</button>
+                <button type="button" class="bios-action" id="bios-discard">Exit without saving</button>
+              </div>
+            </div>
+            <div class="bios-foot">
+              <span><kbd>←</kbd><kbd>→</kbd> Tabs</span><span><kbd>F7</kbd> Advanced mode</span><span><kbd>F10</kbd> Save and exit</span>
+            </div>
+            <div class="bios-dialog" id="bios-dialog" hidden role="alertdialog" aria-labelledby="bios-dialog-title">
+              <p id="bios-dialog-title" class="bios-h">Save and restart?</p>
+              <ul id="bios-dialog-list"></ul>
+              <div class="bios-dialog-actions">
+                <button type="button" id="bios-ok">Yes</button>
+                <button type="button" id="bios-cancel">No</button>
+              </div>
+            </div>
+            <div class="bios-reboot" id="bios-reboot" hidden><span>Restarting…</span></div>
+          </div>
+          <p class="viewer-caption">A simplified, generic simulation: the real thing looks different from one motherboard maker to the next.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================== 7. PERIPHERALS AND CONNECTORS -->
+    <section id="peripheriques" class="section" aria-labelledby="peri-title">
+      <header class="section-head">
+        <p class="kicker">Around the tower</p>
+        <h2 id="peri-title">Peripherals and connectors</h2>
+        <p class="lead">The monitor, keyboard and mouse are what you look at and touch all day long: they matter just as much as what's inside the tower.</p>
+      </header>
+
+      <div class="peri-grid">
+        <article class="peri-card">
+          <svg class="peri-icon" viewBox="0 0 64 48" aria-hidden="true"><rect x="4" y="3" width="56" height="33" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><path d="M26 36l-3 8h18l-3-8" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M10 9h44v21H10z" fill="var(--accent)" opacity=".18"/></svg>
+          <h3>The monitor</h3>
+          <dl class="kv">
+            <dt>Size</dt><dd>The diagonal in inches (1" = 2.54&nbsp;cm): 24" ≈ 61&nbsp;cm, 27" ≈ 69&nbsp;cm.</dd>
+            <dt><span class="term" data-g="resolution">Resolution</span></dt><dd>The number of pixels: <strong>1080p</strong> (1,920 × 1,080, "Full HD") or <strong>1440p</strong> (2,560 × 1,440, "QHD"). The classic pairings: 24" at 1080p, 27" at 1440p (equally sharp, roughly 90 to 110 pixels per inch).</dd>
+            <dt>Refresh rate</dt><dd>The number of images shown per second, in <span class="term" data-g="hz">hertz</span>. At <strong>144–165&nbsp;Hz</strong>, everything feels much smoother than at 60&nbsp;Hz, in games and on the desktop alike, as long as the graphics card can keep up.</dd>
+            <dt>Panel</dt><dd><span class="term" data-g="dalle">IPS</span> (accurate colours), VA (good contrast) or OLED (perfect blacks, pricier). Adaptive sync (FreeSync, G-SYNC Compatible) stops the picture from "tearing".</dd>
+          </dl>
+        </article>
+
+        <article class="peri-card">
+          <svg class="peri-icon" viewBox="0 0 64 48" aria-hidden="true"><rect x="3" y="12" width="58" height="26" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><path d="M10 19h4M18 19h4M26 19h4M34 19h4M42 19h4M50 19h4M10 25h4M18 25h4M26 25h4M34 25h4M42 25h4M50 25h4M18 31h28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          <h3>The mechanical keyboard</h3>
+          <p>Each key has its own <span class="term" data-g="switch">switch</span>: a small spring-loaded mechanism, more precise and longer-lasting than a membrane. There are three families:</p>
+          <ul class="switches">
+            <li>
+              <svg viewBox="0 0 120 64" aria-hidden="true"><path d="M10 54H114M10 54V6" stroke="var(--line)" stroke-width="1.5"/><path d="M12 50L110 12" stroke="var(--accent)" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+              <p><strong>Linear</strong> (often "red"): a smooth, quiet press, popular for gaming.</p>
+            </li>
+            <li>
+              <svg viewBox="0 0 120 64" aria-hidden="true"><path d="M10 54H114M10 54V6" stroke="var(--line)" stroke-width="1.5"/><path d="M12 50L40 30Q48 18 56 34L110 14" stroke="var(--accent)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p><strong>Tactile</strong> ("brown"): you feel a small bump at the point where the key registers. A good all-rounder.</p>
+            </li>
+            <li>
+              <svg viewBox="0 0 120 64" aria-hidden="true"><path d="M10 54H114M10 54V6" stroke="var(--line)" stroke-width="1.5"/><path d="M12 50L40 30Q48 16 56 34L110 14" stroke="var(--accent)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 10l4 6M60 8l-1 7M66 13l-6 4" stroke="var(--ink-2)" stroke-width="2" stroke-linecap="round"/></svg>
+              <p><strong>Clicky</strong> ("blue"): a bump plus an audible click. Satisfying… for you, much less so for anyone nearby.</p>
+            </li>
+          </ul>
+          <p class="muted">The colours are only a convention and vary between brands. The curves show force (vertical) against how far the key is pressed (horizontal). Size: <strong>full-size</strong> (with a number pad) or <span class="term" data-g="tkl">TKL</span> (no number pad, more room for your mouse). Layouts vary by country: QWERTY in the UK and US, AZERTY in France.</p>
+        </article>
+
+        <article class="peri-card">
+          <svg class="peri-icon" viewBox="0 0 64 48" aria-hidden="true"><rect x="20" y="4" width="24" height="40" rx="12" fill="none" stroke="currentColor" stroke-width="3"/><path d="M32 6v12" stroke="currentColor" stroke-width="3"/></svg>
+          <h3>The mouse</h3>
+          <dl class="kv">
+            <dt>Sensor and DPI</dt><dd>The optical sensor tracks movement, and <span class="term" data-g="dpi">DPI</span> sets the sensitivity (800 to 1,600 suits most people).</dd>
+            <dt>Connection</dt><dd>Wired, or wireless with a small 2.4&nbsp;GHz USB receiver (more responsive than Bluetooth).</dd>
+            <dt>Grip</dt><dd>The number one criterion: the shape has to fit your hand.</dd>
+          </dl>
+        </article>
+      </div>
+
+      <h3 class="subhead">The connectors</h3>
+      <ul class="ports">
+        <li class="port-card">
+          <svg viewBox="0 0 160 72" aria-hidden="true"><rect x="12" y="14" width="136" height="44" rx="3" fill="none" stroke="var(--ink-2)" stroke-width="3"/><rect x="18" y="20" width="124" height="32" fill="var(--bg)"/><rect x="24" y="23" width="112" height="13" rx="1.5" fill="#1d4ed8"/><g fill="#d8b35d"><rect x="36" y="34" width="14" height="2.5"/><rect x="62" y="34" width="14" height="2.5"/><rect x="88" y="34" width="14" height="2.5"/><rect x="114" y="34" width="14" height="2.5"/></g></svg>
+          <h4>USB-A</h4>
+          <p>The classic rectangle that only goes in one way. Black or white inside: USB&nbsp;2.0 (480&nbsp;Mb/s); blue: USB 5&nbsp;Gb/s; often red or teal: 10&nbsp;Gb/s.</p>
+        </li>
+        <li class="port-card">
+          <svg viewBox="0 0 160 72" aria-hidden="true"><rect x="34" y="20" width="92" height="32" rx="16" fill="none" stroke="var(--ink-2)" stroke-width="3"/><rect x="40" y="26" width="80" height="20" rx="10" fill="var(--bg)"/><rect x="52" y="32" width="56" height="8" rx="4" fill="var(--ink-3)"/></svg>
+          <h4>USB-C</h4>
+          <p>An oval plug that's <strong>reversible</strong>. Be careful: it's just the <em>shape</em> of the plug. Behind it you might find USB&nbsp;2.0 or USB4 at 40&nbsp;Gb/s, video (DisplayPort) or charging up to 240&nbsp;W: check the spec sheet.</p>
+        </li>
+        <li class="port-card">
+          <svg viewBox="0 0 160 72" aria-hidden="true"><path d="M14 16H146V42L132 58H28L14 42Z" fill="none" stroke="var(--ink-2)" stroke-width="3" stroke-linejoin="round"/><path d="M22 23H138V39L127 51H33L22 39Z" fill="var(--bg)"/><rect x="34" y="31" width="92" height="9" rx="1" fill="var(--ink-3)"/></svg>
+          <h4>HDMI</h4>
+          <p>The trapezoid you'll find on TVs and consoles. HDMI&nbsp;2.1 goes up to 48&nbsp;Gb/s (enough for 4K at 120&nbsp;Hz and beyond). Version 2.2 has been announced, but compatible devices aren't expected before 2027.</p>
+        </li>
+        <li class="port-card">
+          <svg viewBox="0 0 160 72" aria-hidden="true"><path d="M12 14H148V46L134 60H12Z" fill="none" stroke="var(--ink-2)" stroke-width="3" stroke-linejoin="round"/><path d="M19 21H141V43L131 53H19Z" fill="var(--bg)"/><rect x="30" y="30" width="96" height="9" rx="1" fill="var(--ink-3)"/></svg>
+          <h4>DisplayPort</h4>
+          <p>A rectangle with <strong>just one corner cut off</strong>, often with a locking clip. It's the standard for PC monitors: DP&nbsp;1.4 (32.4&nbsp;Gb/s) is enough for 1440p at 165&nbsp;Hz, and DP&nbsp;2.1 goes up to 80&nbsp;Gb/s.</p>
+        </li>
+        <li class="port-card">
+          <svg viewBox="0 0 160 72" aria-hidden="true"><rect x="20" y="20" width="92" height="32" rx="16" fill="none" stroke="var(--ink-2)" stroke-width="3"/><rect x="26" y="26" width="80" height="20" rx="10" fill="var(--bg)"/><rect x="38" y="32" width="56" height="8" rx="4" fill="var(--ink-3)"/><path d="M134 12l-12 26h10l-6 22 18-30h-11l7-18z" fill="var(--accent)"/></svg>
+          <h4>Thunderbolt</h4>
+          <p>Uses the USB-C plug, marked with a lightning-bolt logo: data, video and power down a single cable, at 40&nbsp;Gb/s (Thunderbolt&nbsp;4) or 80&nbsp;Gb/s (Thunderbolt&nbsp;5). Common on laptops; on a desktop, you need a compatible motherboard.</p>
+        </li>
+      </ul>
+
+      <div class="table-wrap">
+        <table class="compare">
+          <caption>Which one should you use for what?</caption>
+          <thead><tr><th scope="col">What you need</th><th scope="col">Best connector</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">144–165 Hz PC monitor</th><td><strong>DisplayPort</strong>, on the graphics card</td></tr>
+            <tr><th scope="row">TV, console, monitor without DisplayPort</th><td><strong>HDMI</strong> (2.1 if possible)</td></tr>
+            <tr><th scope="row">Keyboard, mouse, controller</th><td><strong>USB-A</strong> (USB 2.0 is plenty)</td></tr>
+            <tr><th scope="row">USB stick, external drive</th><td><strong>Blue/red USB-A</strong> (5–10 Gb/s) or <strong>USB-C</strong> at 10 Gb/s or more</td></tr>
+            <tr><th scope="row">Very fast external SSD, docking station</th><td><strong>USB4 USB-C</strong> or <strong>Thunderbolt</strong></td></tr>
+            <tr><th scope="row">Phone (charging + file transfer)</th><td><strong>USB-C</strong></td></tr>
+            <tr><th scope="row">Wired headphones</th><td><strong>3.5 mm jack</strong> (or USB)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="reminder">
+        <svg class="reminder-svg" viewBox="0 0 280 300" role="img" aria-labelledby="rem-t rem-d">
+          <title id="rem-t">The back of a tower PC</title>
+          <desc id="rem-d">The motherboard's video outputs, near the top, are crossed out. The graphics card's outputs, lower down, are marked as the right place to plug in the monitor.</desc>
+          <rect x="40" y="10" width="200" height="280" rx="10" fill="var(--surface-2)" stroke="var(--line)" stroke-width="2"/>
+          <rect x="62" y="30" width="46" height="120" rx="4" fill="var(--bg)" stroke="var(--line)" stroke-width="2"/>
+          <g fill="var(--ink-3)"><rect x="70" y="40" width="30" height="9" rx="2"/><rect x="70" y="54" width="30" height="9" rx="2"/><rect x="70" y="88" width="30" height="9" rx="2"/><rect x="70" y="102" width="30" height="9" rx="2"/><rect x="70" y="116" width="30" height="9" rx="2"/></g>
+          <g><rect x="68" y="69" width="34" height="13" rx="2" fill="var(--danger)" opacity=".85"/><path d="M60 64l50 24M110 64L60 88" stroke="var(--danger)" stroke-width="4" stroke-linecap="round"/></g>
+          <circle cx="182" cy="74" r="38" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="182" cy="74" r="10" fill="var(--line)"/>
+          <g fill="var(--bg)" stroke="var(--line)" stroke-width="2">
+            <rect x="62" y="160" width="160" height="18" rx="2"/><rect x="62" y="182" width="160" height="18" rx="2"/>
+          </g>
+          <rect x="62" y="160" width="160" height="40" rx="3" fill="none" stroke="var(--success)" stroke-width="3"/>
+          <g fill="var(--ink-2)"><rect x="76" y="165" width="22" height="8" rx="1.5"/><rect x="104" y="165" width="22" height="8" rx="1.5"/><rect x="132" y="165" width="22" height="8" rx="1.5"/><rect x="160" y="165" width="22" height="8" rx="1.5"/></g>
+          <g stroke="var(--line)" stroke-width="2" fill="var(--bg)"><rect x="62" y="206" width="160" height="12" rx="2"/><rect x="62" y="222" width="160" height="12" rx="2"/><rect x="62" y="238" width="160" height="12" rx="2"/></g>
+          <rect x="70" y="256" width="140" height="26" rx="3" fill="var(--bg)" stroke="var(--line)" stroke-width="2"/>
+          <path d="M8 180h44" stroke="var(--success)" stroke-width="4" stroke-linecap="round"/><path d="M42 170l12 10-12 10" fill="none" stroke="var(--success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <h3>Important reminder</h3>
+          <p>The monitor plugs into <strong>the graphics card</strong> (the outputs lined up along its bracket, lower down on the back of the tower), <strong>not the motherboard</strong> (the outputs near the USB ports, at the top). The motherboard's outputs only work with the processor's integrated graphics: plug in there and you'll get a black screen, or the graphics card won't be used.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================== 8. COMPATIBILITY CHECKLIST -->
+    <section id="compatibilite" class="section" aria-labelledby="cl-title">
+      <header class="section-head">
+        <p class="kicker">Before you buy</p>
+        <h2 id="cl-title">Final compatibility checklist</h2>
+        <p class="lead">Six checks, and your build is compatible. Tick each one off once you've checked it; your progress is saved on this device.</p>
+      </header>
+      <div class="checklist" id="checklist">
+        <div class="cl-progress" aria-live="polite">
+          <div class="cl-bar" aria-hidden="true"><span id="cl-bar"></span></div>
+          <p><strong id="cl-count">0</strong> / 6 checks</p>
+        </div>
+        <ul class="cl-list">
+          <li class="cl-item">
+            <input type="checkbox" id="cl-1" data-cl="socket">
+            <label for="cl-1"><span class="cl-title">Processor socket = motherboard socket</span><span class="cl-example">e.g. AM5 ↔ AM5</span></label>
+            <details><summary>How to check</summary><p>Compare the "Socket" line on both spec sheets. Then look your processor up in the motherboard's list of supported CPUs (on the maker's website): it tells you the minimum BIOS version.</p></details>
+          </li>
+          <li class="cl-item">
+            <input type="checkbox" id="cl-2" data-cl="ram">
+            <label for="cl-2"><span class="cl-title">RAM type = type the motherboard supports</span><span class="cl-example">e.g. DDR5 ↔ DDR5</span></label>
+            <details><summary>How to check</summary><p>The motherboard's "Memory" section gives the generation (DDR4 or DDR5), the number of slots and the maximum capacity. The QVL lists the kits that have been tested.</p></details>
+          </li>
+          <li class="cl-item">
+            <input type="checkbox" id="cl-3" data-cl="format">
+            <label for="cl-3"><span class="cl-title">Motherboard size supported by the case</span><span class="cl-example">e.g. ATX ↔ ATX case</span></label>
+            <details><summary>How to check</summary><p>The case's spec sheet lists the motherboard sizes it supports. An ATX case also takes smaller boards.</p></details>
+          </li>
+          <li class="cl-item">
+            <input type="checkbox" id="cl-4" data-cl="gpu">
+            <label for="cl-4"><span class="cl-title">Graphics card length &lt; space in the case</span><span class="cl-example">e.g. 28 cm &lt; 36 cm</span></label>
+            <details><summary>How to check</summary><p>Compare the card's length (on the graphics card's spec sheet) with the case's "maximum GPU length". Fans or a radiator at the front can reduce that space, and the spec sheet often says by how much.</p></details>
+          </li>
+          <li class="cl-item">
+            <input type="checkbox" id="cl-5" data-cl="cooler">
+            <label for="cl-5"><span class="cl-title">CPU cooler height &lt; space available in the case</span><span class="cl-example">e.g. 15.5 cm &lt; 16.5 cm</span></label>
+            <details><summary>How to check</summary><p>Compare the cooler's height with the case's "maximum CPU cooler height". Also check that the mounting kit supports your socket.</p></details>
+          </li>
+          <li class="cl-item">
+            <input type="checkbox" id="cl-6" data-cl="psu">
+            <label for="cl-6"><span class="cl-title">Power supply wattage is enough</span><span class="cl-example">e.g. 750 W for ~400 W of load</span></label>
+            <details open><summary>How to check (calculator)</summary>
+              <div class="psu-calc" id="psu-calc">
+                <label for="calc-cpu">Processor (TDP): <output id="calc-cpu-out">105 W</output></label>
+                <input type="range" id="calc-cpu" min="65" max="170" step="5" value="105">
+                <label for="calc-gpu">Graphics card (power draw): <output id="calc-gpu-out">200 W</output></label>
+                <input type="range" id="calc-gpu" min="100" max="350" step="10" value="200">
+                <p class="calc-result">Estimated draw under load: <strong id="calc-load">405 W</strong><br>Recommended power supply: <strong id="calc-psu" class="accent-text">650 W</strong></p>
+                <p class="muted">How it's worked out: (processor + graphics card + 100&nbsp;W for everything else) × 1.5 for headroom, rounded up to the next 50&nbsp;W. If in doubt, follow the graphics card maker's recommendation, and check that the power supply has the right connectors.</p>
+              </div>
+            </details>
+          </li>
+        </ul>
+        <p class="cl-done" id="cl-done" hidden>All checked: your build is compatible. Time to place your order… then come back for the <a href="#montage">build</a>.</p>
+        <button class="btn btn--ghost btn--small" id="cl-reset" type="button">Untick everything</button>
+      </div>
+    </section>
+
+    <!-- ====================================================== 9. GLOSSARY -->
+    <section id="glossaire" class="section" aria-labelledby="glo-title">
+      <header class="section-head">
+        <p class="kicker">Finding your way around</p>
+        <h2 id="glo-title">Glossary</h2>
+        <p class="lead">Every technical term on the site. In the text, words with a dotted underline show their definition when you hover over (or tap) them.</p>
+      </header>
+      <div class="glossary-tools">
+        <label for="glossary-search" class="visually-hidden">Search for a term</label>
+        <input type="search" id="glossary-search" placeholder="Search for a term (e.g. socket, NVMe, EXPO…)" autocomplete="off">
+        <p class="muted" id="glossary-count" aria-live="polite"></p>
+      </div>
+      <dl class="glossary" id="glossary">
+        <div class="g-item" id="g-12v2x6"><dt>12V-2x6</dt><dd>A 16-pin power connector (12 large pins + 4 small ones) used by powerful graphics cards. It can deliver up to 600&nbsp;W.</dd></div>
+        <div class="g-item" id="g-80plus"><dt>80 PLUS</dt><dd>An efficiency rating for power supplies: how much of the energy drawn from the wall actually reaches the components. Common levels: Bronze (~85&nbsp;% at half load), Gold (~90&nbsp;%), then Platinum and Titanium.</dd></div>
+        <div class="g-item" id="g-aio"><dt>AIO</dt><dd>"All-in-one": a sealed, pre-filled liquid cooler. A pump on the processor sends liquid to a radiator with fans, mounted on the case (often 240&nbsp;mm).</dd></div>
+        <div class="g-item" id="g-atx"><dt>ATX</dt><dd>The standard that sets motherboard dimensions (30.5 × 24.4&nbsp;cm for ATX), where their mounting holes go, and the power supply connectors. ATX&nbsp;3.x power supplies cope better with graphics cards' power spikes.</dd></div>
+        <div class="g-item" id="g-bios"><dt>BIOS</dt><dd>"Basic Input/Output System": the start-up software stored on the motherboard. Out of habit, the word now also refers to its successor, UEFI.</dd></div>
+        <div class="g-item" id="g-flashback"><dt>BIOS Flashback</dt><dd>A motherboard button that updates the BIOS from a USB stick, with no processor or memory installed.</dd></div>
+        <div class="g-item" id="g-bootmenu"><dt>Boot menu</dt><dd>A menu shown at power-on (often with F8, F11 or F12) that lets you pick which device to boot from, just this once.</dd></div>
+        <div class="g-item" id="g-equerre"><dt>Bracket</dt><dd>The metal plate at the end of an expansion card, screwed to the back of the case. On a graphics card, it carries the video outputs.</dd></div>
+        <div class="g-item" id="g-bus"><dt>Bus</dt><dd>A set of connections that carries data between components: the motherboard's "roads".</dd></div>
+        <div class="g-item" id="g-cablemanagement"><dt>Cable management</dt><dd>The art of tidying cables away (behind the tray, in neat bundles) for better airflow, easier maintenance and good looks.</dd></div>
+        <div class="g-item" id="g-cache"><dt>Cache</dt><dd>A small, extremely fast memory built into the processor (levels L1, L2, L3) that keeps the most-used data close so it doesn't have to wait for RAM.</dd></div>
+        <div class="g-item" id="g-cl"><dt>CAS latency (CL)</dt><dd>The number of cycles between asking RAM for a piece of data and getting it. Combine it with the speed: latency (ns) ≈ CL × 2,000 ÷ speed (MT/s).</dd></div>
+        <div class="g-item" id="g-cfm"><dt>CFM</dt><dd>"Cubic feet per minute": the unit for a fan's airflow (1&nbsp;CFM ≈ 1.7&nbsp;m³/h).</dd></div>
+        <div class="g-item" id="g-chipset"><dt>Chipset</dt><dd>A chip on the motherboard that runs some of the connections (USB, SATA, some M.2 and PCIe slots) and defines which range the board belongs to.</dd></div>
+        <div class="g-item" id="g-coeur"><dt>Core</dt><dd>A complete processing unit inside a processor, able to run a program independently of the others.</dd></div>
+        <div class="g-item" id="g-cpu"><dt>CPU</dt><dd>"Central Processing Unit": the processor.</dd></div>
+        <div class="g-item" id="g-ventirad"><dt>CPU cooler</dt><dd>An air cooler (a heatsink with a fan) mounted on the processor.</dd></div>
+        <div class="g-item" id="g-ddr5"><dt>DDR5</dt><dd>The 5<sup>th</sup> generation of DDR memory. Faster than DDR4 and not compatible with it (the notch is in a different place).</dd></div>
+        <div class="g-item" id="g-die"><dt>Die</dt><dd>The silicon chip itself, where the transistors are etched. A modern processor can hold several of them under its lid.</dd></div>
+        <div class="g-item" id="g-displayport"><dt>DisplayPort</dt><dd>The standard video connector for PC monitors, recognisable by its single cut-off corner.</dd></div>
+        <div class="g-item" id="g-dpi"><dt>DPI</dt><dd>"Dots per inch": a mouse's sensitivity, the number of points it detects per inch of movement.</dd></div>
+        <div class="g-item" id="g-pilote"><dt>Driver</dt><dd>Software that lets the operating system talk to a piece of hardware (graphics card, chipset, network…).</dd></div>
+        <div class="g-item" id="g-dualchannel"><dt>Dual channel</dt><dd>A mode where the processor accesses two memory sticks in parallel (one per channel), which doubles the bandwidth. They have to be in the right slots, usually A2 and B2.</dd></div>
+        <div class="g-item" id="g-eps"><dt>EPS</dt><dd>An 8-pin power connector (often 4+4) just for the processor, in the top left of the motherboard. It's labelled "CPU" on the power supply side.</dd></div>
+        <div class="g-item" id="g-expo"><dt>EXPO / XMP</dt><dd>Profiles stored on the memory stick by its maker (EXPO for AMD, XMP for Intel). Turning one on in the BIOS runs the RAM at its rated speed.</dd></div>
+        <div class="g-item" id="g-ghz"><dt>GHz</dt><dd>Gigahertz: one billion cycles per second.</dd></div>
+        <div class="g-item" id="g-gpu"><dt>GPU</dt><dd>"Graphics Processing Unit": the graphics card's chip, made up of thousands of processing units working in parallel.</dd></div>
+        <div class="g-item" id="g-passecables"><dt>Grommet</dt><dd>An opening in the tray, often lined with rubber, that lets cables pass behind the motherboard.</dd></div>
+        <div class="g-item" id="g-hdd"><dt>HDD</dt><dd>"Hard disk drive": a drive with magnetic platters and a moving read head. Lots of capacity for little money, but slow and sensitive to knocks.</dd></div>
+        <div class="g-item" id="g-hdmi"><dt>HDMI</dt><dd>A trapezoid-shaped audio and video connector, standard on TVs and consoles.</dd></div>
+        <div class="g-item" id="g-header"><dt>Header</dt><dd>A group of pins on the motherboard for plugging in internal cables: fans, the case's front panel, USB, audio.</dd></div>
+        <div class="g-item" id="g-heatpipe"><dt>Heat pipe</dt><dd>A sealed copper tube holding a little liquid: it evaporates at the hot end and condenses at the cool end, carrying heat away very efficiently.</dd></div>
+        <div class="g-item" id="g-hz"><dt>Hertz (Hz)</dt><dd>The unit of frequency: how many times per second. For a monitor, the number of images it shows each second.</dd></div>
+        <div class="g-item" id="g-io"><dt>I/O</dt><dd>"Input/Output". The ports on the back of the motherboard make up the I/O panel.</dd></div>
+        <div class="g-item" id="g-igpu"><dt>iGPU</dt><dd>Graphics built into the processor: enough for desktop work and troubleshooting, but not for demanding games.</dd></div>
+        <div class="g-item" id="g-ihs"><dt>IHS</dt><dd>"Integrated Heat Spreader": the processor's metal lid, which protects the chip and spreads its heat towards the cooler.</dd></div>
+        <div class="g-item" id="g-iops"><dt>IOPS</dt><dd>Input/output operations per second: a measure of how fast an SSD handles small, random accesses.</dd></div>
+        <div class="g-item" id="g-iso"><dt>ISO</dt><dd>An "image" file containing a whole installation disc, which you write to a USB stick to install an operating system.</dd></div>
+        <div class="g-item" id="g-latence"><dt>Latency</dt><dd>The waiting time between a request and its answer: nanoseconds for RAM, microseconds for an SSD, milliseconds for a hard drive.</dd></div>
+        <div class="g-item" id="g-lga"><dt>LGA</dt><dd>"Land Grid Array": a socket where the pins are on the motherboard and the processor only has flat pads (AMD AM5, Intel LGA&nbsp;1851).</dd></div>
+        <div class="g-item" id="g-m2"><dt>M.2</dt><dd>A compact format for expansion cards (SSDs, Wi-Fi…) that screw flat onto the motherboard. "2280" means 22&nbsp;mm × 80&nbsp;mm.</dd></div>
+        <div class="g-item" id="g-training"><dt>Memory training</dt><dd>The part of start-up where the motherboard tests and calibrates the memory. With DDR5, the first time can take several minutes.</dd></div>
+        <div class="g-item" id="g-modulaire"><dt>Modular</dt><dd>Describes a power supply whose cables plug in as needed. Semi-modular: only the essential cables are fixed.</dd></div>
+        <div class="g-item" id="g-mts"><dt>MT/s</dt><dd>Megatransfers per second: millions of data transfers per second. The unit for RAM speed (often wrongly written as MHz).</dd></div>
+        <div class="g-item" id="g-nand"><dt>NAND</dt><dd>The type of flash memory in SSDs and USB sticks: it keeps data without power.</dd></div>
+        <div class="g-item" id="g-nanoseconde"><dt>Nanosecond (ns)</dt><dd>A billionth of a second. 1&nbsp;µs (microsecond) = 1,000&nbsp;ns, 1&nbsp;ms (millisecond) = 1,000,000&nbsp;ns.</dd></div>
+        <div class="g-item" id="g-nvme"><dt>NVMe</dt><dd>"Non-Volatile Memory Express": a protocol that lets an SSD talk directly over PCIe lanes, much faster than SATA.</dd></div>
+        <div class="g-item" id="g-os"><dt>Operating system (OS)</dt><dd>The main software that runs the computer and launches programs: Windows, Linux, macOS…</dd></div>
+        <div class="g-item" id="g-dalle"><dt>Panel (IPS, VA, OLED)</dt><dd>The screen technology: IPS (accurate colours, good viewing angles), VA (good contrast), OLED (each pixel makes its own light, so blacks are perfect).</dd></div>
+        <div class="g-item" id="g-pcb"><dt>PCB</dt><dd>"Printed Circuit Board": an insulating board carrying copper traces and components.</dd></div>
+        <div class="g-item" id="g-pcie"><dt>PCIe</dt><dd>"PCI Express": the fast bus that links the processor to the graphics card, NVMe SSDs and so on. It comes in a number of lanes (x1, x4, x16), and each generation (3.0, 4.0, 5.0) doubles the speed per lane.</dd></div>
+        <div class="g-item" id="g-pixel"><dt>Pixel</dt><dd>The smallest dot in an image on screen. A 1080p screen has about 2 million of them.</dd></div>
+        <div class="g-item" id="g-post"><dt>POST</dt><dd>"Power-On Self-Test": the hardware self-check the BIOS runs every time the PC starts.</dd></div>
+        <div class="g-item" id="g-protections"><dt>Protections</dt><dd>A power supply's safety circuits (over-voltage, over-current, short circuit, overheating…) that cut the power if something goes wrong.</dd></div>
+        <div class="g-item" id="g-psu"><dt>PSU</dt><dd>"Power Supply Unit": the power supply.</dd></div>
+        <div class="g-item" id="g-pwm"><dt>PWM</dt><dd>"Pulse Width Modulation": a speed signal sent down a fan's 4<sup>th</sup> wire, so the motherboard can match the speed to the temperature.</dd></div>
+        <div class="g-item" id="g-qvl"><dt>QVL</dt><dd>"Qualified Vendor List": the list of components (mostly RAM kits) the motherboard maker has tested.</dd></div>
+        <div class="g-item" id="g-ram"><dt>RAM</dt><dd>"Random Access Memory": fast, volatile working memory.</dd></div>
+        <div class="g-item" id="g-resolution"><dt>Resolution</dt><dd>The number of pixels in an image, as width × height: 2,560 × 1,440, for example.</dd></div>
+        <div class="g-item" id="g-sata"><dt>SATA</dt><dd>The older interface used by 2.5" SSDs and hard drives, limited to about 550&nbsp;MB/s. It needs a data cable and a power cable.</dd></div>
+        <div class="g-item" id="g-secureboot"><dt>Secure Boot</dt><dd>A UEFI feature that only lets signed operating systems start, to block some malware at boot time.</dd></div>
+        <div class="g-item" id="g-slot"><dt>Slot</dt><dd>A place where you plug in a component: a RAM slot, a PCIe slot, an M.2 slot.</dd></div>
+        <div class="g-item" id="g-smt"><dt>SMT</dt><dd>"Simultaneous Multithreading" (Hyper-Threading at Intel): one core handles two threads at once so it's never left idle.</dd></div>
+        <div class="g-item" id="g-socket"><dt>Socket</dt><dd>The processor's mount on the motherboard. The processor and the board must have exactly the same socket.</dd></div>
+        <div class="g-item" id="g-ssd"><dt>SSD</dt><dd>"Solid State Drive": storage built on flash memory, with no moving parts.</dd></div>
+        <div class="g-item" id="g-entretoise"><dt>Standoff</dt><dd>A small post screwed into the case that the motherboard is mounted on, so the board never touches the metal.</dd></div>
+        <div class="g-item" id="g-esd"><dt>Static electricity (ESD)</dt><dd>An electric charge your body builds up through friction (carpet, wool, fleece). Its sudden release ("electrostatic discharge") can damage a chip without you feeling a thing. To avoid it, touch the metal of the case, hold parts by their edges, or wear an anti-static wrist strap.</dd></div>
+        <div class="g-item" id="g-switch"><dt>Switch</dt><dd>The mechanism under each key of a mechanical keyboard: linear, tactile or clicky.</dd></div>
+        <div class="g-item" id="g-tbw"><dt>TBW</dt><dd>"Terabytes Written": the total amount of data you can write to an SSD during its warranty.</dd></div>
+        <div class="g-item" id="g-tdp"><dt>TDP</dt><dd>"Thermal Design Power": roughly how much heat (in watts) a processor gives off, which the cooling has to remove.</dd></div>
+        <div class="g-item" id="g-pate"><dt>Thermal paste</dt><dd>A heat-conducting paste applied between the processor and the cooler to push the air out of the microscopic gaps.</dd></div>
+        <div class="g-item" id="g-thread"><dt>Thread</dt><dd>A thread of execution: a sequence of instructions run by a core.</dd></div>
+        <div class="g-item" id="g-throttling"><dt>Throttling</dt><dd>A component automatically slowing itself down when it gets too hot, to protect itself.</dd></div>
+        <div class="g-item" id="g-debit"><dt>Throughput</dt><dd>The amount of data moved per second (MB/s, GB/s). Not to be confused with latency (the waiting time).</dd></div>
+        <div class="g-item" id="g-thunderbolt"><dt>Thunderbolt</dt><dd>A very fast connection standard (40 to 80&nbsp;Gb/s) that uses the USB-C plug: data, video and power.</dd></div>
+        <div class="g-item" id="g-tkl"><dt>TKL</dt><dd>"Tenkeyless": a keyboard without a number pad.</dd></div>
+        <div class="g-item" id="g-tpm"><dt>TPM 2.0</dt><dd>A security chip (or a feature built into the processor: fTPM at AMD, PTT at Intel) that stores encryption keys. Windows 11 requires it.</dd></div>
+        <div class="g-item" id="g-uefi"><dt>UEFI</dt><dd>"Unified Extensible Firmware Interface": the modern successor to the BIOS, with a graphical interface, mouse support and Secure Boot.</dd></div>
+        <div class="g-item" id="g-usb"><dt>USB / USB-C</dt><dd>The universal connection standard. "USB-C" refers to the shape of the plug (reversible), not its speed.</dd></div>
+        <div class="g-item" id="g-volatile"><dt>Volatile</dt><dd>Loses its data without power, like RAM. Storage, on the other hand, is non-volatile.</dd></div>
+        <div class="g-item" id="g-vram"><dt>VRAM</dt><dd>The graphics card's memory (GDDR6, GDDR7): very fast, it holds the textures and the frames being drawn.</dd></div>
+        <div class="g-item" id="g-vrm"><dt>VRM</dt><dd>"Voltage Regulator Module": the motherboard's power stage that turns 12&nbsp;V into the processor's very low voltage (~1&nbsp;V).</dd></div>
+      </dl>
+      <p class="muted" id="glossary-empty" hidden>No terms match your search.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p><strong>PC Builder</strong>, a guide to building your own desktop PC. Information checked in October 2026: hardware moves fast, so always check the makers' spec sheets before you buy.</p>
+      <p>The 9 3D models are generic (unbranded) and generated by the Blender scripts in <code>scripts/blender/</code>. 3D engine: Three.js 0.160.0 (MIT licence). Sources and licences in detail: <a href="../CREDITS.md">CREDITS.md</a>.</p>
+      <p><a href="#accueil">↑ Back to the top</a></p>
+    </div>
+  </footer>
+
+  <div class="tooltip" id="term-tooltip" role="tooltip" hidden></div>
+  <noscript><p class="noscript">JavaScript is turned off: all the text is still readable, but the 3D viewers and animations won't work.</p></noscript>
+</body>
+</html>

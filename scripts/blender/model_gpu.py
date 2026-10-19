@@ -1,5 +1,5 @@
 """
-model_gpu.py — Carte graphique milieu de gamme, double ventilateur
+model_gpu.py : Carte graphique milieu de gamme, double ventilateur
 (28 x 12 x 5 cm), connecteur PCIe x16 et une prise d'alimentation PCIe 8 broches.
 
 Orientation (une fois enfichée dans le slot PCIe x16 de la carte mère verticale) :

@@ -1,5 +1,5 @@
 """
-render_assembly.py — Assemble le PC complet à partir des .glb et de leurs ancres,
+render_assembly.py : Assemble le PC complet à partir des .glb et de leurs ancres,
 puis en fait un rendu. Sert à VÉRIFIER que les pièces s'emboîtent (mêmes règles de
 placement que le site) et produit l'image d'attente du héros (img/hero-poster.webp).
 

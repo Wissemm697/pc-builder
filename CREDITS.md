@@ -38,4 +38,4 @@ Les images d'attente (`img/previews/*.webp`) sont des rendus de ces mêmes modè
 
 ## Polices et icônes
 
-Il n'y a aucune police externe : le site utilise les polices déjà présentes sur l'appareil (`system-ui`, `ui-monospace`…). Les icônes et les schémas (connecteurs USB, HDMI, DisplayPort…) sont des SVG dessinés à la main directement dans `index.html`.
+Il n'y a aucune police externe : le site utilise les polices déjà présentes sur l'appareil (`system-ui`, `ui-monospace`…). Les icônes et les schémas (connecteurs USB, HDMI, DisplayPort…) sont des SVG dessinés à la main directement dans les pages HTML (`index.html` et `en/index.html`).

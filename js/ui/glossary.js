@@ -1,6 +1,8 @@
 /**
- * glossary.js — Recherche instantanée dans le glossaire (insensible aux accents et à la casse).
+ * glossary.js : Recherche instantanée dans le glossaire (insensible aux accents et à la casse).
  */
+import { t } from '../i18n.js';
+
 const normalize = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
 export function initGlossary() {
@@ -35,7 +37,7 @@ export function initGlossary() {
       }
     }
     empty.hidden = shown > 0;
-    count.textContent = q ? `${shown} terme${shown > 1 ? 's' : ''} sur ${total}` : `${total} termes`;
+    count.textContent = q ? t('termsOf', shown, total) : t('terms', total);
   }
   input.addEventListener('input', update);
   update();

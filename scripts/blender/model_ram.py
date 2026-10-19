@@ -1,5 +1,5 @@
 """
-model_ram.py — Barrette de mémoire DDR5 16 Go (format DIMM 288 broches, 133,35 x 31,25 mm).
+model_ram.py : Barrette de mémoire DDR5 16 Go (format DIMM 288 broches, 133,35 x 31,25 mm).
 
 Une barrette de 16 Go DDR5 « simple face » porte 8 puces mémoire sur une seule face,
 un petit circuit de gestion de l'alimentation (PMIC, nouveauté de la DDR5) et un hub SPD.

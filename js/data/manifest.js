@@ -1,5 +1,5 @@
 /**
- * manifest.js — GÉNÉRÉ AUTOMATIQUEMENT par scripts/optimize-models.mjs (ne pas éditer).
+ * manifest.js : GÉNÉRÉ AUTOMATIQUEMENT par scripts/optimize-models.mjs (ne pas éditer).
  * Pour chaque modèle : boîte englobante, ancres et pivots des pièces animables,
  * en centimètres dans l'espace du site (X = avant, Y = haut, Z = vers la vitre).
  */

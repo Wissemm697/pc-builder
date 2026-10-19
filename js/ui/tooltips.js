@@ -1,5 +1,5 @@
 /**
- * tooltips.js — Définition des termes techniques au survol, au focus clavier ou au toucher.
+ * tooltips.js : Définition des termes techniques au survol, au focus clavier ou au toucher.
  * Les définitions sont lues dans le glossaire (source unique) : <div id="g-xxx"><dt/><dd/></div>.
  */
 export function initTooltips() {

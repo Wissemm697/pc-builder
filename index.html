@@ -3,20 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Monter son PC de A à Z — guide 3D interactif</title>
+  <!-- Politique de sécurité : uniquement des ressources du site lui-même (voir SECURITY.md) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-fFbaf6bPvF6y5DgodPe80TPzHWuaeaCUTn59gFqvDC8='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' data: blob:; font-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Monter son PC de A à Z : guide 3D interactif</title>
   <meta name="description" content="Comprendre chaque pièce d'un PC fixe, vérifier la compatibilité et l'assembler pas à pas, avec des modèles 3D interactifs.">
-  <meta name="theme-color" content="#0b0f14">
+  <meta name="theme-color" content="#111317">
+  <link rel="alternate" hreflang="fr" href="./">
+  <link rel="alternate" hreflang="en" href="en/">
+  <link rel="alternate" hreflang="x-default" href="./">
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
-  <!-- Three.js en version figée (0.160.0), copié localement : le site fonctionne hors-ligne -->
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "./js/vendor/three/three.module.min.js",
-      "three/addons/": "./js/vendor/three/addons/"
-    }
-  }
-  </script>
+  <!-- thème clair/sombre et langue préférée, appliqués avant l'affichage -->
+  <script src="js/prefs.js"></script>
+  <!-- Three.js en version figée (0.160.0), copié localement : le site fonctionne hors ligne.
+       L'importmap tient sur une ligne : son empreinte (CSP) ne dépend pas des fins de ligne. -->
+  <script type="importmap">{"imports":{"three":"./js/vendor/three/three.module.min.js","three/addons/":"./js/vendor/three/addons/"}}</script>
   <script type="module" src="js/main.js"></script>
 </head>
 <body>
@@ -29,6 +31,22 @@
       <span>PC&nbsp;Builder</span>
     </a>
     <p class="topbar-current" id="topbar-current" aria-live="polite">Accueil</p>
+    <div class="topbar-tools">
+      <details class="lang-menu" id="lang-menu">
+        <summary aria-label="Langue du site : français">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span>FR</span>
+        </summary>
+        <ul>
+          <li><a href="./" hreflang="fr" lang="fr" aria-current="true">Français</a></li>
+          <li><a href="en/" hreflang="en" lang="en">English</a></li>
+        </ul>
+      </details>
+      <button class="icon-btn theme-toggle" id="theme-toggle" type="button" aria-label="Changer de thème" aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
     <button class="toc-toggle" id="toc-toggle" aria-expanded="false" aria-controls="toc">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       <span>Sommaire</span>
@@ -61,6 +79,7 @@
         <li class="toc-group">Assembler
           <ol>
             <li><a href="#vue-eclatee">Vue éclatée</a></li>
+            <li><a href="#securite">Sécurité</a></li>
             <li><a href="#montage">Montage pas à pas</a></li>
             <li><a href="#bios">BIOS / UEFI</a></li>
           </ol>
@@ -865,6 +884,39 @@
       </div>
     </section>
 
+    <!-- ====================================================== SÉCURITÉ -->
+    <section id="securite" class="section" aria-labelledby="safety-title">
+      <header class="section-head">
+        <p class="kicker">Avant de toucher aux pièces</p>
+        <h2 id="safety-title">La sécurité d'abord</h2>
+        <p class="lead">Monter un PC n'est pas dangereux pour toi si tu respectes quelques règles simples. Le vrai risque concerne surtout les composants&nbsp;: une décharge d'<span class="term" data-g="esd">électricité statique</span> que tu ne sens même pas peut suffire à en abîmer un.</p>
+      </header>
+      <div class="safety-grid">
+        <article class="safety-card">
+          <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>L'électricité statique</h3>
+          <p>En marchant sur une moquette ou en enlevant un pull, ton corps peut se charger de plusieurs milliers de volts. On ne sent une décharge qu'à partir d'environ 3&nbsp;000&nbsp;V, mais une décharge bien plus faible suffit à endommager une puce. Le dégât ne se voit pas toujours tout de suite&nbsp;: une pièce peut marcher, puis tomber en panne des semaines plus tard.</p>
+          <ul>
+            <li><strong>Décharge-toi souvent&nbsp;:</strong> touche une partie métallique non peinte du boîtier avant de prendre chaque pièce, et de temps en temps pendant le montage.</li>
+            <li><strong>Choisis ton poste&nbsp;:</strong> un sol dur (carrelage, parquet) plutôt qu'une moquette, des vêtements en coton plutôt qu'en laine ou en polaire.</li>
+            <li><strong>Garde les pièces dans leur sachet antistatique</strong> jusqu'au moment de les installer. La carte mère se monte posée sur sa boîte en carton.</li>
+            <li><strong>Tiens tout par les bords&nbsp;:</strong> ne touche ni les contacts dorés, ni les puces, ni les broches du socket.</li>
+            <li><strong>Le plus sûr&nbsp;:</strong> un bracelet antistatique (quelques euros), relié par sa pince à une partie métallique du boîtier.</li>
+          </ul>
+        </article>
+        <article class="safety-card">
+          <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 16H3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4M12 17v.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Le courant et le reste</h3>
+          <ul>
+            <li><strong>Débranche le câble secteur</strong> pendant tout le montage, et à chaque fois que tu ouvriras le PC plus tard. Laisse l'interrupteur de l'alimentation sur <strong>O</strong>.</li>
+            <li><strong>N'ouvre jamais l'alimentation.</strong> Ses condensateurs peuvent garder une charge dangereuse longtemps après avoir été débranchés. Si elle tombe en panne, on la remplace&nbsp;; on ne la répare pas soi-même.</li>
+            <li><strong>Attention aux bords de tôle</strong> à l'intérieur du boîtier&nbsp;: ils peuvent couper. Vas-y doucement, des gants fins sont une option.</li>
+            <li><strong>Ne force jamais un connecteur.</strong> S'il résiste, il est à l'envers ou ce n'est pas le bon.</li>
+            <li><strong>Avant la mise sous tension,</strong> vérifie qu'aucune vis ni aucun outil ne traîne dans le boîtier&nbsp;: un objet métallique peut provoquer un court-circuit.</li>
+          </ul>
+          <p class="safety-note">Des rappels de sécurité apparaissent aussi aux étapes sensibles du montage.</p>
+        </article>
+      </div>
+    </section>
+
     <!-- ====================================================== 5. MONTAGE PAS À PAS -->
     <section id="montage" class="section section--wide" aria-labelledby="mont-title">
       <header class="section-head">
@@ -898,10 +950,10 @@
           <ul>
             <li><strong>Outils&nbsp;:</strong> un tournevis cruciforme (taille PH2 pour presque toutes les vis), une lampe, des attaches velcro ou des colliers, un petit bol pour les vis.</li>
             <li><strong>Surface&nbsp;:</strong> une table dégagée et dure, pas de moquette. La boîte de la carte mère servira de support.</li>
-            <li><strong>Électricité statique&nbsp;:</strong> une décharge invisible peut abîmer un composant. Touche régulièrement une partie métallique non peinte (le châssis du boîtier) pour te décharger, évite les pulls en laine. Un bracelet antistatique relié au châssis est un plus.</li>
+            <li><strong><span class="term" data-g="esd">Électricité statique</span>&nbsp;:</strong> une décharge invisible peut abîmer un composant. Touche régulièrement une partie métallique non peinte du boîtier pour te décharger, évite les pulls en laine. Un bracelet antistatique relié au châssis est un plus. Relis les <a href="#securite">règles de sécurité</a> si besoin.</li>
             <li><strong>Le manuel de la carte mère</strong> à portée de main&nbsp;: il indique l'emplacement de chaque slot et de chaque en-tête.</li>
           </ul>
-          <p class="tip">Ne branche rien sur le secteur tant que le montage n'est pas terminé.</p>
+          <p class="tip tip--safety">Ne branche rien sur le secteur tant que le montage n'est pas terminé.</p>
         </li>
         <li data-step="2">
           <h3>Le processeur dans son socket</h3>
@@ -912,6 +964,7 @@
             <li>Tiens le processeur par les bords et pose-le <strong>sans forcer et sans le faire glisser</strong>&nbsp;: il doit tomber à plat tout seul.</li>
             <li>Referme le cadre et abaisse le levier (une résistance est normale). Le cache plastique saute&nbsp;: garde-le.</li>
           </ul>
+          <p class="tip tip--safety">Avant de sortir le processeur de sa boîte, touche le métal du boîtier pour te décharger. Ne touche jamais les broches du socket.</p>
         </li>
         <li data-step="3">
           <h3>La RAM dans les slots A2 et B2</h3>
@@ -920,6 +973,7 @@
             <li>Aligne l'encoche de la barrette avec le détrompeur du slot&nbsp;: dans un sens seulement.</li>
             <li>Appuie fermement, bien verticalement, des deux côtés à la fois, jusqu'au <strong>clic</strong> des loquets. Ça demande plus de force qu'on ne l'imagine.</li>
           </ul>
+          <p class="tip tip--safety">Tiens les barrettes par les côtés&nbsp;: ne touche ni les contacts dorés, ni les puces.</p>
         </li>
         <li data-step="4">
           <h3>Le SSD M.2 et sa vis</h3>
@@ -928,6 +982,7 @@
             <li>Insère le SSD <strong>en biais (environ 30°)</strong>, contacts dorés en premier, l'encoche alignée sur la clé du connecteur.</li>
             <li>Abaisse-le à plat et revisse, sans forcer.</li>
           </ul>
+          <p class="tip tip--safety">Tiens le SSD par les bords, sans toucher ses contacts dorés. Garde la minuscule vis à l'œil&nbsp;: tombée sur la carte, elle peut provoquer un court-circuit.</p>
         </li>
         <li data-step="5">
           <h3>La pâte thermique, puis le ventirad</h3>
@@ -975,6 +1030,7 @@
             <li>Visse l'équerre au boîtier.</li>
             <li>Branche le câble <strong>PCIe 8 broches</strong> de l'alimentation (pas un câble marqué «&nbsp;CPU&nbsp;»), jusqu'au clic.</li>
           </ul>
+          <p class="tip tip--safety">Décharge-toi une dernière fois avant de prendre la carte graphique, et tiens-la par l'équerre et les bords.</p>
         </li>
         <li data-step="10">
           <h3>Le cable management</h3>
@@ -992,6 +1048,7 @@
             <li>Normal&nbsp;: les ventilateurs tournent, les LED de diagnostic s'allument une à une puis s'éteignent. Le premier démarrage peut durer plusieurs minutes (entraînement de la mémoire DDR5)&nbsp;: patience.</li>
             <li>L'écran du BIOS/UEFI apparaît&nbsp;: direction la <a href="#bios">section suivante</a>.</li>
           </ul>
+          <p class="tip tip--safety">Avant de brancher le secteur, vérifie qu'aucune vis ni aucun outil ne traîne dans le boîtier, et que le panneau latéral est remis.</p>
           <details class="trouble" open>
             <summary>Rien ne s'allume (aucun ventilateur ne tourne)&nbsp;?</summary>
             <ul class="checklist-mini">
@@ -1072,13 +1129,13 @@
                     <p>Total&nbsp;: <span class="bios-val">32 768 Mo</span> (DDR5)</p>
                     <p>Vitesse&nbsp;: <span class="bios-val" data-bios="mem-speed">4 800 MT/s</span></p>
                     <ul class="bios-dimms">
-                      <li>A1&nbsp;: —</li><li>A2&nbsp;: <span class="bios-ok">16 Go</span></li><li>B1&nbsp;: —</li><li>B2&nbsp;: <span class="bios-ok">16 Go</span></li>
+                      <li>A1&nbsp;: vide</li><li>A2&nbsp;: <span class="bios-ok">16 Go</span></li><li>B1&nbsp;: vide</li><li>B2&nbsp;: <span class="bios-ok">16 Go</span></li>
                     </ul>
                   </div>
                   <div class="bios-box">
                     <p class="bios-h">Stockage</p>
                     <p>M.2_1&nbsp;: <span class="bios-ok">SSD NVMe 1 To</span></p>
-                    <p>M.2_2&nbsp;: —</p>
+                    <p>M.2_2&nbsp;: vide</p>
                     <p>SATA 1-4&nbsp;: aucun</p>
                   </div>
                   <div class="bios-box">
@@ -1350,6 +1407,7 @@
         <div class="g-item" id="g-displayport"><dt>DisplayPort</dt><dd>Connecteur vidéo standard des écrans PC, reconnaissable à son unique coin coupé.</dd></div>
         <div class="g-item" id="g-dpi"><dt>DPI</dt><dd>«&nbsp;Dots per inch&nbsp;»&nbsp;: sensibilité d'une souris, le nombre de points détectés par pouce de déplacement.</dd></div>
         <div class="g-item" id="g-dualchannel"><dt>Dual channel</dt><dd>Mode où le processeur accède à deux barrettes en parallèle (une par canal), ce qui double la bande passante. Il faut les bons slots, souvent A2 et B2.</dd></div>
+        <div class="g-item" id="g-esd"><dt>Électricité statique (ESD)</dt><dd>Charge électrique que le corps accumule par frottement (moquette, laine, polaire). Sa décharge brutale («&nbsp;ElectroStatic Discharge&nbsp;») peut abîmer une puce sans qu'on la sente. Pour l'éviter&nbsp;: toucher le métal du boîtier, tenir les pièces par les bords, ou porter un bracelet antistatique.</dd></div>
         <div class="g-item" id="g-header"><dt>En-tête (header)</dt><dd>Groupe de broches sur la carte mère pour brancher les câbles internes&nbsp;: ventilateurs, façade du boîtier, USB, audio.</dd></div>
         <div class="g-item" id="g-entretoise"><dt>Entretoise</dt><dd>Petite colonnette vissée dans le boîtier sur laquelle se fixe la carte mère, pour qu'elle ne touche jamais le métal.</dd></div>
         <div class="g-item" id="g-eps"><dt>EPS</dt><dd>Connecteur d'alimentation 8 broches (souvent 4+4) dédié au processeur, en haut à gauche de la carte mère. Il est marqué «&nbsp;CPU&nbsp;» côté alimentation.</dd></div>

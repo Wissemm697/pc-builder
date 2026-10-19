@@ -1,5 +1,5 @@
 /**
- * scroll.js — Défilement vers une section, avec repli : si le défilement doux n'a pas
+ * scroll.js : Défilement vers une section, avec repli : si le défilement doux n'a pas
  * démarré (certains navigateurs ou réglages le désactivent), on saute directement.
  */
 export function scrollToId(id) {

@@ -1,42 +1,46 @@
 /**
- * charts.js — Petits graphiques en barres (HTML/CSS) pour les ordres de grandeur.
+ * charts.js : Petits graphiques en barres (HTML/CSS) pour les ordres de grandeur.
  * Une seule série par graphique (pas de légende), valeur au bout de chaque barre,
  * infobulle au survol ou au focus, et un tableau des valeurs pour l'accessibilité.
  */
+import { L, t } from '../i18n.js';
+
+const COLON = L(' : ', ': ');
+
 const CHARTS = {
   latency: {
-    title: 'Temps d\'accès aux données',
-    sub: 'Échelle logarithmique : chaque graduation est 1 000 fois plus longue que la précédente.',
+    title: L('Temps d\'accès aux données', 'How long it takes to reach the data'),
+    sub: L('Échelle logarithmique : chaque graduation est 1 000 fois plus longue que la précédente.', 'Logarithmic scale: each tick mark is 1,000 times longer than the one before.'),
     scale: 'log',
     min: 0.5,
     max: 2e7,
     ticks: [[1, '1 ns'], [1e3, '1 µs'], [1e6, '1 ms']],
     grid: [1, 10, 100, 1e3, 1e4, 1e5, 1e6, 1e7],
     rows: [
-      { name: 'Cache L1 (CPU)', v: 1, label: '~1 ns' },
-      { name: 'Cache L3 (CPU)', v: 10, label: '~10 ns' },
-      { name: 'RAM DDR5', v: 80, label: '~80 ns', emph: true },
-      { name: 'SSD NVMe', v: 8e4, label: '~80 µs', emph: true },
-      { name: 'Disque dur', v: 8e6, label: '~8 ms' },
+      { name: L('Cache L1 (CPU)', 'L1 cache (CPU)'), v: 1, label: '~1 ns' },
+      { name: L('Cache L3 (CPU)', 'L3 cache (CPU)'), v: 10, label: '~10 ns' },
+      { name: L('RAM DDR5', 'DDR5 RAM'), v: 80, label: '~80 ns', emph: true },
+      { name: L('SSD NVMe', 'NVMe SSD'), v: 8e4, label: '~80 µs', emph: true },
+      { name: L('Disque dur', 'Hard drive'), v: 8e6, label: '~8 ms' },
     ],
-    unit: 'temps d\'accès typique',
+    unit: L('temps d\'accès typique', 'typical access time'),
   },
   storage: {
-    title: 'Débit en lecture séquentielle',
-    sub: 'Gros fichiers, dans les meilleures conditions (en Go/s).',
+    title: L('Débit en lecture séquentielle', 'Sequential read speed'),
+    sub: L('Gros fichiers, dans les meilleures conditions (en Go/s).', 'Large files, under ideal conditions (in GB/s).'),
     scale: 'linear',
     min: 0,
     max: 15,
-    ticks: [[0, '0'], [5, '5 Go/s'], [10, '10 Go/s'], [15, '15 Go/s']],
+    ticks: [[0, '0'], [5, L('5 Go/s', '5 GB/s')], [10, L('10 Go/s', '10 GB/s')], [15, L('15 Go/s', '15 GB/s')]],
     grid: [0, 5, 10, 15],
     rows: [
-      { name: 'Disque dur', v: 0.2, label: '~200 Mo/s' },
-      { name: 'SSD SATA', v: 0.55, label: '~550 Mo/s' },
-      { name: 'NVMe PCIe 3.0', v: 3.5, label: '~3 500 Mo/s' },
-      { name: 'NVMe PCIe 4.0', v: 7, label: '~7 000 Mo/s', emph: true },
-      { name: 'NVMe PCIe 5.0', v: 14, label: '~14 000 Mo/s' },
+      { name: L('Disque dur', 'Hard drive'), v: 0.2, label: L('~200 Mo/s', '~200 MB/s') },
+      { name: L('SSD SATA', 'SATA SSD'), v: 0.55, label: L('~550 Mo/s', '~550 MB/s') },
+      { name: 'NVMe PCIe 3.0', v: 3.5, label: L('~3 500 Mo/s', '~3,500 MB/s') },
+      { name: 'NVMe PCIe 4.0', v: 7, label: L('~7 000 Mo/s', '~7,000 MB/s'), emph: true },
+      { name: 'NVMe PCIe 5.0', v: 14, label: L('~14 000 Mo/s', '~14,000 MB/s') },
     ],
-    unit: 'débit maximal',
+    unit: L('débit maximal', 'peak speed'),
   },
 };
 
@@ -93,7 +97,7 @@ export function initCharts() {
       track.className = 'chart-track';
       track.tabIndex = 0;
       track.setAttribute('role', 'img');
-      track.setAttribute('aria-label', `${r.name} : ${r.label}`);
+      track.setAttribute('aria-label', `${r.name}${COLON}${r.label}`);
       const bar = document.createElement('span');
       bar.className = `chart-bar${r.emph ? ' is-emph' : ''}`;
       const w = Math.max(1.5, pct(conf, r.v));
@@ -111,7 +115,7 @@ export function initCharts() {
       }
       track.append(bar, val);
       const showTip = (x, y) => {
-        tip.textContent = `${r.name} : ${r.label} (${conf.unit})`;
+        tip.textContent = `${r.name}${COLON}${r.label} (${conf.unit})`;
         tip.hidden = false;
         tip.style.left = `${Math.min(window.innerWidth - tip.offsetWidth - 10, x + 14)}px`;
         tip.style.top = `${y - 36}px`;
@@ -140,7 +144,9 @@ export function initCharts() {
     // tableau des valeurs (accessibilité)
     const det = document.createElement('details');
     det.className = 'chart-table';
-    det.innerHTML = '<summary>Voir les valeurs en tableau</summary>';
+    const summary = document.createElement('summary');
+    summary.textContent = t('seeTable');
+    det.append(summary);
     const table = document.createElement('table');
     for (const r of conf.rows) {
       const tr = document.createElement('tr');

@@ -1,5 +1,5 @@
 /**
- * fallbacks.js — Modèles de SECOURS construits directement en Three.js.
+ * fallbacks.js : Modèles de SECOURS construits directement en Three.js.
  *
  * Utilisés uniquement si un fichier .glb ne peut pas être chargé (fichier absent,
  * serveur mal configuré…). Ils sont simplifiés mais respectent les mêmes dimensions,

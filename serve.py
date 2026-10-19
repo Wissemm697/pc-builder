@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-serve.py — Lance le site en local, sans rien installer (Python 3.8 ou plus récent).
+serve.py : lance le site en local, sans rien installer (Python 3.8 ou plus récent).
 
     python serve.py            ->  http://localhost:8000  (le navigateur s'ouvre tout seul)
     python serve.py 8080       ->  autre port
@@ -52,6 +52,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
         # pas de cache : une modification des fichiers est visible au simple rechargement
         self.send_header('Cache-Control', 'no-cache')
+        # en-têtes de sécurité (la politique de contenu complète est dans chaque page HTML)
+        self.send_header('X-Content-Type-Options', 'nosniff')
+        self.send_header('Referrer-Policy', 'strict-origin-when-cross-origin')
+        self.send_header('X-Frame-Options', 'DENY')
+        self.send_header('Content-Security-Policy', "frame-ancestors 'none'")
+        self.send_header('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(), usb=()')
         super().end_headers()
 
     def log_message(self, fmt, *args):

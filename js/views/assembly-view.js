@@ -1,5 +1,5 @@
 /**
- * assembly-view.js — Montage pas à pas en 3D (11 étapes).
+ * assembly-view.js : Montage pas à pas en 3D (11 étapes).
  *
  * Principe : chaque étape k a un « état final » (où est chaque pièce une fois l'étape
  * terminée). Pour jouer l'étape k, on place instantanément la scène dans l'état final de
@@ -13,6 +13,7 @@ import { createStage, ease, prefersReducedMotion } from '../core/stage.js';
 import { buildPC } from '../core/pc-rig.js';
 import { Tweens } from '../core/anim.js';
 import { Cable, resample } from '../core/cables.js';
+import { L } from '../i18n.js';
 
 const D2R = THREE.MathUtils.degToRad;
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
@@ -47,17 +48,25 @@ export async function createAssemblyView(el, stepsUI) {
   const track = (o) => { disposables.push(o); return o; };
 
   // ------------------------------------------------------------------ établi
-  const table = new THREE.Mesh(track(new THREE.BoxGeometry(150, 2, 105)),
-    track(new THREE.MeshStandardMaterial({ color: 0x131921, roughness: 0.92 })));
+  const tableMat = track(new THREE.MeshStandardMaterial({ color: 0x131921, roughness: 0.92 }));
+  const table = new THREE.Mesh(track(new THREE.BoxGeometry(150, 2, 105)), tableMat);
   table.position.set(8, -1.01, 18);
   table.receiveShadow = true;
   scene.add(table);
-  const mat = new THREE.Mesh(track(new THREE.PlaneGeometry(78, 52)),
-    track(new THREE.MeshStandardMaterial({ color: 0x1a2430, roughness: 0.96 })));
+  const matMat = track(new THREE.MeshStandardMaterial({ color: 0x1a2430, roughness: 0.96 }));
+  const mat = new THREE.Mesh(track(new THREE.PlaneGeometry(78, 52)), matMat);
   mat.rotation.x = -Math.PI / 2;
   mat.position.set(-4, 0.004, 40);
   mat.receiveShadow = true;
   scene.add(mat);
+  // couleurs de l'établi selon le thème clair / sombre de la page
+  const applyTheme = () => {
+    const light = document.documentElement.getAttribute('data-theme') === 'light';
+    tableMat.color.set(light ? 0xc9ced6 : 0x131921);
+    matMat.color.set(light ? 0xaeb7c2 : 0x1a2430);
+  };
+  applyTheme();
+  document.addEventListener('pc-builder:theme', applyTheme);
   // boîte de la carte mère (support isolant)
   const boxMat = track(new THREE.MeshStandardMaterial({ color: 0x3a332b, roughness: 0.85 }));
   const mbBox = new THREE.Mesh(track(new THREE.BoxGeometry(34, 6, 28)), boxMat);
@@ -757,6 +766,7 @@ export async function createAssemblyView(el, stepsUI) {
       token += 1;
       tweens.cancelAll();
       unsubscribe();
+      document.removeEventListener('pc-builder:theme', applyTheme);
       Object.values(cables).forEach((c) => c.dispose());
       for (const d of disposables) d.dispose?.();
       for (const m of pc.materials) m.dispose();
@@ -780,13 +790,13 @@ function makeScreenTexture() {
   g.fillRect(0, 0, 1024, 64);
   g.fillStyle = '#ffffff';
   g.font = 'bold 30px system-ui, sans-serif';
-  g.fillText('UEFI BIOS Utility · Mode simplifié', 30, 43);
+  g.fillText(L('UEFI BIOS Utility · Mode simplifié', 'UEFI BIOS Utility · EZ Mode'), 30, 43);
   const rows = [
-    ['Processeur', '8 cœurs · 38 °C'],
-    ['Mémoire', '32 Go DDR5 (A2 + B2)'],
-    ['Stockage', 'SSD NVMe 1 To (M.2_1)'],
-    ['Carte graphique', 'PCIe x16 détectée'],
-    ['Ventilateurs', 'CPU_FAN 820 tr/min'],
+    [L('Processeur', 'Processor'), L('8 cœurs · 38 °C', '8 cores · 38 °C')],
+    [L('Mémoire', 'Memory'), L('32 Go DDR5 (A2 + B2)', '32 GB DDR5 (A2 + B2)')],
+    [L('Stockage', 'Storage'), L('SSD NVMe 1 To (M.2_1)', '1 TB NVMe SSD (M.2_1)')],
+    [L('Carte graphique', 'Graphics card'), L('PCIe x16 détectée', 'PCIe x16 detected')],
+    [L('Ventilateurs', 'Fans'), L('CPU_FAN 820 tr/min', 'CPU_FAN 820 RPM')],
   ];
   g.font = '28px system-ui, sans-serif';
   rows.forEach(([k, v], i) => {
@@ -800,7 +810,7 @@ function makeScreenTexture() {
   });
   g.fillStyle = '#22d3ee';
   g.font = 'bold 26px system-ui, sans-serif';
-  g.fillText('Tout est détecté : appuyez sur F10 pour enregistrer.', 30, 545);
+  g.fillText(L('Tout est détecté : appuyez sur F10 pour enregistrer.', 'Everything detected. Press F10 to save.'), 30, 545);
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
   return tex;

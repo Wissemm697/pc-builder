@@ -1,5 +1,5 @@
 """
-model_ssd.py — SSD NVMe M.2 2280 (22 x 80 mm), 1 To.
+model_ssd.py : SSD NVMe M.2 2280 (22 x 80 mm), 1 To.
 
 Orientation (une fois posé dans le slot M.2 de la carte mère) : à plat dans le plan XY,
 composants vers +Z, connecteur (contacts dorés, encoche « M ») côté X = 0, demi-lune

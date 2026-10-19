@@ -1,5 +1,5 @@
 /**
- * loader.js — Module de chargement PARTAGÉ par toutes les vues.
+ * loader.js : Module de chargement PARTAGÉ par toutes les vues.
  *
  * - Charge chaque .glb UNE seule fois (cache de promesses) avec le décodeur meshopt.
  * - Corrige quelques matériaux une fois pour toutes (vitre, grilles perforées, LED).

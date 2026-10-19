@@ -1,5 +1,5 @@
 /**
- * checklist.js — Checklist de compatibilité (cases à cocher) + calculateur d'alimentation.
+ * checklist.js : Checklist de compatibilité (cases à cocher) + calculateur d'alimentation.
  * La progression est gardée dans le navigateur (localStorage) quand c'est possible.
  */
 const KEY = 'pc-builder:checklist';

@@ -1,5 +1,5 @@
 """
-common.py — Boîte à outils partagée par tous les scripts de modélisation Blender.
+common.py : Boîte à outils partagée par tous les scripts de modélisation Blender.
 
 Lancement d'un script de pièce (deux façons équivalentes) :
     blender -b -P scripts/blender/model_fan.py
@@ -187,7 +187,7 @@ def textured_mat(name, image, metallic=0.0, roughness=0.5, mask=False, color_mul
 
 
 # --------------------------------------------------------------------------
-# Textures procédurales (numpy) — dessinées en coordonnées pixel, origine en haut à gauche
+# Textures procédurales (numpy), dessinées en coordonnées pixel, origine en haut à gauche
 # --------------------------------------------------------------------------
 def srgb(hexstr, a=1.0):
     h = hexstr.lstrip('#')

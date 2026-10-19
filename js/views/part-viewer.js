@@ -1,5 +1,5 @@
 /**
- * part-viewer.js — Visionneuse d'une pièce SEULE.
+ * part-viewer.js : Visionneuse d'une pièce SEULE.
  *
  * - Rotation et zoom à la souris ou au doigt (OrbitControls), rotation automatique
  *   lente jusqu'à la première interaction.
@@ -13,6 +13,7 @@ import { createStage, frameBox, ease, prefersReducedMotion, isCoarsePointer } fr
 import { getPart, spinRotors } from '../core/loader.js';
 import { Tweens } from '../core/anim.js';
 import { PARTS } from '../data/parts.js';
+import { t } from '../i18n.js';
 
 const tmpV = new THREE.Vector3();
 const tmpN = new THREE.Vector3();
@@ -48,7 +49,7 @@ export async function createPartViewer(el) {
   ui.className = 'viewer-ui';
   const hint = document.createElement('p');
   hint.className = 'viewer-hint';
-  hint.textContent = isCoarsePointer() ? 'Glisser pour tourner · pincer pour zoomer' : 'Glisser pour tourner · molette pour zoomer';
+  hint.textContent = isCoarsePointer() ? t('hintTouch') : t('hintMouse');
   const hotLayer = document.createElement('div');
   hotLayer.className = 'hotspots';
   el.append(ui, hint, hotLayer);
@@ -64,13 +65,13 @@ export async function createPartViewer(el) {
     return b;
   }
 
-  const btnHot = button('Repères', () => {
+  const btnHot = button(t('hotspots'), () => {
     hotspotsOn = !hotspotsOn;
     btnHot.setAttribute('aria-pressed', String(hotspotsOn));
     hotLayer.hidden = !hotspotsOn;
     needsFrame = true;
   }, true);
-  button('Recentrer', () => {
+  button(t('recenter'), () => {
     if (current) frameBox(camera, controls, current.box, current.conf.view, 1.12);
     needsFrame = true;
   });
@@ -139,7 +140,7 @@ export async function createPartViewer(el) {
       dot.type = 'button';
       dot.className = 'hotspot-dot';
       dot.textContent = String(i + 1);
-      dot.setAttribute('aria-label', `${h.t} : ${h.d}`);
+      dot.setAttribute('aria-label', `${h.t}. ${h.d}`);
       const lab = document.createElement('div');
       lab.className = 'hotspot-label';
       lab.innerHTML = `<strong></strong><span></span>`;
@@ -209,7 +210,7 @@ export async function createPartViewer(el) {
     if (part.fallback) {
       const note = document.createElement('p');
       note.className = 'viewer-fallback-note';
-      note.textContent = 'Modèle simplifié (fichier 3D indisponible)';
+      note.textContent = t('fallbackNote');
       el.append(note);
     }
     needsFrame = true;

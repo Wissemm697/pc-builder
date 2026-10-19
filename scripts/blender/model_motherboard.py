@@ -1,5 +1,5 @@
 """
-model_motherboard.py — Carte mère ATX (30,5 x 24,4 cm), socket AM5, 4 slots DDR5,
+model_motherboard.py : Carte mère ATX (30,5 x 24,4 cm), socket AM5, 4 slots DDR5,
 2 slots M.2, 1 slot PCIe x16 principal (+ un x1 et un x16 « long » câblé en x4).
 
 Orientation : la carte est verticale (plan XY), composants vers +Z, ports arrière

@@ -1,5 +1,5 @@
 /**
- * pc-rig.js — Assemble le PC complet à partir des ancres des modèles.
+ * pc-rig.js : Assemble le PC complet à partir des ancres des modèles.
  * Utilisé par le héros, la vue éclatée et le montage pas à pas (mêmes modèles, mêmes règles).
  *
  * Hiérarchie (unités : cm, repère du boîtier : X = avant, Y = haut, Z = vitre) :
@@ -18,6 +18,7 @@
 import * as THREE from 'three';
 import { getPart, spinRotors } from './loader.js';
 import { PART_LABELS } from '../data/parts.js';
+import { t } from '../i18n.js';
 
 /**
  * @param {{cloneMaterials?: boolean}} [opts]
@@ -76,7 +77,7 @@ export async function buildPC(opts = {}) {
   tag(ssd, 'ssd');
   tag(gpu, 'gpu');
   tag(psu, 'psu');
-  fans.forEach((f, i) => tag(f, 'fan', i < 3 ? 'avant' : 'arrière'));
+  fans.forEach((f, i) => tag(f, 'fan', i < 3 ? t('front') : t('rear')));
 
   const parts = { case: pcCase, motherboard: mb, cpu, cooler, ram: [ramA, ramB], ssd, gpu, psu, fans };
   const all = [pcCase, mb, cpu, cooler, ramA, ramB, ssd, gpu, psu, ...fans];

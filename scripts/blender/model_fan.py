@@ -1,5 +1,5 @@
 """
-model_fan.py — Ventilateur de boîtier 120 mm (12 x 12 x 2,5 cm).
+model_fan.py : Ventilateur de boîtier 120 mm (12 x 12 x 2,5 cm).
 
 Orientation : axe de rotation = X. L'air entre par la face +X (côté pales visibles)
 et ressort par la face -X (côté croisillons / moteur). Ainsi, les 3 ventilateurs de

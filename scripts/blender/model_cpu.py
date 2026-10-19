@@ -1,5 +1,5 @@
 """
-model_cpu.py — Processeur de bureau grand public (format AMD AM5 : boîtier 40 x 40 mm).
+model_cpu.py : Processeur de bureau grand public (format AMD AM5 : boîtier 40 x 40 mm).
 
 Le socket AM5 est de type LGA : les ~1 700 broches sont dans le socket de la carte
 mère, le processeur n'a que des pastilles dorées en dessous.

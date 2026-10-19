@@ -1,5 +1,5 @@
 /**
- * viewport-manager.js — Cycle de vie des visionneuses 3D.
+ * viewport-manager.js : Cycle de vie des visionneuses 3D.
  *
  * Les navigateurs limitent le nombre de contextes WebGL simultanés (souvent 16, parfois
  * beaucoup moins sur mobile). Ce module :
@@ -12,6 +12,7 @@
  * donc la recréation est rapide.
  */
 import { isCoarsePointer } from './stage.js';
+import { t } from '../i18n.js';
 
 const MAX_ACTIVE = isCoarsePointer() ? 3 : 5;
 const IDLE_DISPOSE_MS = 45000;
@@ -84,7 +85,7 @@ export class ViewportManager {
           slot.el.classList.remove('is-loading');
           slot.el.classList.add('is-error');
           const status = slot.el.querySelector('.viewer-status');
-          if (status) status.textContent = "La 3D n'a pas pu démarrer : image fixe affichée.";
+          if (status) status.textContent = t('viewerFailed');
         })
         .finally(() => { slot.creating = null; });
       return;

@@ -1,5 +1,5 @@
 /**
- * anim.js — Mini-moteur d'animations (interpolations dans le temps), sans dépendance.
+ * anim.js : Mini-moteur d'animations (interpolations dans le temps), sans dépendance.
  *
  *   const tw = new Tweens();
  *   await tw.to({ duration: 0.8, delay: 0.2, ease: ease.inOut, update: (k) => { ... } });

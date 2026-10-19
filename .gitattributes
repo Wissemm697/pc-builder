@@ -1,0 +1,5 @@
+# fins de ligne LF partout (la politique de sécurité dépend du contenu exact des pages)
+* text=auto eol=lf
+*.glb binary
+*.webp binary
+*.png binary

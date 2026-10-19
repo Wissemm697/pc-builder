@@ -1,5 +1,5 @@
 /**
- * exploded-view.js — Vue éclatée interactive.
+ * exploded-view.js : Vue éclatée interactive.
  *
  * - Un curseur fait passer de « éclaté » (0) à « assemblé » (100) ; chaque pièce rejoint sa
  *   place à son tour (ordre de montage), avec une animation amortie.
@@ -11,6 +11,7 @@ import { createStage, frameBox, ease, clamp01, prefersReducedMotion } from '../c
 import { buildPC, findPartRoot } from '../core/pc-rig.js';
 import { Tweens } from '../core/anim.js';
 import { scrollToId } from '../ui/scroll.js';
+import { t } from '../i18n.js';
 
 const ACCENT = new THREE.Color(0x22d3ee);
 
@@ -85,7 +86,7 @@ export async function createExplodedView(el) {
     syncPlayLabel();
   };
   function syncPlayLabel() {
-    if (playLabel) playLabel.textContent = tTarget > 0.5 ? 'Éclater' : 'Assembler';
+    if (playLabel) playLabel.textContent = tTarget > 0.5 ? t('explode') : t('assemble');
   }
   const onPlay = () => {
     const from = tTarget;
@@ -139,7 +140,7 @@ export async function createExplodedView(el) {
       label.innerHTML = '';
       label.append(document.createTextNode(hovered.userData.label + sub));
       const small = document.createElement('small');
-      small.textContent = 'cliquer : voir la fiche';
+      small.textContent = t('clickToOpen');
       label.append(small);
       label.style.transform = `translate(${(clientX - r.left).toFixed(0)}px, ${(clientY - r.top).toFixed(0)}px) translate(-50%, calc(-100% - 14px))`;
       label.classList.add('is-visible');

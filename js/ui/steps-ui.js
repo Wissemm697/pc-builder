@@ -1,10 +1,12 @@
 /**
- * steps-ui.js — Panneau du montage pas à pas (texte, pastilles d'étapes, boutons).
+ * steps-ui.js : Panneau du montage pas à pas (texte, pastilles d'étapes, boutons).
  *
  * Le contenu des étapes est écrit dans le HTML (#steps-source) : il reste lisible sans
  * JavaScript. Ce module l'affiche une étape à la fois et prévient la scène 3D (si elle est
  * chargée) à chaque changement d'étape. Il fonctionne même si la 3D est indisponible.
  */
+import { t } from '../i18n.js';
+
 export function initStepsUI() {
   const source = document.getElementById('steps-source');
   const content = document.getElementById('step-content');
@@ -28,8 +30,8 @@ export function initStepsUI() {
     b.className = 'step-dot';
     b.setAttribute('role', 'tab');
     b.textContent = String(i + 1);
-    const title = li.querySelector('h3')?.textContent || `Étape ${i + 1}`;
-    b.setAttribute('aria-label', `Étape ${i + 1} : ${title}`);
+    const title = li.querySelector('h3')?.textContent || `${t('step')} ${i + 1}`;
+    b.setAttribute('aria-label', `${t('step')} ${i + 1} : ${title}`);
     b.addEventListener('click', () => go(i + 1));
     dots.append(b);
     return b;
@@ -43,14 +45,14 @@ export function initStepsUI() {
     const li = items[current - 1];
     content.replaceChildren(...[...li.childNodes].map((n) => n.cloneNode(true)));
     content.scrollTop = 0;
-    count.textContent = `Étape ${current} / ${total}`;
+    count.textContent = `${t('step')} ${current} / ${total}`;
     dotEls.forEach((d, i) => {
       d.setAttribute('aria-selected', String(i + 1 === current));
       d.tabIndex = i + 1 === current ? 0 : -1;
       d.classList.toggle('is-done', i + 1 < current || i + 1 <= maxSeen - 1);
     });
     prev.disabled = current === 1;
-    next.textContent = current === total ? 'Recommencer ↺' : 'Étape suivante →';
+    next.textContent = current === total ? t('restart') : t('nextStep');
   }
 
   function go(k, opts = {}) {

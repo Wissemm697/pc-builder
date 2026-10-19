@@ -1,5 +1,5 @@
 """
-model_cooler.py — Ventirad « tour » (12,5 x 7 x 15,5 cm) : base en contact avec le
+model_cooler.py : Ventirad « tour » (12,5 x 7 x 15,5 cm) : base en contact avec le
 processeur, 4 caloducs (heatpipes) en U, empilement d'ailettes en aluminium et un
 ventilateur de 120 mm qui pousse l'air de l'avant (+X) vers l'arrière (-X).
 

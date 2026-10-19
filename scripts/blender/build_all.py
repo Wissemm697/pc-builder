@@ -1,5 +1,5 @@
 """
-build_all.py — Génère TOUS les modèles d'un coup (et leurs aperçus PNG).
+build_all.py : Génère TOUS les modèles d'un coup (et leurs aperçus PNG).
 
     blender -b -P scripts/blender/build_all.py                 # tous les modèles + aperçus
     blender -b -P scripts/blender/build_all.py -- --no-render  # sans les rendus (rapide)

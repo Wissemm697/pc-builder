@@ -1,5 +1,5 @@
 /**
- * stage.js — Création d'une scène 3D prête à l'emploi : moteur de rendu WebGL,
+ * stage.js : Création d'une scène 3D prête à l'emploi : moteur de rendu WebGL,
  * caméra, contrôles (souris ET tactile), éclairage propre et ombres légères.
  *
  * Éclairage : une lumière ambiante (hémisphérique), une lumière directionnelle principale

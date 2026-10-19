@@ -1,5 +1,5 @@
 """
-model_psu.py — Alimentation ATX 750 W, 80 PLUS Gold, semi-modulaire (15 x 8,6 x 14 cm).
+model_psu.py : Alimentation ATX 750 W, 80 PLUS Gold, semi-modulaire (15 x 8,6 x 14 cm).
 
 Semi-modulaire : les câbles indispensables (24 broches carte mère, 8 broches EPS du
 processeur) sont fixés à l'alimentation ; les autres (PCIe, SATA) se branchent à la
